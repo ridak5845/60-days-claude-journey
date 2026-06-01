@@ -15,3 +15,5 @@
 Created my AI Personality Profile
 Set clear goals for the next 60 days
 #60DaysOfAI
+
+![AI Portrait](https://raw.githubusercontent.com/ridak5845/60-days-claude-journey/refs/heads/main/Day%201%20Claude%20AI%20portrait.png)
