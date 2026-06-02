@@ -14,13 +14,17 @@ I practiced writing prompts with clear objectives, context, constraints, and des
 •Small changes in wording can improve results significantly.
 
 ##For Example:-
+
 ###Weak Prompt:
 Optimize this API.
 
 ###Engineered Prompt:
 Act as a backend performance engineer. Review the following REST API code and identify performance bottlenecks. Suggest improvements related to database queries, caching, response time, and scalability. Explain each recommendation and estimate its impact on performance.
 
+
 Conclusion:-
 By the end of Day 2, I gained a solid understanding of Prompt Engineering fundamentals and learned how structured, context-rich prompts can significantly improve AI outputs. I also developed a basic framework for creating more effective prompts that I can apply in future AI projects.
+
+
 
 ![AI Poster](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day2/Day2%20Claude%20challenge%20.png)
