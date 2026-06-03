@@ -78,3 +78,6 @@ WITHOUT ASSIGNING A ROLE
  
 ASKED AS FOUNDER PERSONA 
 ![AI CHAT](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-3/claudeday-3..PNG)
+
+ASKED AS DEVELOPER PERSONA 
+1[AI CHAT](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-3/claude%20day-3%2C..PNG)
