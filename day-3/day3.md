@@ -73,4 +73,6 @@ Role-Based Prompt Engineering showed me that the way instructions are framed dir
 
 Screenshot of Claude chats where I asked the same question without assigning a role and then asked as a Founder persona and then asked as a developer persona are attached below.
 
+WITHOUT ASSIGNING A ROLE
+![AI CHAT](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-3/claude%20day-3.PNG)
  
