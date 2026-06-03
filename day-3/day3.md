@@ -81,3 +81,13 @@ ASKED AS FOUNDER PERSONA
 
 ASKED AS DEVELOPER PERSONA 
 ![AI CHAT](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-3/claude%20day-3%2C..PNG)
+
+WHAT I LEARNED-
+
+->When I asked the question without assigning a role, Claude gave a general answer that was useful but broad and applicable to almost anyone.
+
+->When I assigned the role of a Founder, the response shifted toward business strategy, customer acquisition, validation, and growth. The AI started thinking like someone responsible for building and scaling a startup.
+
+->When I assigned the role of a Developer, the response focused on technical execution, product quality, user experience, analytics, and feature implementation. The AI approached the same problem from an engineering perspective.
+
+->The biggest takeaway is that the question remained the same, but the answers changed based on the role assigned. Role-Based Prompting helps Claude adopt a specific mindset, resulting in more targeted, practical, and relevant responses.
