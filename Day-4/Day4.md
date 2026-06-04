@@ -2,7 +2,7 @@
 
 As part of the 60-Day Claude AI Challenge, today's focus was on understanding and applying Chain of Thought (CoT) Prompting. This technique encourages AI models to reason through problems step-by-step, leading to more accurate and logical responses.
 
-# Learning Objectives:-
+—> Learning Objectives:-
 
 Understand the concept of Chain of Thought Prompting.
 Learn how structured prompts improve AI reasoning.
@@ -93,3 +93,8 @@ Sign up on Kaggle + explore a dataset
 Polish your LinkedIn profile
 Pick one project and write a spec doc
 
+—>MY ROADMAP 
+![AI ROADMAP](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-4/Claude%20AI%20day%204.jpg)
+
+—> Conclusion:-
+Today's session helped me transform a broad career goal into a structured one-year plan. With a clear roadmap in place, I now have a better understanding of what to learn, build, and accomplish to land my desired job.
