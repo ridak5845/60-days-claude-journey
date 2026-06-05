@@ -27,6 +27,8 @@ Output Screenshot:-
 Prompt 2: I provided detailed context, including: • My learning goal (Context Engineering) • My current stage as a learner • What I already knew • What I wanted to achieve by the end of 30 days
 Result: The roadmap became significantly more structured, relevant, and actionable. The tasks were tailored to my experience level, the learning sequence was more logical, and the recommendations aligned closely with my objectives.
 
+Output Screenshot:-
+![AI SS](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-5/Prompt%202%20day5.jpg)
 —>This experiment demonstrated that AI performance is heavily influenced by the quality of context provided. The more relevant information the model receives, the more personalized and effective its output becomes.
 
 #60DaysOfClaudeAI #Day5 #ContextEngineering #GitHub #VersionControl #AIEngineering #LearningInPublic #GenerativeAI
