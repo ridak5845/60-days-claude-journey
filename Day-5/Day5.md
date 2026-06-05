@@ -29,6 +29,10 @@ Result: The roadmap became significantly more structured, relevant, and actionab
 
 Output Screenshot:-
 ![AI SS](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-5/Prompt%202%20day5.jpg)
+
+![AI SS](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-5/Prompt%202day.2.jpg)
+
+
 —>This experiment demonstrated that AI performance is heavily influenced by the quality of context provided. The more relevant information the model receives, the more personalized and effective its output becomes.
 
 #60DaysOfClaudeAI #Day5 #ContextEngineering #GitHub #VersionControl #AIEngineering #LearningInPublic #GenerativeAI
