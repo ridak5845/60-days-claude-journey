@@ -21,6 +21,8 @@ After learning about context engineering, I conducted a simple experiment with C
 Prompt 1: I simply asked Claude to generate a 30-day roadmap without providing any personal background or learning goals.
 Result: The roadmap was generic and designed for a broad audience. While it was useful, it lacked personalization and didn't account for my current skill level or specific objectives.
 
+Output Screenshot:-
+![AI SS](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-5/Prompt1%20day5.jpg)
 
 Prompt 2: I provided detailed context, including: • My learning goal (Context Engineering) • My current stage as a learner • What I already knew • What I wanted to achieve by the end of 30 days
 Result: The roadmap became significantly more structured, relevant, and actionable. The tasks were tailored to my experience level, the learning sequence was more logical, and the recommendations aligned closely with my objectives.
