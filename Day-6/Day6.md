@@ -65,7 +65,7 @@ Cleaner formatting made the resume easier for ATS software to parse.
 
   **Original Resume**
 
-![Original resume](
+![Original resume](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-6/Original%20Resume%20.jpg)
 
   **Optimized Resume**
 
