@@ -69,7 +69,7 @@ Cleaner formatting made the resume easier for ATS software to parse.
 
   **Optimized Resume**
 
-![Optimized Resume](
+![Optimized Resume](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-6/Optimized%20Resume.jpg)
 
   **Day 6 Complete ✔️**
 
