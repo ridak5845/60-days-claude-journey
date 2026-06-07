@@ -1,4 +1,5 @@
 **60 Days Claude AI Challenge**
+
 **Day 7: Building My Ideal Claude Workflow**
 
 Overview
@@ -174,7 +175,7 @@ By using the right model for the right task, I can work faster, learn more effic
 
 **—> My Claude Usage Strategy:-**
 
-![Claude Strategy](
+![Claude Strategy](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-7/Claude%20Strategy%20.jpg)
 
 —>Final Reflection
 
