@@ -50,4 +50,4 @@ The goal was to make complex environmental data easy to understand, visually eng
 
 ## 🖥️ Live Demo
 
-[Open Dashboard](./env_health_redesign.html)
+[Open Dashboard](./env_health_redesign(1).html)
