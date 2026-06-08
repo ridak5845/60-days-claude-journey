@@ -1,4 +1,5 @@
 **Day 8 — 60 Days of Claude AI Challenge**
+
 **Personal Environmental Health Analyzer**
 
 **Overview**
@@ -45,3 +46,8 @@ The goal was to make complex environmental data easy to understand, visually eng
 -Build projects with a product-focused mindset
 -Improve speed while maintaining clarity and intention
 -Transition from just coding to designing complete solutions
+
+
+## 🌐 Live Demo
+
+🔗 [View Live Dashboard]()
