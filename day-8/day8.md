@@ -49,8 +49,4 @@ The goal was to make complex environmental data easy to understand, visually eng
 
 
 
-## 🌐 Live Demo
-🔗 https://ridak5845.github.io/60-days-claude-journey/day-8/
 
-## 📂 Source Code
-🔗 https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/index.html
