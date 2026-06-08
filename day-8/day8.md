@@ -48,6 +48,6 @@ The goal was to make complex environmental data easy to understand, visually eng
 -Transition from just coding to designing complete solutions
 
 
-## 🌐 Live Demo
+## 🖥️ Live Demo
 
-🔗 [View Live Dashboard](https://github.com/ridak5845/60-days-claude-journey/settings/pages)
+[Open Dashboard](./env_health_redesign.html)
