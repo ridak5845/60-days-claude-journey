@@ -50,4 +50,4 @@ The goal was to make complex environmental data easy to understand, visually eng
 
 ## 🌐 Live Demo
 
-🔗 [View Live Dashboard]()
+🔗 [View Live Dashboard](https://github.com/ridak5845/60-days-claude-journey/settings/pages)
