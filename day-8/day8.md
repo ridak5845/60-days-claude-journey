@@ -47,14 +47,19 @@ The goal was to make complex environmental data easy to understand, visually eng
 -Improve speed while maintaining clarity and intention
 -Transition from just coding to designing complete solutions
 
-### Prompt used
+### Prompt used:-
 
 [View Prompt Snip](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/day8prompt.png)
 
-### HTML File of Dashboard
+### 🌐 HTML File of Dashboard:-
 
 [View html file](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/env_health_redesign%20.html)
 
-### Screenshots of Dashboard 
+### 🔗 View Dashboard:-
 
 [Screenshot 1](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/snip1.png)
+[Screenshot 2](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/snip2.png)
+[Screenshot 3]()
+[Screenshot 4]()
+[Screenshot 5]()
+[Screenshot 6]()
