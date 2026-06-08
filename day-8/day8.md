@@ -65,5 +65,6 @@ The goal was to make complex environmental data easy to understand, visually eng
 
 [Screenshot 4](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/snip4.png)
 
-[Screenshot 5]()
+[Screenshot 5](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/snip5.png)
+
 [Screenshot 6]()
