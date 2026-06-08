@@ -54,3 +54,7 @@ The goal was to make complex environmental data easy to understand, visually eng
 ### HTML File of Dashboard
 
 [View html file](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/env_health_redesign%20.html)
+
+### Screenshots of Dashboard 
+
+[Screenshot 1](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/snip1.png)
