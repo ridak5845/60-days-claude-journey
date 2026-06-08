@@ -58,8 +58,12 @@ The goal was to make complex environmental data easy to understand, visually eng
 ### 🔗 View Dashboard:-
 
 [Screenshot 1](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/snip1.png)
+
 [Screenshot 2](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/snip2.png)
+
 [Screenshot 3](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/snip3.png)
-[Screenshot 4]()
+
+[Screenshot 4](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-8/snip4.png)
+
 [Screenshot 5]()
 [Screenshot 6]()
