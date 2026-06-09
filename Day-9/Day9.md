@@ -111,3 +111,41 @@ The project evolved from a basic nutrition tracking MVP into a nutrition intelli
 #### **NutriScope MVP HTML File**
 
 [NutriScope](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/NutriScope.html)
+
+#### **NutriScope Enhanced HTML File**
+
+[NutriScope_Enhanced](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/NutriScope_Enhanced.html)
+
+
+### **SCREENSHOTS OF THE APPLICATION**
+
+#### **NutriScope MVP Snips**
+
+[1.Dashboard]()
+
+[2.Profile]()
+
+[3.Food Log]()
+
+[4. Nutrients]()
+
+[5.Recommendations]()
+
+
+#### **Enhanced NutriScope Snips**
+
+[1.Dashboard]()
+
+[2.Profile]()
+
+[3.Food Log]()
+
+[4.Nutrients]()
+
+[5.Meal Planner]()
+
+[6.Recommendations]()
+
+[7.Risk Analysis]()
+
+[8.Sources]()
