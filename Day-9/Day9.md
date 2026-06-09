@@ -121,31 +121,31 @@ The project evolved from a basic nutrition tracking MVP into a nutrition intelli
 
 #### **NutriScope MVP Snips**
 
-[1.Dashboard]()
+[1.Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/MVP_snip1.png)
 
-[2.Profile]()
+[2.Profile](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/MVP_snip2.png)
 
-[3.Food Log]()
+[3.Food Log](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/MVP_snip3.png)
 
-[4. Nutrients]()
+[4. Nutrients](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/MVP_snip4.png)
 
-[5.Recommendations]()
+[5.Recommendations](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/MVP_snip5.png)
 
 
 #### **Enhanced NutriScope Snips**
 
 [1.Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/Enhanced_snip1.png)
 
-[2.Profile]()
+[2.Profile](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/Enhanced_snip2.png)
 
-[3.Food Log]()
+[3.Food Log](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/Enhanced_snip3.png)
 
-[4.Nutrients]()
+[4.Nutrients](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/Enhanced_snip4.png)
 
-[5.Meal Planner]()
+[5.Meal Planner](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/Enhanced_snip5.png)
 
-[6.Recommendations]()
+[6.Recommendations](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/Enhanced_snip6.png)
 
-[7.Risk Analysis]()
+[7.Risk Analysis](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/Enhanced_snip7.png)
 
-[8.Sources]()
+[8.Sources](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/Enhanced_snip8.png)
