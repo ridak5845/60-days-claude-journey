@@ -1,13 +1,16 @@
-**60 Days Claude AI Challenge — Day 9**
+### **60 Days Claude AI Challenge — Day 9**
+
 Today’s challenge was to build NutriScope, an AI-powered nutrition tracking and meal planning application, using a two-step prompt engineering workflow with Claude AI.
 
 
-**Project Overview**
+#### **Project Overview**
+
 NutriScope is an AI-generated nutrition tracking and meal planning application created as part of the Day 9 / 60 Days Claude AI Challenge. The project demonstrates how iterative prompt engineering can evolve a simple MVP into a more feature-rich and user-centric application.
 
-**Development Approach**
+#### **Development Approach**
 
 **Prompt 1:** 
+
 Build MVP
 
 Build a complete single-file HTML application called NutriScope.
@@ -42,6 +45,7 @@ Premium SaaS UI, Mobile Responsive, Chart.js, Dark Theme, Modern Cards, No Backe
 Return only the complete HTML code.
 
 **Prompt 2:** 
+
 Enhance Application
 
 Enhance the existing NutriScope application.
@@ -51,7 +55,8 @@ CSV Upload, 40 more foods, Additional micronutrients, 2-day meal planner, Risk A
 
 Return the updated HTML only.
 
-**MVP Features:-**
+#### **MVP Features:-**
+
 •User profile management
 •Personalized daily nutrition targets
 •Food logging system
@@ -59,7 +64,8 @@ Return the updated HTML only.
 •Nutrient breakdown dashboard
 •Basic nutrition recommendations
 
-**Enhanced Features:-**
+#### **Enhanced Features:-**
+
 •Advanced nutrient dashboard
 •Micronutrient tracking and radar charts
 •AI-powered meal planner
@@ -69,7 +75,7 @@ Return the updated HTML only.
 •CSV import/export functionality
 •Nutrition source transparency and methodology documentation
 
-**Key Learnings**
+#### **Key Learnings**
 
 **1. Prompt Iteration Improves Product Quality**
 A single prompt can generate a functional application, but iterative prompting significantly improves feature depth, UX, and overall completeness.
@@ -96,7 +102,8 @@ The quality of outputs depended heavily on how clearly requirements, goals, and 
 **7. AI Enables Rapid Prototyping**
 What traditionally takes multiple design and development iterations can be prototyped in a fraction of the time using structured prompts.
 
-**Outcome**
+#### **Outcome**
+
 The project evolved from a basic nutrition tracking MVP into a nutrition intelligence platform featuring analytics, meal planning, risk analysis, and personalized recommendations—highlighting the power of iterative AI-assisted product development.
 
 
