@@ -106,4 +106,8 @@ What traditionally takes multiple design and development iterations can be proto
 
 The project evolved from a basic nutrition tracking MVP into a nutrition intelligence platform featuring analytics, meal planning, risk analysis, and personalized recommendations—highlighting the power of iterative AI-assisted product development.
 
+### **FILES:-**
 
+#### **NutriScope MVP HTML File**
+
+[NutriScope](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/NutriScope.html)
