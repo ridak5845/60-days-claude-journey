@@ -134,7 +134,7 @@ The project evolved from a basic nutrition tracking MVP into a nutrition intelli
 
 #### **Enhanced NutriScope Snips**
 
-[1.Dashboard]()
+[1.Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-9/Enhanced_snip1.png)
 
 [2.Profile]()
 
