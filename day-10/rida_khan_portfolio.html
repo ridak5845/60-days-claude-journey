@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rida Khan — Data Scientist & AI Engineer</title>
+  <meta name="description" content="Rida Khan — Aspiring Data Scientist & AI Engineer. B.Tech CSE at Integral University, Lucknow. Python, ML, MERN Stack, IBM Certified." />
+  <meta name="keywords" content="Rida Khan, Data Scientist, AI Engineer, Machine Learning, Python, MERN Stack, Portfolio" />
+  <meta name="author" content="Rida Khan" />
+  <meta property="og:title" content="Rida Khan — Data Scientist & AI Engineer" />
+  <meta property="og:description" content="Portfolio of Rida Khan, aspiring Data Scientist and AI Engineer from Kannauj, India." />
+  <meta property="og:type" content="website" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            navy: { 950: '#030712', 900: '#0a0f1e', 800: '#0d1630', 700: '#111d45' },
+            azure: { 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' },
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease forwards',
+            'blink': 'blink 1s step-end infinite',
+          },
+          keyframes: {
+            fadeUp: { '0%': { opacity: '0', transform: 'translateY(24px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            blink: { '0%,100%': { opacity: '1' }, '50%': { opacity: '0' } },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { --nav-h: 64px; }
+    body { font-family: 'Inter', sans-serif; }
+    h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; }
+    .cursor { display: inline-block; width: 2px; height: 1.1em; background: #3b82f6; margin-left: 2px; vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+    .skill-bar { position: relative; height: 6px; border-radius: 999px; overflow: hidden; background: rgba(59,130,246,0.15); }
+    .skill-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #3b82f6, #60a5fa); width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+    .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .nav-link.active { color: #3b82f6; }
+    .section-hidden { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .section-visible { opacity: 1; transform: translateY(0); }
+    .glow { box-shadow: 0 0 40px rgba(59,130,246,0.15); }
+    .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(59,130,246,0.18); }
+    .dot-grid { background-image: radial-gradient(circle, rgba(59,130,246,0.15) 1px, transparent 1px); background-size: 28px 28px; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 3px; }
+    html.dark ::-webkit-scrollbar-track { background: #0a0f1e; }
+    html.light ::-webkit-scrollbar-track { background: #f1f5f9; }
+    @media (prefers-reduced-motion: reduce) {
+      .section-hidden, .skill-bar-fill, .cursor { transition: none; animation: none; }
+    }
+  </style>
+</head>
+<body class="dark bg-navy-950 text-slate-100 font-body antialiased">
+
+<!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5 bg-navy-950/80 dark:bg-navy-950/80 light:bg-white/80 transition-colors" style="height:var(--nav-h)">
+  <div class="max-w-6xl mx-auto px-4 h-full flex items-center justify-between">
+    <span class="font-display font-700 text-lg tracking-tight text-white">RK<span class="text-azure-500">.</span></span>
+    <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+      <a href="#hero"     class="nav-link text-slate-400 hover:text-white transition-colors">Home</a>
+      <a href="#about"    class="nav-link text-slate-400 hover:text-white transition-colors">About</a>
+      <a href="#skills"   class="nav-link text-slate-400 hover:text-white transition-colors">Skills</a>
+      <a href="#projects" class="nav-link text-slate-400 hover:text-white transition-colors">Projects</a>
+      <a href="#certs"    class="nav-link text-slate-400 hover:text-white transition-colors">Achievements</a>
+      <a href="#contact"  class="nav-link text-slate-400 hover:text-white transition-colors">Contact</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="themeToggle" class="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition text-lg" aria-label="Toggle theme">🌙</button>
+      <button id="menuBtn" class="md:hidden w-9 h-9 flex items-center justify-center text-slate-300" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="hidden md:hidden bg-navy-900/95 border-t border-white/5 px-4 py-4 flex flex-col gap-3 text-sm font-medium">
+    <a href="#hero"     class="nav-link text-slate-300 hover:text-white" onclick="closeMobile()">Home</a>
+    <a href="#about"    class="nav-link text-slate-300 hover:text-white" onclick="closeMobile()">About</a>
+    <a href="#skills"   class="nav-link text-slate-300 hover:text-white" onclick="closeMobile()">Skills</a>
+    <a href="#projects" class="nav-link text-slate-300 hover:text-white" onclick="closeMobile()">Projects</a>
+    <a href="#certs"    class="nav-link text-slate-300 hover:text-white" onclick="closeMobile()">Achievements</a>
+    <a href="#contact"  class="nav-link text-slate-300 hover:text-white" onclick="closeMobile()">Contact</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-16 dot-grid">
+  <!-- Ambient orbs -->
+  <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-azure-600/10 blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-azure-500/8 blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+    <!-- Avatar placeholder with initials -->
+    <div class="mx-auto mb-8 w-24 h-24 rounded-full bg-gradient-to-br from-azure-600 to-azure-400 flex items-center justify-center text-3xl font-display font-bold text-white glow ring-4 ring-azure-500/20">
+      RK
+    </div>
+
+    <p class="text-azure-400 text-sm font-medium tracking-widest uppercase mb-3">Welcome to my portfolio</p>
+
+    <h1 class="font-display text-5xl md:text-7xl font-bold text-white leading-tight mb-4">
+      Rida Khan
+    </h1>
+
+    <div class="text-xl md:text-2xl text-slate-300 font-medium mb-6 h-8">
+      <span id="typedText"></span><span class="cursor"></span>
+    </div>
+
+    <p class="text-slate-400 max-w-xl mx-auto mb-8 leading-relaxed">
+      Building intelligent, scalable systems at the intersection of AI and full-stack engineering.
+    </p>
+
+    <div class="flex items-center justify-center gap-4 mb-10">
+      <a href="https://linkedin.com/in/ridak5845" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white/10 hover:bg-azure-600 transition flex items-center justify-center" aria-label="LinkedIn">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="https://github.com/ridak5845" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white/10 hover:bg-azure-600 transition flex items-center justify-center" aria-label="GitHub">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
+      <a href="mailto:ridak5845@gmail.com" class="w-10 h-10 rounded-full bg-white/10 hover:bg-azure-600 transition flex items-center justify-center" aria-label="Email">
+        <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </a>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+      <a href="#projects" class="px-6 py-3 rounded-lg bg-azure-600 hover:bg-azure-500 text-white font-semibold text-sm transition flex items-center gap-2">
+        View My Work
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <a href="#contact" class="px-6 py-3 rounded-lg border border-azure-500/40 text-azure-300 hover:bg-azure-500/10 font-semibold text-sm transition">
+        Get In Touch
+      </a>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-600 text-xs animate-bounce">
+      <span>Scroll</span>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+<section id="about" class="py-24 px-4">
+  <div class="max-w-5xl mx-auto section-hidden">
+    <div class="flex flex-col md:flex-row gap-12 items-center">
+      <div class="flex-shrink-0">
+        <div class="relative">
+          <div class="w-48 h-48 rounded-2xl bg-gradient-to-br from-navy-800 to-navy-700 border border-white/10 flex items-center justify-center">
+            <span class="font-display text-6xl font-bold text-azure-400">RK</span>
+          </div>
+          <div class="absolute -bottom-3 -right-3 w-12 h-12 rounded-xl bg-azure-600 flex items-center justify-center text-xl">🤖</div>
+        </div>
+      </div>
+      <div>
+        <p class="text-azure-400 text-xs font-semibold tracking-widest uppercase mb-2">About Me</p>
+        <h2 class="font-display text-4xl font-bold text-white mb-4">
+          Turning data into<br/><span class="text-azure-400">intelligent decisions</span>
+        </h2>
+        <p class="text-slate-400 leading-relaxed mb-4">
+          I'm a third-year B.Tech Computer Science student at Integral University, Lucknow, with a CGPA of 9.3/10. I've developed strong expertise in Python, Artificial Intelligence, and Full-Stack Web Development — with a particular focus on machine learning and building production-ready applications.
+        </p>
+        <p class="text-slate-400 leading-relaxed mb-6">
+          Driven by a passion for technology, I love creating scalable, intelligent, and user-centric digital solutions. I'm IBM-certified in Machine Learning and trained in MERN Stack development, always looking for the next challenge at the edge of AI and engineering.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div class="bg-white/5 rounded-xl p-4 border border-white/8">
+            <div class="text-2xl font-display font-bold text-azure-400">9.3</div>
+            <div class="text-xs text-slate-500 mt-1">CGPA / 10</div>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4 border border-white/8">
+            <div class="text-2xl font-display font-bold text-azure-400">2+</div>
+            <div class="text-xs text-slate-500 mt-1">Certifications</div>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4 border border-white/8">
+            <div class="text-2xl font-display font-bold text-azure-400">3+</div>
+            <div class="text-xs text-slate-500 mt-1">Projects Built</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ SKILLS ═══════════════════════════ -->
+<section id="skills" class="py-24 px-4 bg-navy-900/50">
+  <div class="max-w-5xl mx-auto section-hidden">
+    <div class="text-center mb-14">
+      <p class="text-azure-400 text-xs font-semibold tracking-widest uppercase mb-2">My Stack</p>
+      <h2 class="font-display text-4xl font-bold text-white">Skills & Technologies</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10 mb-14">
+      <!-- Skill bars -->
+      <div class="space-y-5">
+        <h3 class="font-display text-lg font-semibold text-white mb-4">Core Proficiencies</h3>
+        <div class="space-y-4" id="skillBars">
+          <div class="skill-item">
+            <div class="flex justify-between text-sm mb-1"><span class="text-slate-300">Python</span><span class="text-azure-400 font-medium">90%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="flex justify-between text-sm mb-1"><span class="text-slate-300">Machine Learning / AI</span><span class="text-azure-400 font-medium">80%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="flex justify-between text-sm mb-1"><span class="text-slate-300">MERN Stack</span><span class="text-azure-400 font-medium">82%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="82"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="flex justify-between text-sm mb-1"><span class="text-slate-300">SQL & Data Analytics</span><span class="text-azure-400 font-medium">75%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="75"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="flex justify-between text-sm mb-1"><span class="text-slate-300">JavaScript / Node.js</span><span class="text-azure-400 font-medium">78%</span></div>
+            <div class="skill-bar"><div class="skill-bar-fill" data-width="78"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Soft skills -->
+      <div>
+        <h3 class="font-display text-lg font-semibold text-white mb-4">Professional Skills</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-white/5 border border-white/8 rounded-xl p-4 flex items-center gap-3 hover:border-azure-500/40 transition">
+            <span class="text-xl">🧠</span>
+            <span class="text-sm text-slate-300">Critical Thinking</span>
+          </div>
+          <div class="bg-white/5 border border-white/8 rounded-xl p-4 flex items-center gap-3 hover:border-azure-500/40 transition">
+            <span class="text-xl">🗣️</span>
+            <span class="text-sm text-slate-300">Communication</span>
+          </div>
+          <div class="bg-white/5 border border-white/8 rounded-xl p-4 flex items-center gap-3 hover:border-azure-500/40 transition">
+            <span class="text-xl">🏆</span>
+            <span class="text-sm text-slate-300">Leadership</span>
+          </div>
+          <div class="bg-white/5 border border-white/8 rounded-xl p-4 flex items-center gap-3 hover:border-azure-500/40 transition">
+            <span class="text-xl">⚡</span>
+            <span class="text-sm text-slate-300">Problem Solving</span>
+          </div>
+          <div class="bg-white/5 border border-white/8 rounded-xl p-4 flex items-center gap-3 hover:border-azure-500/40 transition">
+            <span class="text-xl">⏱️</span>
+            <span class="text-sm text-slate-300">Time Management</span>
+          </div>
+          <div class="bg-white/5 border border-white/8 rounded-xl p-4 flex items-center gap-3 hover:border-azure-500/40 transition">
+            <span class="text-xl">🔄</span>
+            <span class="text-sm text-slate-300">Adaptability</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech tags -->
+    <div>
+      <h3 class="font-display text-lg font-semibold text-white mb-4">Technologies & Tools</h3>
+      <div class="flex flex-wrap gap-2">
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-azure-600/20 text-azure-300 border border-azure-500/30">Python</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-azure-600/20 text-azure-300 border border-azure-500/30">Machine Learning</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-azure-600/20 text-azure-300 border border-azure-500/30">SQL</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-azure-600/20 text-azure-300 border border-azure-500/30">AI / Deep Learning</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-azure-600/20 text-azure-300 border border-azure-500/30">HTML / CSS</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-azure-600/20 text-azure-300 border border-azure-500/30">JavaScript</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-slate-300 border border-white/10">React.js</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-slate-300 border border-white/10">Node.js</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-slate-300 border border-white/10">Express.js</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-slate-300 border border-white/10">MongoDB</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-slate-300 border border-white/10">JWT Auth</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-slate-300 border border-white/10">RESTful APIs</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-slate-300 border border-white/10">Excel</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-slate-300 border border-white/10">GitHub</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-slate-300 border border-white/10">VS Code</span>
+        <span class="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-slate-300 border border-white/10">Jupyter Notebook</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ PROJECTS ═══════════════════════════ -->
+<section id="projects" class="py-24 px-4">
+  <div class="max-w-5xl mx-auto section-hidden">
+    <div class="text-center mb-14">
+      <p class="text-azure-400 text-xs font-semibold tracking-widest uppercase mb-2">What I've Built</p>
+      <h2 class="font-display text-4xl font-bold text-white">Featured Projects</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Project 1 -->
+      <div class="card-hover bg-navy-900/80 border border-white/8 rounded-2xl overflow-hidden flex flex-col">
+        <div class="h-2 bg-gradient-to-r from-azure-600 to-azure-400"></div>
+        <div class="p-6 flex flex-col flex-1">
+          <div class="w-10 h-10 rounded-xl bg-azure-600/20 flex items-center justify-center text-xl mb-4">💬</div>
+          <h3 class="font-display text-lg font-semibold text-white mb-2">Social Media Web App</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-1">
+            A full-stack social platform featuring secure JWT authentication, post creation, real-time likes and comments, and RESTful API architecture — built end-to-end with the MERN stack.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded text-xs bg-azure-600/20 text-azure-300">MongoDB</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-azure-600/20 text-azure-300">Express.js</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-azure-600/20 text-azure-300">React.js</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-azure-600/20 text-azure-300">Node.js</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-white/8 text-slate-400">JWT</span>
+          </div>
+          <a href="https://github.com/ridak5845" target="_blank" rel="noopener" class="text-azure-400 hover:text-azure-300 text-sm font-medium flex items-center gap-1 transition">
+            View on GitHub
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="card-hover bg-navy-900/80 border border-white/8 rounded-2xl overflow-hidden flex flex-col">
+        <div class="h-2 bg-gradient-to-r from-violet-600 to-azure-400"></div>
+        <div class="p-6 flex flex-col flex-1">
+          <div class="w-10 h-10 rounded-xl bg-violet-600/20 flex items-center justify-center text-xl mb-4">🤖</div>
+          <h3 class="font-display text-lg font-semibold text-white mb-2">ML Prediction Pipeline</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-1">
+            An end-to-end machine learning pipeline developed during the IBM internship — data preprocessing, model training, evaluation, and visualization using Python's ML ecosystem.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded text-xs bg-violet-600/20 text-violet-300">Python</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-violet-600/20 text-violet-300">Scikit-learn</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-white/8 text-slate-400">Pandas</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-white/8 text-slate-400">NumPy</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-white/8 text-slate-400">Jupyter</span>
+          </div>
+          <a href="https://github.com/ridak5845" target="_blank" rel="noopener" class="text-azure-400 hover:text-azure-300 text-sm font-medium flex items-center gap-1 transition">
+            View on GitHub
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="card-hover bg-navy-900/80 border border-white/8 rounded-2xl overflow-hidden flex flex-col">
+        <div class="h-2 bg-gradient-to-r from-emerald-600 to-azure-400"></div>
+        <div class="p-6 flex flex-col flex-1">
+          <div class="w-10 h-10 rounded-xl bg-emerald-600/20 flex items-center justify-center text-xl mb-4">📊</div>
+          <h3 class="font-display text-lg font-semibold text-white mb-2">Data Analytics Dashboard</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-1">
+            An interactive analytics dashboard for exploring and visualizing business datasets — inspired by the Deloitte Data Analytics Job Simulation, with SQL-driven insights and Excel reporting.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded text-xs bg-emerald-600/20 text-emerald-300">Python</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-emerald-600/20 text-emerald-300">SQL</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-white/8 text-slate-400">Excel</span>
+            <span class="px-2 py-0.5 rounded text-xs bg-white/8 text-slate-400">Pandas</span>
+          </div>
+          <a href="https://github.com/ridak5845" target="_blank" rel="noopener" class="text-azure-400 hover:text-azure-300 text-sm font-medium flex items-center gap-1 transition">
+            View on GitHub
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ ACHIEVEMENTS & CERTS ═══════════════════════════ -->
+<section id="certs" class="py-24 px-4 bg-navy-900/50">
+  <div class="max-w-5xl mx-auto section-hidden">
+    <div class="text-center mb-14">
+      <p class="text-azure-400 text-xs font-semibold tracking-widest uppercase mb-2">Recognition</p>
+      <h2 class="font-display text-4xl font-bold text-white">Achievements & Certifications</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- IBM Cert -->
+      <div class="card-hover bg-navy-900/80 border border-azure-500/20 rounded-2xl p-6 flex gap-4 items-start">
+        <div class="w-14 h-14 rounded-xl bg-blue-600/20 flex-shrink-0 flex items-center justify-center text-2xl">🏅</div>
+        <div>
+          <span class="text-xs font-semibold text-azure-400 uppercase tracking-wider">Certification</span>
+          <h3 class="font-display font-semibold text-white mt-1 mb-1">IBM Machine Learning with Python</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Globally recognized certification from IBM's 30-day intensive internship program, covering supervised/unsupervised ML algorithms, model evaluation, and Python implementation.</p>
+          <span class="inline-block mt-2 px-2 py-0.5 rounded text-xs bg-blue-600/20 text-blue-300">IBM Global Certification</span>
+        </div>
+      </div>
+
+      <!-- Deloitte Cert -->
+      <div class="card-hover bg-navy-900/80 border border-emerald-500/20 rounded-2xl p-6 flex gap-4 items-start">
+        <div class="w-14 h-14 rounded-xl bg-emerald-600/20 flex-shrink-0 flex items-center justify-center text-2xl">📈</div>
+        <div>
+          <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Job Simulation</span>
+          <h3 class="font-display font-semibold text-white mt-1 mb-1">Deloitte Data Analytics Job Simulation</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Completed Deloitte's virtual data analytics simulation, gaining hands-on experience in business data analysis, insight generation, and data-driven decision-making.</p>
+          <span class="inline-block mt-2 px-2 py-0.5 rounded text-xs bg-emerald-600/20 text-emerald-300">Deloitte</span>
+        </div>
+      </div>
+
+      <!-- Astrophysics Cert -->
+      <div class="card-hover bg-navy-900/80 border border-violet-500/20 rounded-2xl p-6 flex gap-4 items-start">
+        <div class="w-14 h-14 rounded-xl bg-violet-600/20 flex-shrink-0 flex items-center justify-center text-2xl">🔭</div>
+        <div>
+          <span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">Course Certificate</span>
+          <h3 class="font-display font-semibold text-white mt-1 mb-1">Fundamentals of Astrophysics</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Certified course in the fundamentals of astrophysics from Integral University, Lucknow — reflecting intellectual curiosity beyond core computer science studies.</p>
+          <span class="inline-block mt-2 px-2 py-0.5 rounded text-xs bg-violet-600/20 text-violet-300">Integral University</span>
+        </div>
+      </div>
+
+      <!-- MERN Training -->
+      <div class="card-hover bg-navy-900/80 border border-orange-500/20 rounded-2xl p-6 flex gap-4 items-start">
+        <div class="w-14 h-14 rounded-xl bg-orange-600/20 flex-shrink-0 flex items-center justify-center text-2xl">🛠️</div>
+        <div>
+          <span class="text-xs font-semibold text-orange-400 uppercase tracking-wider">Training</span>
+          <h3 class="font-display font-semibold text-white mt-1 mb-1">6-Week MERN Stack Training</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Intensive offline training at Manyversity Academics, Lucknow — covering MongoDB, Express.js, React.js, and Node.js, culminating in a capstone social media application.</p>
+          <span class="inline-block mt-2 px-2 py-0.5 rounded text-xs bg-orange-600/20 text-orange-300">Manyversity Academics</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Education highlight -->
+    <div class="mt-8 bg-gradient-to-r from-azure-600/10 to-navy-800/50 border border-azure-500/20 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-5">
+      <div class="w-14 h-14 rounded-xl bg-azure-600/20 flex-shrink-0 flex items-center justify-center text-2xl">🎓</div>
+      <div>
+        <span class="text-xs font-semibold text-azure-400 uppercase tracking-wider">Currently Enrolled</span>
+        <h3 class="font-display font-semibold text-white mt-0.5">B.Tech — Computer Science & Engineering</h3>
+        <p class="text-slate-400 text-sm">Integral University, Lucknow &nbsp;·&nbsp; 2023–2027 (Expected) &nbsp;·&nbsp; <span class="text-azure-300 font-semibold">CGPA: 9.3 / 10</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+<section id="contact" class="py-24 px-4">
+  <div class="max-w-4xl mx-auto section-hidden">
+    <div class="text-center mb-14">
+      <p class="text-azure-400 text-xs font-semibold tracking-widest uppercase mb-2">Let's Connect</p>
+      <h2 class="font-display text-4xl font-bold text-white">Get In Touch</h2>
+      <p class="text-slate-400 mt-3 max-w-lg mx-auto">Whether you have an opportunity, a project idea, or just want to say hello — my inbox is always open.</p>
+    </div>
+
+    <div class="grid md:grid-cols-5 gap-8">
+      <!-- Direct links -->
+      <div class="md:col-span-2 flex flex-col gap-4">
+        <a href="mailto:ridak5845@gmail.com" class="flex items-center gap-3 p-4 bg-white/5 border border-white/8 rounded-xl hover:border-azure-500/40 transition group">
+          <div class="w-10 h-10 rounded-lg bg-azure-600/20 flex items-center justify-center flex-shrink-0 group-hover:bg-azure-600/30 transition">
+            <svg class="w-4 h-4 text-azure-400 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">Email</div>
+            <div class="text-sm text-slate-200 font-medium">ridak5845@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/ridak5845" target="_blank" rel="noopener" class="flex items-center gap-3 p-4 bg-white/5 border border-white/8 rounded-xl hover:border-azure-500/40 transition group">
+          <div class="w-10 h-10 rounded-lg bg-azure-600/20 flex items-center justify-center flex-shrink-0 group-hover:bg-azure-600/30 transition">
+            <svg class="w-4 h-4 text-azure-400 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">LinkedIn</div>
+            <div class="text-sm text-slate-200 font-medium">linkedin.com/in/ridak5845</div>
+          </div>
+        </a>
+        <a href="https://github.com/ridak5845" target="_blank" rel="noopener" class="flex items-center gap-3 p-4 bg-white/5 border border-white/8 rounded-xl hover:border-azure-500/40 transition group">
+          <div class="w-10 h-10 rounded-lg bg-azure-600/20 flex items-center justify-center flex-shrink-0 group-hover:bg-azure-600/30 transition">
+            <svg class="w-4 h-4 text-azure-400 fill-current" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">GitHub</div>
+            <div class="text-sm text-slate-200 font-medium">github.com/ridak5845</div>
+          </div>
+        </a>
+        <div class="flex items-center gap-3 p-4 bg-white/5 border border-white/8 rounded-xl">
+          <div class="w-10 h-10 rounded-lg bg-azure-600/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-azure-400 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">Location</div>
+            <div class="text-sm text-slate-200 font-medium">Kannauj, Uttar Pradesh, India</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact form -->
+      <div class="md:col-span-3 bg-navy-900/80 border border-white/8 rounded-2xl p-6">
+        <h3 class="font-display font-semibold text-white mb-4">Send a Message</h3>
+        <div id="contactForm" class="space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="text-xs text-slate-400 font-medium mb-1 block">Name</label>
+              <input type="text" id="cf-name" placeholder="Your name" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-azure-500 transition" />
+            </div>
+            <div>
+              <label class="text-xs text-slate-400 font-medium mb-1 block">Email</label>
+              <input type="email" id="cf-email" placeholder="your@email.com" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-azure-500 transition" />
+            </div>
+          </div>
+          <div>
+            <label class="text-xs text-slate-400 font-medium mb-1 block">Subject</label>
+            <input type="text" id="cf-subject" placeholder="What's this about?" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-azure-500 transition" />
+          </div>
+          <div>
+            <label class="text-xs text-slate-400 font-medium mb-1 block">Message</label>
+            <textarea id="cf-message" rows="4" placeholder="Tell me more…" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-azure-500 transition resize-none"></textarea>
+          </div>
+          <button onclick="sendEmail()" class="w-full py-3 rounded-lg bg-azure-600 hover:bg-azure-500 text-white text-sm font-semibold transition flex items-center justify-center gap-2">
+            Send Message
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+          </button>
+        </div>
+        <div id="formSuccess" class="hidden text-center py-6">
+          <div class="text-4xl mb-2">✅</div>
+          <p class="text-white font-semibold">Message sent!</p>
+          <p class="text-slate-400 text-sm mt-1">Your email client will open to complete sending.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer class="border-t border-white/5 py-8 text-center">
+  <p class="text-slate-600 text-sm">
+    © 2025 Rida Khan &nbsp;·&nbsp; Built with 💙 &nbsp;·&nbsp;
+    <a href="mailto:ridak5845@gmail.com" class="text-azure-500 hover:text-azure-400 transition">ridak5845@gmail.com</a>
+  </p>
+</footer>
+
+<!-- ═══════════════════════════ LIGHT MODE OVERRIDES ═══════════════════════════ -->
+<style>
+html.light { background: #f8fafc; color: #0f172a; }
+html.light body { background: #f8fafc; color: #0f172a; }
+html.light #navbar { background: rgba(248,250,252,0.92); border-color: rgba(0,0,0,0.06); }
+html.light .nav-link { color: #64748b; }
+html.light .nav-link:hover { color: #0f172a; }
+html.light .nav-link.active { color: #2563eb; }
+html.light #hero .text-slate-300 { color: #374151; }
+html.light #hero .text-slate-400 { color: #6b7280; }
+html.light .dot-grid { background-image: radial-gradient(circle, rgba(59,130,246,0.12) 1px, transparent 1px); }
+html.light .bg-navy-900\/80, html.light .bg-navy-900\/50 { background: rgba(226,232,240,0.7); }
+html.light .bg-white\/5 { background: rgba(0,0,0,0.04); }
+html.light .border-white\/8, html.light .border-white\/10 { border-color: rgba(0,0,0,0.08); }
+html.light .text-slate-300 { color: #374151; }
+html.light .text-slate-400 { color: #6b7280; }
+html.light .text-slate-500 { color: #9ca3af; }
+html.light .text-white { color: #0f172a; }
+html.light .bg-navy-950, html.light .bg-navy-900\/50 { background: #f1f5f9; }
+html.light footer { background: #f1f5f9; border-color: rgba(0,0,0,0.07); }
+html.light input, html.light textarea { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.12) !important; color: #0f172a !important; }
+html.light input::placeholder, html.light textarea::placeholder { color: #9ca3af !important; }
+html.light .text-slate-600 { color: #475569; }
+</style>
+
+<!-- ═══════════════════════════ JAVASCRIPT ═══════════════════════════ -->
+<script>
+// ── Theme toggle ──
+const html = document.documentElement;
+const btn = document.getElementById('themeToggle');
+let dark = true;
+btn.addEventListener('click', () => {
+  dark = !dark;
+  html.classList.toggle('dark', dark);
+  html.classList.toggle('light', !dark);
+  btn.textContent = dark ? '🌙' : '☀️';
+});
+
+// ── Mobile menu ──
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+function closeMobile() { mobileMenu.classList.add('hidden'); }
+
+// ── Typing animation ──
+const phrases = [
+  'Python Developer',
+  'AI & ML Enthusiast',
+  'MERN Stack Builder',
+  'Data Science Aspirant',
+  'IBM Certified in ML',
+];
+let pi = 0, ci = 0, deleting = false;
+const target = document.getElementById('typedText');
+function type() {
+  const phrase = phrases[pi];
+  if (!deleting) {
+    target.textContent = phrase.slice(0, ++ci);
+    if (ci === phrase.length) { deleting = true; setTimeout(type, 1800); return; }
+  } else {
+    target.textContent = phrase.slice(0, --ci);
+    if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+  }
+  setTimeout(type, deleting ? 50 : 80);
+}
+setTimeout(type, 600);
+
+// ── Scroll animations ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('section-visible');
+      // Animate skill bars
+      if (e.target.closest && e.target.id === 'skills' || e.target.querySelector && e.target.querySelector('.skill-bar-fill')) {
+        e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+          setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 200);
+        });
+      }
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.section-hidden').forEach(el => observer.observe(el));
+
+// Trigger skill bars when skills section enters view
+const skillSection = document.getElementById('skills');
+const skillObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+      setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 300);
+    });
+    skillObserver.disconnect();
+  }
+}, { threshold: 0.2 });
+skillObserver.observe(skillSection);
+
+// ── Active nav highlighting ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const id = e.target.id;
+      document.querySelectorAll(`.nav-link[href="#${id}"]`).forEach(l => l.classList.add('active'));
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+sections.forEach(s => navObserver.observe(s));
+
+// ── Contact form ──
+function sendEmail() {
+  const name = document.getElementById('cf-name').value;
+  const email = document.getElementById('cf-email').value;
+  const subject = document.getElementById('cf-subject').value;
+  const message = document.getElementById('cf-message').value;
+  if (!name || !email || !message) {
+    alert('Please fill in name, email, and message.');
+    return;
+  }
+  const body = encodeURIComponent(`Hi Rida,\n\nName: ${name}\nEmail: ${email}\n\n${message}`);
+  const sub = encodeURIComponent(subject || `Portfolio contact from ${name}`);
+  window.location.href = `mailto:ridak5845@gmail.com?subject=${sub}&body=${body}`;
+  document.getElementById('contactForm').classList.add('hidden');
+  document.getElementById('formSuccess').classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
