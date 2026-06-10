@@ -50,7 +50,7 @@ Looking forward to applying these insights in future projects and continuing the
 
 ### **HTML File of the Portfolio**
 
-[Portfolio]()
+[Portfolio](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-10/rida_khan_portfolio.html)
 
 
 ### **Screenshots of Portfolio website**
@@ -65,7 +65,7 @@ Looking forward to applying these insights in future projects and continuing the
 
 #### **3.Skills Page**
 
-[Skills](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-10/Portfolio_snap3.png)
+[Skills](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-10/portfolio_snap3.png)
 
 #### **4.Projects Page**
 
