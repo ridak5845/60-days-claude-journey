@@ -52,7 +52,7 @@ This exercise helped me understand how ATS systems evaluate resumes and how stra
 
 #### **Screenshot of ATS Score**
 
-[ATS Score]()
+[ATS Score](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-11/ATS_Score.jpg)
 
 #### **Optimized Resume**
 
