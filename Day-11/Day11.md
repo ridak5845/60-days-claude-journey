@@ -56,5 +56,5 @@ This exercise helped me understand how ATS systems evaluate resumes and how stra
 
 #### **Optimized Resume**
 
-[Resume]()
+[Resume](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-11/Optimized%20Resume_Claude%20.jpg)
 
