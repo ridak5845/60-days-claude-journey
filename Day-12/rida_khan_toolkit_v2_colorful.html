@@ -1,0 +1,395 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.tk{font-family:var(--font-sans);padding:1rem 0}
+.hero{background:#26215C;border-radius:16px;padding:1.5rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.hero-bg-shape{position:absolute;top:-30px;right:-30px;width:160px;height:160px;background:#534AB7;border-radius:50%;opacity:0.35}
+.hero-bg-shape2{position:absolute;bottom:-40px;right:60px;width:100px;height:100px;background:#1D9E75;border-radius:50%;opacity:0.2}
+.hero-top{display:flex;align-items:center;gap:14px;margin-bottom:1rem;position:relative;z-index:1}
+.avatar{width:54px;height:54px;border-radius:50%;background:#534AB7;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:17px;color:#EEEDFE;flex-shrink:0;border:2px solid #7F77DD}
+.hero-name{font-size:21px;font-weight:500;color:#fff}
+.hero-role{font-size:13px;color:#AFA9EC;margin-top:2px}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;position:relative;z-index:1}
+.ht{font-size:12px;padding:4px 12px;border-radius:20px;font-weight:500}
+.ht-p{background:#534AB7;color:#EEEDFE}
+.ht-t{background:#0F6E56;color:#9FE1CB}
+.ht-a{background:#854F0B;color:#FAC775}
+.ht-c{background:#712B13;color:#F5C4B3}
+.score-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.25rem}
+.sc{border-radius:12px;padding:0.875rem;text-align:center;border:0.5px solid var(--color-border-tertiary)}
+.sc.purple{background:#EEEDFE;border-color:#AFA9EC}
+.sc.teal{background:#E1F5EE;border-color:#5DCAA5}
+.sc.amber{background:#FAEEDA;border-color:#EF9F27}
+.sc-val{font-size:22px;font-weight:500}
+.sc.purple .sc-val{color:#3C3489}
+.sc.teal .sc-val{color:#085041}
+.sc.amber .sc-val{color:#633806}
+.sc-label{font-size:11px;margin-top:2px}
+.sc.purple .sc-label{color:#534AB7}
+.sc.teal .sc-label{color:#0F6E56}
+.sc.amber .sc-label{color:#854F0B}
+.nav{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.25rem}
+.nb{font-size:12px;padding:5px 11px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:4px}
+.nb i{font-size:13px}
+.nb:hover{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC}
+.nb.active{background:#534AB7;color:#EEEDFE;border-color:#534AB7}
+.section{display:none}
+.section.active{display:block}
+.sec-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.sec-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.si-p{background:#EEEDFE;color:#3C3489}
+.si-t{background:#E1F5EE;color:#085041}
+.si-a{background:#FAEEDA;color:#633806}
+.si-c{background:#FAECE7;color:#712B13}
+.si-pk{background:#FBEAF0;color:#72243E}
+.si-b{background:#E6F1FB;color:#0C447C}
+.sec-title{font-size:16px;font-weight:500;color:var(--color-text-primary)}
+.sec-sub{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.cc{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:1.25rem;margin-bottom:10px;position:relative}
+.cc.accent-p{border-left:3px solid #534AB7;border-radius:0 12px 12px 0}
+.cc.accent-t{border-left:3px solid #1D9E75;border-radius:0 12px 12px 0}
+.cc.accent-a{border-left:3px solid #BA7517;border-radius:0 12px 12px 0}
+.ct{font-size:14px;color:var(--color-text-primary);line-height:1.75;white-space:pre-wrap}
+.cpb{position:absolute;top:10px;right:10px;font-size:12px;padding:4px 10px;border-radius:6px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;display:flex;align-items:center;gap:4px}
+.cpb:hover{background:#EEEDFE;color:#3C3489}
+.cpb.ok{background:#E1F5EE;color:#085041}
+.lbl{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;margin-top:1rem}
+.lbl:first-child{margin-top:0}
+.lbl-p{color:#534AB7}
+.lbl-t{color:#0F6E56}
+.lbl-a{color:#854F0B}
+.str-card{border-radius:10px;padding:0.875rem;margin-bottom:8px;display:flex;align-items:flex-start;gap:10px;border:0.5px solid var(--color-border-tertiary)}
+.str-card:nth-child(odd){background:#EEEDFE}
+.str-card:nth-child(even){background:#E1F5EE}
+.str-num{font-size:13px;font-weight:500;min-width:22px}
+.str-card:nth-child(odd) .str-num{color:#3C3489}
+.str-card:nth-child(even) .str-num{color:#085041}
+.str-txt{font-size:13px;line-height:1.6}
+.str-card:nth-child(odd) .str-txt{color:#26215C}
+.str-card:nth-child(even) .str-txt{color:#04342C}
+.jg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:0.5rem}
+.ji{border-radius:10px;padding:0.75rem;font-size:13px;display:flex;align-items:center;gap:8px;border:0.5px solid var(--color-border-tertiary)}
+.ji:nth-child(1),.ji:nth-child(4),.ji:nth-child(7),.ji:nth-child(10){background:#EEEDFE;color:#26215C}
+.ji:nth-child(2),.ji:nth-child(5),.ji:nth-child(8){background:#E1F5EE;color:#04342C}
+.ji:nth-child(3),.ji:nth-child(6),.ji:nth-child(9){background:#FAEEDA;color:#412402}
+.ji-n{font-size:11px;font-weight:500;min-width:18px}
+.ji:nth-child(1) .ji-n,.ji:nth-child(4) .ji-n,.ji:nth-child(7) .ji-n,.ji:nth-child(10) .ji-n{color:#534AB7}
+.ji:nth-child(2) .ji-n,.ji:nth-child(5) .ji-n,.ji:nth-child(8) .ji-n{color:#0F6E56}
+.ji:nth-child(3) .ji-n,.ji:nth-child(6) .ji-n,.ji:nth-child(9) .ji-n{color:#854F0B}
+.gr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:0.5rem}
+.gc{border-radius:10px;padding:0.875rem;border:0.5px solid var(--color-border-tertiary)}
+.gc.gs{background:#E1F5EE}
+.gc.gm{background:#FAECE7}
+.gc.grm{background:#FAEEDA}
+.gc-t{font-size:12px;font-weight:500;margin-bottom:8px}
+.gc.gs .gc-t{color:#085041}
+.gc.gm .gc-t{color:#712B13}
+.gc.grm .gc-t{color:#633806}
+.gi{font-size:12px;padding:3px 0;display:flex;align-items:flex-start;gap:5px;line-height:1.4}
+.gc.gs .gi{color:#04342C}
+.gc.gm .gi{color:#4A1B0C}
+.gc.grm .gi{color:#412402}
+.gi::before{content:"›";flex-shrink:0;margin-top:0px;font-weight:500}
+.match{display:flex;align-items:center;gap:12px;background:#EEEDFE;border-radius:12px;padding:1rem;margin-bottom:1rem;border:0.5px solid #AFA9EC}
+.mc-info .mc-t{font-size:14px;font-weight:500;color:#26215C}
+.mc-info .mc-d{font-size:12px;color:#534AB7;margin-top:3px}
+.bc{border-radius:0;border-left:3px solid #534AB7;padding:0.875rem 1rem;background:var(--color-background-secondary);margin-bottom:8px}
+.bl-p{border-left-color:#534AB7}
+.bl-t{border-left-color:#1D9E75}
+.bl-a{border-left-color:#BA7517}
+.bc-lbl{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.bl-p .bc-lbl{color:#534AB7}
+.bl-t .bc-lbl{color:#0F6E56}
+.bl-a .bc-lbl{color:#854F0B}
+.bc-txt{font-size:14px;color:var(--color-text-primary);line-height:1.65}
+.iv{border-radius:10px;border:0.5px solid var(--color-border-tertiary);padding:0.875rem;margin-bottom:8px}
+.iv:nth-child(odd){background:#EEEDFE}
+.iv:nth-child(even){background:#E1F5EE}
+.iv-q{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:5px}
+.iv:nth-child(odd) .iv-q{color:#3C3489}
+.iv:nth-child(even) .iv-q{color:#085041}
+.iv-a{font-size:13px;line-height:1.6}
+.iv:nth-child(odd) .iv-a{color:#26215C}
+.iv:nth-child(even) .iv-a{color:#04342C}
+</style>
+
+<h2 class="sr-only">Rida Khan job search and personal branding toolkit with 12 interactive sections</h2>
+<div class="tk">
+  <div class="hero">
+    <div class="hero-bg-shape"></div>
+    <div class="hero-bg-shape2"></div>
+    <div class="hero-top">
+      <div class="avatar">RK</div>
+      <div>
+        <div class="hero-name">Rida Khan</div>
+        <div class="hero-role">Data Analyst · Data Science & AI Engineering · Kannauj, India</div>
+      </div>
+    </div>
+    <div class="hero-tags">
+      <span class="ht ht-p">CGPA 9.3/10</span>
+      <span class="ht ht-t">IBM Certified</span>
+      <span class="ht ht-a">B.Tech CSE 2027</span>
+      <span class="ht ht-c">SQL · Python · ML</span>
+      <span class="ht ht-t">MERN Stack</span>
+    </div>
+  </div>
+
+  <div class="score-strip">
+    <div class="sc purple"><div class="sc-val">9.3</div><div class="sc-label">CGPA / 10</div></div>
+    <div class="sc teal"><div class="sc-val">IBM</div><div class="sc-label">ML Certified</div></div>
+    <div class="sc amber"><div class="sc-val">80%</div><div class="sc-label">JD match</div></div>
+  </div>
+
+  <div class="nav" id="nav">
+    <button class="nb active" onclick="sw('cover',this)"><i class="ti ti-file-text" aria-hidden="true"></i>Cover Letter</button>
+    <button class="nb" onclick="sw('rec',this)"><i class="ti ti-mail" aria-hidden="true"></i>Recruiter</button>
+    <button class="nb" onclick="sw('hm',this)"><i class="ti ti-user-check" aria-hidden="true"></i>Hiring Mgr</button>
+    <button class="nb" onclick="sw('li',this)"><i class="ti ti-brand-linkedin" aria-hidden="true"></i>LinkedIn</button>
+    <button class="nb" onclick="sw('ref',this)"><i class="ti ti-users" aria-hidden="true"></i>Referral</button>
+    <button class="nb" onclick="sw('fu',this)"><i class="ti ti-clock" aria-hidden="true"></i>Follow-Up</button>
+    <button class="nb" onclick="sw('intro',this)"><i class="ti ti-microphone" aria-hidden="true"></i>30-Sec Intro</button>
+    <button class="nb" onclick="sw('titles',this)"><i class="ti ti-list-check" aria-hidden="true"></i>Job Titles</button>
+    <button class="nb" onclick="sw('str',this)"><i class="ti ti-star" aria-hidden="true"></i>Strengths</button>
+    <button class="nb" onclick="sw('gaps',this)"><i class="ti ti-chart-bar" aria-hidden="true"></i>Skill Gap</button>
+    <button class="nb" onclick="sw('brand',this)"><i class="ti ti-id-badge" aria-hidden="true"></i>Brand</button>
+    <button class="nb" onclick="sw('iv',this)"><i class="ti ti-bulb" aria-hidden="true"></i>Interview</button>
+  </div>
+
+  <div id="cover" class="section active">
+    <div class="sec-header"><div class="sec-icon si-p"><i class="ti ti-file-text" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">ATS-Friendly Cover Letter</div><div class="sec-sub">Tailored for Data Analyst · 400 words · Ready to send</div></div></div>
+    <div class="cc accent-p">
+      <button class="cpb" onclick="cp(this,'cv-t')"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy</span></button>
+      <div class="ct" id="cv-t">Dear Hiring Manager,
+
+I am writing to apply for the Data Analyst position at your organization. As a Computer Science undergraduate at Integral University (CGPA: 9.3/10) with hands-on experience in SQL, Python, and data analysis, and a globally recognized IBM certification in Machine Learning with Python, I am confident I can deliver the actionable insights your team needs.
+
+During my IBM Machine Learning Internship, I preprocessed, cleaned, and validated structured datasets, applying supervised and unsupervised ML algorithms using Python (pandas, scikit-learn) and evaluating model performance using statistical metrics. This experience gave me a strong foundation in the data quality work that drives reliable reporting — directly aligned with your requirements for data cleaning and KPI definition.
+
+My MERN Stack training at Manyversity Academics, Lucknow, strengthened my ability to design efficient data models, build structured query pipelines in MongoDB, and manage data integrity end-to-end. I translated business requirements into data-backed features for a full-stack social media application — an experience that sharpened my thinking around how data flows underpin real product decisions.
+
+On the technical side, I bring proficiency in SQL (querying, joins, aggregations, reporting), Python (pandas, numpy, scikit-learn), Excel, and working knowledge of data visualization concepts with active learning in Power BI and Tableau. My academic record reflects consistency and intellectual rigor — a 9.3 CGPA alongside 90% in Class X and 88.8% in Class XII.
+
+What sets me apart is my ability to bridge technical analysis and structured data management with a clear focus on outcomes. I am a fast learner with a proven track record of completing intensive programs (30-day IBM internship, 6-week offline MERN training) and delivering results.
+
+I would welcome the opportunity to bring this combination of analytical skills, technical depth, and drive to your team. I am available for an interview at your convenience and can be reached at ridak5845@gmail.com or +91 82993 55845.
+
+Thank you for your consideration.
+
+Sincerely,
+Rida Khan</div>
+    </div>
+  </div>
+
+  <div id="rec" class="section">
+    <div class="sec-header"><div class="sec-icon si-t"><i class="ti ti-mail" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">Recruiter Outreach Email</div><div class="sec-sub">Cold outreach · Direct and results-focused</div></div></div>
+    <div class="cc accent-t">
+      <button class="cpb" onclick="cp(this,'rec-t')"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy</span></button>
+      <div class="ct" id="rec-t">Subject: Data Analyst Fresher — 9.3 CGPA, IBM ML Certified, SQL + Python
+
+Hi [Recruiter's Name],
+
+I came across your profile while researching talent teams at [Company Name] and wanted to reach out directly.
+
+I'm Rida Khan, a B.Tech CSE student at Integral University (CGPA: 9.3/10), seeking an entry-level Data Analyst role. I bring hands-on experience in SQL, Python (pandas, numpy, scikit-learn), data cleaning, and statistical analysis, backed by an IBM Global Certification in Machine Learning with Python.
+
+Key highlights:
+• SQL proficiency: querying, joins, aggregations, reporting
+• Python: data preprocessing, ML model evaluation (IBM Internship)
+• Structured data modeling and RESTful API experience (MERN Stack)
+• Currently developing Power BI/Tableau skills
+
+I'm actively applying and would appreciate any open roles or referrals that match my profile. I've attached my resume for your review.
+
+LinkedIn: linkedin.com/in/ridak5845
+GitHub: github.com/ridak5845
+
+Thank you for your time — I look forward to connecting.
+
+Best regards,
+Rida Khan | +91 82993 55845</div>
+    </div>
+  </div>
+
+  <div id="hm" class="section">
+    <div class="sec-header"><div class="sec-icon si-a"><i class="ti ti-user-check" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">Hiring Manager Email</div><div class="sec-sub">Direct outreach when JD lists a manager</div></div></div>
+    <div class="cc accent-a">
+      <button class="cpb" onclick="cp(this,'hm-t')"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy</span></button>
+      <div class="ct" id="hm-t">Subject: Application — Data Analyst Role | Rida Khan | IBM ML Certified, 9.3 CGPA
+
+Dear [Hiring Manager's Name],
+
+I'm applying for the Data Analyst position on your team and wanted to reach out personally to express my interest.
+
+I'm a final-year B.Tech CSE student at Integral University with a CGPA of 9.3/10. My technical background spans SQL, Python (pandas, numpy, scikit-learn), data cleaning and validation, and statistical analysis. I completed a 30-day IBM Machine Learning internship where I worked on structured datasets — cleaning, preprocessing, and evaluating model performance — and earned a globally recognized IBM certification in ML with Python.
+
+I understand your team needs someone who can write reliable SQL queries, clean and validate data from multiple sources, and collaborate with stakeholders on KPI definition. That's exactly where I've focused my preparation. I've also done 6 weeks of intensive backend training (MERN stack), which gives me a strong foundation in data modeling and structured data management.
+
+I'm a fast learner, I work with precision, and I'm ready to contribute from day one. My resume is attached.
+
+Could we schedule a brief call this week or next?
+
+Warm regards,
+Rida Khan
+ridak5845@gmail.com | +91 82993 55845 | linkedin.com/in/ridak5845</div>
+    </div>
+  </div>
+
+  <div id="li" class="section">
+    <div class="sec-header"><div class="sec-icon si-b"><i class="ti ti-brand-linkedin" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">LinkedIn Connection Requests</div><div class="sec-sub">Under 300 characters · Three variants</div></div></div>
+    <div class="lbl lbl-p">For recruiters</div>
+    <div class="cc accent-p"><button class="cpb" onclick="cp(this,'li1')"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy</span></button><div class="ct" id="li1">Hi [Name], I'm Rida — B.Tech CSE student (9.3 CGPA), IBM ML certified, seeking a Data Analyst role. Your work at [Company] stood out to me. Would love to connect and be on your radar for relevant openings.</div></div>
+    <div class="lbl lbl-t">For data professionals</div>
+    <div class="cc accent-t"><button class="cpb" onclick="cp(this,'li2')"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy</span></button><div class="ct" id="li2">Hi [Name], I'm a Data Analyst fresher with SQL, Python, and IBM ML certification. I've been following your work on [topic] and would love to connect, learn from your journey, and explore opportunities at [Company].</div></div>
+    <div class="lbl lbl-a">For hiring managers</div>
+    <div class="cc accent-a"><button class="cpb" onclick="cp(this,'li3')"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy</span></button><div class="ct" id="li3">Hi [Name], I noticed your team is hiring a Data Analyst. I'm Rida — 9.3 CGPA, IBM ML certified, skilled in SQL and Python. I'd love to connect and learn more about the role and your team's data work.</div></div>
+  </div>
+
+  <div id="ref" class="section">
+    <div class="sec-header"><div class="sec-icon si-pk"><i class="ti ti-users" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">Referral Request Message</div><div class="sec-sub">For peers, alumni, or professional contacts</div></div></div>
+    <div class="cc accent-p"><button class="cpb" onclick="cp(this,'ref-t')"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy</span></button>
+    <div class="ct" id="ref-t">Hi [Name],
+
+Hope you're doing well! I'm actively looking for entry-level Data Analyst opportunities and I know you work at [Company / in the data space].
+
+A quick snapshot of my profile:
+• B.Tech CSE, Integral University — CGPA 9.3/10
+• IBM Certification in Machine Learning with Python
+• Hands-on: SQL, Python (pandas, scikit-learn), data cleaning, backend data modeling
+• Currently learning Power BI/Tableau
+
+I'd be incredibly grateful if you could refer me to any open Data Analyst roles at your company, or connect me with someone on the hiring team. I've attached my resume — happy to share it in any format.
+
+No pressure at all — even a quick introduction would mean a lot.
+
+Best,
+Rida Khan | ridak5845@gmail.com | linkedin.com/in/ridak5845</div></div>
+  </div>
+
+  <div id="fu" class="section">
+    <div class="sec-header"><div class="sec-icon si-a"><i class="ti ti-clock" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">Follow-Up Email</div><div class="sec-sub">Send 5 days after application · No response</div></div></div>
+    <div class="cc accent-a"><button class="cpb" onclick="cp(this,'fu-t')"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy</span></button>
+    <div class="ct" id="fu-t">Subject: Following Up — Data Analyst Application | Rida Khan
+
+Dear [Name],
+
+I hope this message finds you well. I wanted to follow up on my application for the Data Analyst role I submitted on [Date].
+
+I remain very interested in the position and in [Company Name]'s work. My background in SQL, Python-based data analysis, and IBM-certified machine learning — combined with a 9.3 CGPA and hands-on project experience — makes this an exciting opportunity I'd love to explore further.
+
+If the role is still open, I'd welcome the chance to speak with you. I'm happy to provide any additional information or a quick portfolio walkthrough.
+
+Thank you again for your time.
+
+Best regards,
+Rida Khan
+ridak5845@gmail.com | +91 82993 55845 | linkedin.com/in/ridak5845</div></div>
+  </div>
+
+  <div id="intro" class="section">
+    <div class="sec-header"><div class="sec-icon si-p"><i class="ti ti-microphone" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">30-Second Professional Introduction</div><div class="sec-sub">Interviews, networking events, career fairs</div></div></div>
+    <div class="lbl lbl-p">Formal / Interview</div>
+    <div class="cc accent-p"><button class="cpb" onclick="cp(this,'in1')"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy</span></button>
+    <div class="ct" id="in1">Hi, I'm Rida Khan — a Computer Science undergraduate at Integral University with a CGPA of 9.3 out of 10, specializing in data analysis and machine learning.
+
+I completed an IBM-certified Machine Learning internship where I worked with real structured datasets — cleaning, preprocessing, and evaluating models using Python and scikit-learn. I also have 6 weeks of hands-on backend training, where I built data models and RESTful APIs.
+
+My core strengths are SQL, Python, and structured data management. I'm currently building my Power BI and Tableau skills and am looking for an entry-level Data Analyst role where I can turn data into decisions that matter.
+
+I'd love to learn more about the work your team does.</div></div>
+    <div class="lbl lbl-t">Networking / Career Fair</div>
+    <div class="cc accent-t"><button class="cpb" onclick="cp(this,'in2')"><i class="ti ti-copy" aria-hidden="true"></i><span>Copy</span></button>
+    <div class="ct" id="in2">I'm Rida — final-year CS student, IBM-certified in ML, and actively looking for Data Analyst roles. I work with SQL and Python for data cleaning and analysis, and I've built projects involving full-stack data management. I'm at a 9.3 CGPA, which honestly just means I take my work seriously. What kind of data problems does your team work on?</div></div>
+  </div>
+
+  <div id="titles" class="section">
+    <div class="sec-header"><div class="sec-icon si-t"><i class="ti ti-list-check" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">Top 10 Job Titles for Your Profile</div><div class="sec-sub">Ranked by fit · Search these on job boards</div></div></div>
+    <div class="jg">
+      <div class="ji"><span class="ji-n">01</span>Data Analyst</div>
+      <div class="ji"><span class="ji-n">02</span>Junior Data Analyst</div>
+      <div class="ji"><span class="ji-n">03</span>BI Analyst</div>
+      <div class="ji"><span class="ji-n">04</span>SQL Analyst</div>
+      <div class="ji"><span class="ji-n">05</span>Reporting Analyst</div>
+      <div class="ji"><span class="ji-n">06</span>ML Engineer (Entry)</div>
+      <div class="ji"><span class="ji-n">07</span>Data Science Intern</div>
+      <div class="ji"><span class="ji-n">08</span>Analytics Engineer</div>
+      <div class="ji"><span class="ji-n">09</span>Backend Data Analyst</div>
+      <div class="ji"><span class="ji-n">10</span>Python Data Analyst</div>
+    </div>
+  </div>
+
+  <div id="str" class="section">
+    <div class="sec-header"><div class="sec-icon si-a"><i class="ti ti-star" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">Key Strengths Recruiters Will Notice</div><div class="sec-sub">Your standout signals in the fresher applicant pool</div></div></div>
+    <div class="str-card"><span class="str-num">01</span><span class="str-txt">Academic excellence + real-world validation — A 9.3 CGPA combined with IBM global certification separates you from candidates with grades alone.</span></div>
+    <div class="str-card"><span class="str-num">02</span><span class="str-txt">Industry-recognized ML internship — IBM's program is globally credentialed. You applied ML to actual data, evaluated model performance, and earned proof of it.</span></div>
+    <div class="str-card"><span class="str-num">03</span><span class="str-txt">SQL + Python combination — Most freshers have one. Having both with demonstrated application makes you immediately deployable.</span></div>
+    <div class="str-card"><span class="str-num">04</span><span class="str-txt">Backend data modeling experience — MongoDB schema design and RESTful API work shows you understand how data is structured upstream — a major advantage.</span></div>
+    <div class="str-card"><span class="str-num">05</span><span class="str-txt">End-to-end project delivery — You shipped a full-stack capstone product, not just a tutorial. That signals execution ability over theoretical knowledge.</span></div>
+    <div class="str-card"><span class="str-num">06</span><span class="str-txt">Consistent performance pattern — 90% (Class X), 88.8% (Class XII), 9.3 CGPA (B.Tech). Recruiters read this as reliability, not luck.</span></div>
+    <div class="str-card"><span class="str-num">07</span><span class="str-txt">Self-driven learner — Two intensive external programs while maintaining top academics signals the proactivity early-career hires need to demonstrate.</span></div>
+  </div>
+
+  <div id="gaps" class="section">
+    <div class="sec-header"><div class="sec-icon si-b"><i class="ti ti-chart-bar" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">Skill Gap Analysis</div><div class="sec-sub">Where you stand vs. the Data Analyst JD</div></div></div>
+    <div class="match">
+      <svg width="52" height="52" viewBox="0 0 52 52" aria-hidden="true">
+        <circle cx="26" cy="26" r="20" fill="none" stroke="#AFA9EC" stroke-width="4"/>
+        <circle cx="26" cy="26" r="20" fill="none" stroke="#534AB7" stroke-width="4" stroke-dasharray="100 126" stroke-linecap="round" transform="rotate(-90 26 26)"/>
+        <text x="26" y="30" text-anchor="middle" font-size="11" font-weight="500" fill="#3C3489">80%</text>
+      </svg>
+      <div class="mc-info"><div class="mc-t">Strong JD match — ready to apply now</div><div class="mc-d">All required skills covered. One gap: Power BI/Tableau (actively learning). You exceed expectations with ML and backend data skills.</div></div>
+    </div>
+    <div class="gr">
+      <div class="gc gs"><div class="gc-t"><i class="ti ti-check" aria-hidden="true"></i> Current strengths</div>
+        <div class="gi">SQL (querying, joins)</div><div class="gi">Python (pandas, numpy)</div><div class="gi">Data cleaning & validation</div><div class="gi">Statistics & ML fundamentals</div><div class="gi">Excel basics</div><div class="gi">KPI definition concepts</div><div class="gi">MongoDB data modeling</div><div class="gi">RESTful API design</div>
+      </div>
+      <div class="gc gm"><div class="gc-t"><i class="ti ti-alert-circle" aria-hidden="true"></i> Gaps to close</div>
+        <div class="gi">Power BI (in progress)</div><div class="gi">Tableau (in progress)</div><div class="gi">ETL pipeline concepts</div><div class="gi">Advanced Excel (pivot, macros)</div><div class="gi">Cloud data tools (BigQuery)</div><div class="gi">Dashboard storytelling</div><div class="gi">Stakeholder management</div>
+      </div>
+      <div class="gc grm"><div class="gc-t"><i class="ti ti-route" aria-hidden="true"></i> 90-day roadmap</div>
+        <div class="gi">Wk 1–3: Power BI (Microsoft Learn)</div><div class="gi">Wk 4–6: Tableau Public — 2 dashboards</div><div class="gi">Wk 7–8: Advanced Excel (Chandoo.org)</div><div class="gi">Wk 9–10: ETL basics (dbt free)</div><div class="gi">Wk 11–12: BigQuery sandbox + SQL projects</div><div class="gi">Ongoing: Publish to GitHub with README</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="brand" class="section">
+    <div class="sec-header"><div class="sec-icon si-p"><i class="ti ti-id-badge" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">Personal Brand Summary</div><div class="sec-sub">Use across LinkedIn, resume header, and portfolio</div></div></div>
+    <div class="bc bl-p"><div class="bc-lbl">Unique value proposition</div><div class="bc-txt">A top-ranked CS graduate (9.3 CGPA) who brings both analytical precision and backend data engineering instincts — IBM-certified in ML, proficient in SQL and Python, trained to build data systems from the schema up. I don't just analyze data; I understand how it's structured, cleaned, and served.</div></div>
+    <div class="bc bl-t"><div class="bc-lbl">Professional positioning statement</div><div class="bc-txt">Entry-level Data Analyst with a rare combination of machine learning certification, backend data modeling experience, and strong SQL/Python fundamentals. I turn messy datasets into reliable insights — and I bring the technical depth to understand why the data looks the way it does.</div></div>
+    <div class="bc bl-a"><div class="bc-lbl">LinkedIn headline options</div><div class="bc-txt">Data Analyst | SQL · Python · IBM ML Certified | B.Tech CSE, 9.3 CGPA | Seeking Entry-Level Roles
+
+— or —
+
+Aspiring Data Analyst | IBM Machine Learning Certified | SQL · Python · Data Cleaning | Open to Opportunities</div></div>
+  </div>
+
+  <div id="iv" class="section">
+    <div class="sec-header"><div class="sec-icon si-t"><i class="ti ti-bulb" aria-hidden="true" style="font-size:17px"></i></div><div><div class="sec-title">Interview Talking Points</div><div class="sec-sub">Best stories, prepped and ready</div></div></div>
+    <div class="lbl lbl-p">Most impressive achievements to lead with</div>
+    <div class="iv"><div class="iv-q">Achievement 1 — Academic + certification</div><div class="iv-a">"I maintained a 9.3 CGPA while completing two intensive external programs — a 30-day IBM ML internship and a 6-week offline MERN training. The IBM certification is globally recognized and I earned it by working on real data."</div></div>
+    <div class="iv"><div class="iv-q">Achievement 2 — Data quality work</div><div class="iv-a">"During my IBM internship, I preprocessed and cleaned structured datasets, handled missing values, and ran feature validation before applying ML models. I evaluated accuracy using precision, recall, and F1-score metrics."</div></div>
+    <div class="iv"><div class="iv-q">Achievement 3 — End-to-end project</div><div class="iv-a">"I built a full-stack social media app with JWT auth, MongoDB data models optimized for query efficiency, and RESTful APIs — translating feature requirements into data structures, which is essentially what a Data Analyst does with KPIs."</div></div>
+    <div class="lbl lbl-t" style="margin-top:1rem">Areas recruiters are likely to probe</div>
+    <div class="iv"><div class="iv-q">Q: Still in college — how do you handle real work pressure?</div><div class="iv-a">Prep: Talk about managing two certifications alongside a 9.3 CGPA. Mention the 30-day sprint nature of IBM and 6-week offline commitment — both ran alongside academics.</div></div>
+    <div class="iv"><div class="iv-q">Q: Power BI/Tableau listed as required — are you proficient?</div><div class="iv-a">Prep: Be honest — "I'm actively learning through [platform]. I work with data visualization concepts and Excel charts today. I'm confident I'll be productive in Power BI within my first month."</div></div>
+    <div class="iv"><div class="iv-q">Q: Tell me about a time you cleaned messy data.</div><div class="iv-a">Prep: Use the IBM internship — describe the dataset, issues found (nulls, duplicates, outliers), what you did in pandas, and how model performance improved after cleaning.</div></div>
+    <div class="iv"><div class="iv-q">Q: How do you define a KPI for a business team?</div><div class="iv-a">Prep: "Start with the business question — what decision needs to be made? Then work backwards to what's measurable, what data exists, and what threshold means success." Use social media app engagement rate as an example.</div></div>
+  </div>
+</div>
+
+<script>
+function sw(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function cp(btn,id){
+  navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>{
+    const sp=btn.querySelector('span');
+    const og=sp.textContent;
+    sp.textContent='Copied!';
+    btn.classList.add('ok');
+    setTimeout(()=>{sp.textContent=og;btn.classList.remove('ok');},2000);
+  });
+}
+</script>
