@@ -100,8 +100,9 @@ The toolkit combines AI-powered content generation, job search strategy, recruit
 -AI-generated templates reduce job application friction.
 -Combining technical skills with storytelling creates stronger career positioning.
 
-### **My Personalized Toolkit**
-[My Toolkit](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-12/rida_khan_toolkit_.html)
+### **My Personalized Toolkit **
+
+[MY TOOLKIT](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-12/rida_khan_toolkit_.html)
 
 **Conclusion**
 
