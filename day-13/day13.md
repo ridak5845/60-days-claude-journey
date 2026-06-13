@@ -71,7 +71,7 @@ This exercise showed how Claude AI can transform raw job data into strategic car
 
 ### **Screenshot of Dashboard of Job Search Analysis**
 
-[Dashboard]()
+[Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-13/Job_search_Analysis.jpeg)
 
 ### **Html File of the generated dashboard**
 
