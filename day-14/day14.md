@@ -23,7 +23,80 @@ Learn how AI can:
 
 ## Prompt Used
 
+You are an AI Red Flag Detector for job seekers.
 
+Analyze the Job Description and Company Information.
+
+Identify:
+
+1. Unrealistic Requirements
+- Excessive experience for the role
+- Too many skills/responsibilities
+- Contradictory expectations
+
+2. Toxic Workplace Signals
+- Burnout indicators
+- 'Wear many hats'
+- 'Fast-paced', 'rockstar', 'hustle culture'
+- Poor work-life balance signals
+
+3. Remote Job Authenticity
+- Hidden office requirements
+- Relocation expectations
+- Misleading remote claims
+
+4. Hiring Risks
+- Missing salary information
+- Vague responsibilities
+- Excessive qualifications
+- Suspicious hiring practices
+
+5. Company Risks
+- Reputation concerns
+- Stability concerns
+- Growth or layoff indicators
+
+Output:
+
+## Overall Risk Score (0-100)
+
+### Top Red Flags
+- List with severity (1-10)
+
+### Positive Signals
+- List positives
+
+### Risk Breakdown
+| Category | Risk Level |
+|-----------|-----------|
+| Requirements | |
+| Culture | |
+| Remote | |
+| Hiring | |
+| Company | |
+
+### Final Verdict
+✅ Apply
+⚠️ Apply with Caution
+❌ Avoid
+
+### 5 Smart Interview Questions
+Generate questions that help validate the identified risks.
+
+Job Description:
+[Junior Full Stack Developer
+We are looking for a passionate Junior Full Stack Developer with 5+ years of experience.
+Requirements: • React, Angular, Vue • Node.js, Python, Java, Golang • AWS, Azure, GCP •
+Docker, Kubernetes • AI/ML experience preferred Responsibilities: • Build web applications •
+Manage cloud infrastructure • Design architecture • Lead client meetings • Mentor junior developers
+• Provide 24/7 support when needed Benefits: • Work hard, play hard culture • Fast-paced startup
+environment • Must thrive under pressure • We are like a family Location: Remote (Relocation to
+Bengaluru may be required after probation)]
+
+Company Information:
+[• Startup founded 8 months ago • Team size: 12 employees • No public funding information
+available • Recent employee reviews mention long working hours • No salary range disclosed •
+Rapid hiring phase]
 
 ## Key Red Flags Identified
 
