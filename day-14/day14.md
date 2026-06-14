@@ -212,6 +212,14 @@ A job description is more than a hiring document—it provides insights into a c
 Using AI to analyze JDs helps candidates make more informed career decisions and avoid potential red flags before entering the interview process.
 
 
+## Generated HTML file of the Red Flag Analysis of Job Description
+
+[HTML File](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-14/job_red_flag_analysis%20.html)
+
+## Screenshot of the Red Flag Analysis Report
+
+[Report](
+
 
 ### Challenge Progress
 
