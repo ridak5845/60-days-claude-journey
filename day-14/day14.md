@@ -218,7 +218,7 @@ Using AI to analyze JDs helps candidates make more informed career decisions and
 
 ## Screenshot of the Red Flag Analysis Report
 
-[Report](
+[Report](https://github.com/ridak5845/60-days-claude-journey/blob/main/day-14/Job_Red_Flag_Analysis.jpeg)
 
 
 ### Challenge Progress
