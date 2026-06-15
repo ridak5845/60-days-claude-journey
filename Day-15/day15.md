@@ -52,6 +52,20 @@ You have a genuinely powerful chart for a career in technology. Scorpio Lagna gi
 3.Health: Moon in the 6th house in Hasta nakshatra is your most sensitive planetary placement. It indicates a tendency toward anxiety, digestive issues, and stress-linked hormonal imbalances. This is not severe, but it is real — especially during high-pressure periods like placements and 2027 (Rahu-Saturn AD). Daily meditation, consistent sleep, and digestive care are not optional for you — they are astrological prescriptions.
 
 
+### **Screenshots of MY VEDIC REPORT DASHBOARD**
+
+[1.Dashboarrd](
+
+[2.Planets](
+
+[3.Summary](
+
+[4.Dasha](
+
+[5.Yogas](
+
+[6.Forecast](
+
 ✔️ Day 15 Completed
 📅 45 Days to go…
 
