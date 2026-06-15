@@ -54,7 +54,7 @@ You have a genuinely powerful chart for a career in technology. Scorpio Lagna gi
 
 ### **Screenshots of MY VEDIC REPORT DASHBOARD**
 
-[1.Dashboarrd](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-15/vedic-dashboard.png)
+[1.Dashboarrd](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-15/Vedic-dashboard.png)
 
 [2.Planets](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-15/vedic-planets.png)
 
