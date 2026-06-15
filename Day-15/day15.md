@@ -54,17 +54,17 @@ You have a genuinely powerful chart for a career in technology. Scorpio Lagna gi
 
 ### **Screenshots of MY VEDIC REPORT DASHBOARD**
 
-[1.Dashboarrd](
+[1.Dashboarrd](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-15/vedic-dashboard.png)
 
-[2.Planets](
+[2.Planets](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-15/vedic-planets.png)
 
-[3.Summary](
+[3.Summary](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-15/vedic-chart-summary.png)
 
-[4.Dasha](
+[4.Dasha](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-15/vedic-dasha.png)
 
-[5.Yogas](
+[5.Yogas](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-15/vedic-yogas.png)
 
-[6.Forecast](
+[6.Forecast](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-15/vedic-forecast.png)
 
 ✔️ Day 15 Completed
 📅 45 Days to go…
