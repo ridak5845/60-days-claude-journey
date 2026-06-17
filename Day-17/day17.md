@@ -71,4 +71,10 @@ Choosing the right fuel type is no longer just about price. This dashboard provi
 
 [Screenshot 1](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-17/Screenshot_17-6-2026_152146_.jpeg)
 
-[Screenshot 2](
+[Screenshot 2](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-17/screenshot-1781693284856.png)
+
+**-> Conclusion**
+
+This project highlights how data-driven analysis can simplify complex decisions like choosing the right fuel type by balancing cost, efficiency, and sustainability.
+
+The 60 Days Claude AI Challenge is helping me consistently build, experiment, and improve—strengthening my skills in AI, data analytics, and real-world problem solving while turning ideas into practical, impactful projects.
