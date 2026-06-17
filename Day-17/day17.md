@@ -69,6 +69,6 @@ Choosing the right fuel type is no longer just about price. This dashboard provi
 
 ### SCREENSHOTS OF THE DASHBOARD
 
-[Screenshot 1](
+[Screenshot 1](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-17/Screenshot_17-6-2026_152146_.jpeg)
 
 [Screenshot 2](
