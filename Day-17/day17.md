@@ -65,7 +65,7 @@ Choosing the right fuel type is no longer just about price. This dashboard provi
 
 ### HTML File of the created AI Vehicle Cost & Fuel Analysis Dashboard**
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-17/e85_fuel_dashboard.html)
 
 ### SCREENSHOTS OF THE DASHBOARD
 
