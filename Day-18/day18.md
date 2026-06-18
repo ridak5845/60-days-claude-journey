@@ -21,7 +21,7 @@ The goal was to create a custom Claude Skill that can:
 
 ### Generated Dashboard
 
-> [Dashboard](
+> [Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-18/Screenshot_18-6-2026_154326_.jpeg)
 
 > [Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-18/Screenshot_18-6-2026_154413_.jpeg)
 
