@@ -33,8 +33,8 @@ The system combines:
 ![Messi vs Ronaldo Compatibility]()
 
 
-### 4. Personalized Football Insights Dashboard
-![Football Insights Dashboard]()
+### 4. Personalized Football Insights 
+![Football Insights ](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-19/screenshot-1781863098377.png)
 
 
 ## 🧠 Key Findings
