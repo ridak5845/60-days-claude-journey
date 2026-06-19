@@ -21,8 +21,8 @@ The system combines:
 
 ## 📸 Screenshots
 
-### 1. Football Intelligence Profile
-![Football Intelligence Profile]()
+### 1. Football Intelligence Hub Dashboard
+![Football Intelligence Dashboard]()
 
 
 ### 2. Football IQ Results
@@ -30,7 +30,7 @@ The system combines:
 
 
 ### 3. Messi vs Ronaldo Compatibility Analysis
-![Messi vs Ronaldo Compatibility]()
+![Messi vs Ronaldo Compatibility](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-19/Screenshot_19-6-2026_15284_.jpeg)
 
 
 ### 4. Personalized Football Insights 
