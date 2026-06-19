@@ -22,7 +22,7 @@ The system combines:
 ## 📸 Screenshots
 
 ### 1. Football Intelligence Hub Dashboard
-![Football Intelligence Dashboard]()
+![Football Intelligence Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-19/screenshot-1781863010979.png)
 
 
 ### 2. Football IQ Results
