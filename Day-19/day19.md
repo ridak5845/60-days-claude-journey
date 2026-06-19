@@ -26,7 +26,7 @@ The system combines:
 
 
 ### 2. Football IQ Results
-![Football IQ Results]()
+![Football IQ Results](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-19/screenshot-1781863055999.png)
 
 
 ### 3. Messi vs Ronaldo Compatibility Analysis
