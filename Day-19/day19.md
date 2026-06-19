@@ -24,16 +24,19 @@ The system combines:
 ### 1. Football Intelligence Hub Dashboard
 ![Football Intelligence Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-19/screenshot-1781863010979.png)
 
+### 2. Football Tournament Analysis
+![Tournament Analysis](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-19/Screenshot_19-6-2026_152721_.jpeg)
 
-### 2. Football IQ Results
+
+### 3. Football IQ Results
 ![Football IQ Results](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-19/screenshot-1781863055999.png)
 
 
-### 3. Messi vs Ronaldo Compatibility Analysis
+### 4. Messi vs Ronaldo Compatibility Analysis
 ![Messi vs Ronaldo Compatibility](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-19/Screenshot_19-6-2026_15284_.jpeg)
 
 
-### 4. Personalized Football Insights 
+### 5. Personalized Football Insights 
 ![Football Insights ](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-19/screenshot-1781863098377.png)
 
 
