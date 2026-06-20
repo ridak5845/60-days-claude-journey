@@ -43,7 +43,7 @@ As the project evolved, I focused on enhancing both functionality and user exper
 ## 🖼️ Screenshots  
 
 ### 📸 Camera Capture  
-![Camera Preview](./images/camera-preview.png)
+![Camera Preview](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-20/screenshot-1781966329279.png)
 
 ### 🧩 Puzzle Difficulty Selection
 ![Difficulty Selection]()
@@ -54,8 +54,8 @@ As the project evolved, I focused on enhancing both functionality and user exper
 ### 🏆 Results Screen  
 ![Results Screen](./images/results.png)
 
-### 🌙 Dark Mode UI  
-![Dark Mode](./images/dark-mode.png)
+### ☀️ Light Mode UI  
+![Light Mode]()
 
 
 
