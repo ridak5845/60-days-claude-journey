@@ -46,7 +46,7 @@ As the project evolved, I focused on enhancing both functionality and user exper
 ![Camera Preview](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-20/screenshot-1781966329279.png)
 
 ### 🧩 Puzzle Difficulty Selection
-![Difficulty Selection]()
+![Difficulty Selection](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-20/screenshot-1781966370343.png)
 
 ### 🧩 Puzzle Gameplay  
 ![Puzzle Gameplay](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-20/screenshot-1781974646460.png)
