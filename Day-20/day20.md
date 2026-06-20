@@ -55,7 +55,7 @@ As the project evolved, I focused on enhancing both functionality and user exper
 ![Results Screen](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-20/screenshot-1781966554602.png)
 
 ### ☀️ Light Mode UI  
-![Light Mode]()
+![Light Mode](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-20/screenshot-1781966645592.png)
 
 
 
