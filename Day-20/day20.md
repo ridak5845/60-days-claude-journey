@@ -49,7 +49,7 @@ As the project evolved, I focused on enhancing both functionality and user exper
 ![Difficulty Selection]()
 
 ### 🧩 Puzzle Gameplay  
-![Puzzle Gameplay](./images/gameplay.png)
+![Puzzle Gameplay](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-20/screenshot-1781974646460.png)
 
 ### 🏆 Results Screen  
 ![Results Screen](./images/results.png)
