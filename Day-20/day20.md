@@ -51,8 +51,8 @@ As the project evolved, I focused on enhancing both functionality and user exper
 ### 🧩 Puzzle Gameplay  
 ![Puzzle Gameplay](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-20/screenshot-1781974646460.png)
 
-### 🏆 Results Screen  
-![Results Screen](./images/results.png)
+### 🏆 Results Screen With Confetti
+![Results Screen](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-20/screenshot-1781966554602.png)
 
 ### ☀️ Light Mode UI  
 ![Light Mode]()
