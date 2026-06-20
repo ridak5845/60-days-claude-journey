@@ -10,7 +10,7 @@ As the project evolved, I focused on enhancing both functionality and user exper
 
 
 ## 📂 Project File 
-- 📄 [HTML File](./face-puzzle-game.html)  
+- 📄 [HTML File](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-20/face_puzzle.html)  
 - 🖼️ Screenshots provided below  
 
 ---
