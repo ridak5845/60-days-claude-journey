@@ -23,7 +23,7 @@ Although the footprint spans 15 services, a significant portion of the estimated
 
 
 ### 2.Digital Twin Profile and Exposure Heatmap
-![Digital Twin Profile](
+![Digital Twin Profile](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-21/Screenshot_21-6-2026_181858_.jpeg)
 
 The dashboard generated estimated insights about user behavior, including:
 - Smartphone-first usage
