@@ -9,7 +9,7 @@ For Day 21 of the 60 Days of Claude AI Challenge, I built a **Digital Privacy In
 ## Dashboard Screenshots
 
 ### 1.Dashboard Overview
-![dashboard](
+![dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-21/screenshot-1782046095671.png)
 
 **Key Metrics**
 - Digital Footprint Score: **74/100 (Significant)**
