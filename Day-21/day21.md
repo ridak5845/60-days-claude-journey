@@ -36,7 +36,7 @@ These are estimates generated from app usage patterns only and are not verified 
 
 
 ### 3.Company Exposure Ranking 
-![Company Exposure Ranking](
+![Company Exposure Ranking](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-21/screenshot-1782046154757.png)
 
 Top exposure contributors:
 1. Alphabet (Google) – 96
