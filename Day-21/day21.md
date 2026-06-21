@@ -8,7 +8,7 @@ For Day 21 of the 60 Days of Claude AI Challenge, I built a **Digital Privacy In
 
 ## Dashboard Screenshots
 
-### Dashboard Overview
+### 1.Dashboard Overview
 ![dashboard](
 
 **Key Metrics**
@@ -22,7 +22,7 @@ For Day 21 of the 60 Days of Claude AI Challenge, I built a **Digital Privacy In
 Although the footprint spans 15 services, a significant portion of the estimated exposure is concentrated within a small number of technology ecosystems.
 
 
-### Digital Twin Profile and Exposure Heatmap
+### 2.Digital Twin Profile and Exposure Heatmap
 ![Digital Twin Profile](
 
 The dashboard generated estimated insights about user behavior, including:
@@ -35,7 +35,7 @@ The dashboard generated estimated insights about user behavior, including:
 These are estimates generated from app usage patterns only and are not verified personal information.
 
 
-### Company Exposure Ranking 
+### 3.Company Exposure Ranking 
 ![Company Exposure Ranking](
 
 Top exposure contributors:
@@ -46,7 +46,7 @@ Top exposure contributors:
 5. Apple – 52
 
 
-## Data Collection Matrix
+### 4.Data Collection Matrix
 ![Data Collection Matrix](
 
 ### Data Categories Evaluated
@@ -60,7 +60,7 @@ Top exposure contributors:
 ### Observation
 Several applications potentially touch multiple categories of personal data, increasing the breadth of the overall digital footprint.
 
-### Risk Radar & Data Collection Matrix
+### 5.Risk Radar & Data Collection Matrix
 ![Risk Radar](
 
 The highest estimated exposure areas were:
@@ -68,7 +68,7 @@ The highest estimated exposure areas were:
 - Behavioral Tracking
 - Device Identification
 
-### Privacy Improvement Simulator
+### 6.Privacy Improvement Simulator
 ![Privacy Improvement Simulator](
 
 The dashboard suggested actions such as:
