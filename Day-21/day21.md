@@ -68,8 +68,8 @@ The highest estimated exposure areas were:
 - Behavioral Tracking
 - Device Identification
 
-### 6.Privacy Improvement Simulator
-![Privacy Improvement Simulator](
+### 6.Wow Insights and Privacy Improvement Simulator
+![Privacy Improvement Simulator](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-21/Screenshot_21-6-2026_182244_.jpeg)
 
 The dashboard suggested actions such as:
 - Turning off ad personalization
