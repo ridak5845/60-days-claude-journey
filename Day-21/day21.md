@@ -47,7 +47,7 @@ Top exposure contributors:
 
 
 ### 4.Data Collection Matrix
-![Data Collection Matrix](
+![Data Collection Matrix](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-21/screenshot-1782046178998.png)
 
 ### Data Categories Evaluated
 - Location
