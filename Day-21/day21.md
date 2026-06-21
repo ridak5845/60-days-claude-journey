@@ -80,7 +80,7 @@ The dashboard suggested actions such as:
 
 ## Generated HTML File
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-21/digital_footprint_dashboard.html)
 
 ### Features
 - Digital Footprint Score
