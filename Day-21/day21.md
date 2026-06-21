@@ -60,8 +60,8 @@ Top exposure contributors:
 ### Observation
 Several applications potentially touch multiple categories of personal data, increasing the breadth of the overall digital footprint.
 
-### 5.Risk Radar & Data Collection Matrix
-![Risk Radar](
+### 5.Risk Radar & Most Valuable Data Assets
+![Risk Radar](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-21/Screenshot_21-6-2026_182026_.jpeg)
 
 The highest estimated exposure areas were:
 - Social Graph
