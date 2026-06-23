@@ -11,7 +11,7 @@
 
 ### Screenshot 1 – Customer Profile & Personas
 
-![SCREENSHOT 1](
+![SCREENSHOT 1](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-23/Screenshot%202026-06-23%20170650.png)
 
 - Identified key customer segments
 - Defined buyer personas
