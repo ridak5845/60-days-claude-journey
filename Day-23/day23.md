@@ -35,7 +35,7 @@
 
 ### Screenshot 4 – Risks & Action Plan
 
-![SCREENSHOT 4](
+![SCREENSHOT 4](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-23/Screenshot%202026-06-23%20170805.png)
 
 - Evaluated startup risks
 - Built a 30-day MVP roadmap
