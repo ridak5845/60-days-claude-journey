@@ -43,7 +43,7 @@
 
 ### Screenshot 5 – Scores & Verdict
 
-![SCREENSHOT 5](
+![SCREENSHOT 5](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-23/Screenshot%202026-06-23%20170826.png)
 
 - Assessed customer clarity
 - Evaluated PMF potential
