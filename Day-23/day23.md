@@ -19,7 +19,7 @@
 
 ### Screenshot 2 – Pain Points & Customer Journey
 
-![SCREENSHOT 2](
+![SCREENSHOT 2](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-23/Screenshot%202026-06-23%20170732.png)
 
 - Analyzed top customer pain points
 - Mapped awareness to retention journey
