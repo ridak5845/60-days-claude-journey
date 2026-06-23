@@ -27,7 +27,7 @@
 
 ### Screenshot 3 – MVP Strategy
 
-![SCREENSHOT 3](
+![SCREENSHOT 3](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-23/Screenshot%202026-06-23%20170749.png)
 
 - Defined MVP scope
 - Created success metrics
