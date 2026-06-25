@@ -1,12 +1,12 @@
 # 60 Days Claude AI Challenge
 
-# Day 25 – AI Shark Tank Simulator 🚀
+# Day 25 – AI Shark Tank Simulator 
 
 ## Challenge Overview
 Today's challenge was to build an **AI Shark Tank Simulator** and pitch a startup idea to AI investors. The goal was to defend the business model, answer tough investor questions, and receive an investment decision based on market potential, scalability, and profitability.
 
 
-## Startup Pitched: FoodSaver AI 🍽️♻️
+## Startup Pitched: FoodSaver AI 
 
 FoodSaver AI is an AI-powered platform that helps:
 
@@ -34,7 +34,7 @@ FoodSaver AI is an AI-powered platform that helps:
 
 ### Final Investment Decision
 
-![Decision Screenshot](screenshots/decision.png)
+![Decision Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-25/Screenshot%202026-06-25%20112623.png)
 
 ![Decision Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-25/Screenshot%202026-06-25%20112645.png)
 
@@ -74,7 +74,7 @@ FoodSaver AI is an AI-powered platform that helps:
 ## Investment Decision
 
 ### Final Result
-✅ **ACQUIRED**
+ **ACQUIRED**
 
 ### Funding Offered
 **₹42,50,000**
@@ -115,11 +115,11 @@ FoodSaver AI is an AI-powered platform that helps:
 This challenge helped me think like both a founder and an investor. Instead of focusing only on the product, I had to justify the market size, business model, profitability, competition strategy, and long-term vision. It was a great exercise in understanding what makes a startup truly investable.
 
 
-## Day 25 Complete ✅
+## Day 25 Complete 
 
 **Challenge:** AI Shark Tank Simulator  
 **Startup:** FoodSaver AI  
-**Outcome:** ACQUIRED 🚀  
+**Outcome:** ACQUIRED  
 **Funding:** ₹42,50,000  
 **Valuation:** ₹83,33,333  
 **Equity Offered:** 51%
