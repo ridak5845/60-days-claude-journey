@@ -33,11 +33,11 @@ FoodSaver AI is an AI-powered platform that helps:
 
 
 ### Final Investment Decision
-*Insert Screenshot*
 
 ![Decision Screenshot](screenshots/decision.png)
 
 ![Decision Screenshot](screenshots/decision.png)
+
 
 ### AI SharkTank Pitch Report
 
@@ -54,7 +54,7 @@ FoodSaver AI is an AI-powered platform that helps:
 
 ### Application Screenshot
 
-![HTML Application](screenshots/html-app.png)
+![HTML Application](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-25/shark_tank_simulator.html)
 
 
 ## Startup Evaluation Results
