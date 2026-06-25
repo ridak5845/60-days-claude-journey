@@ -29,7 +29,7 @@ FoodSaver AI is an AI-powered platform that helps:
 
 ### Pitch Presentation
 
-![Pitch Screenshot](screenshots/pitch.png)
+![Pitch Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-25/Screenshot%202026-06-25%20111710.png)
 
 
 ### Final Investment Decision
