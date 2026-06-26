@@ -19,7 +19,8 @@ The simulator provides an interactive learning experience that walks through the
 - Multiple referral cases
 - Clinical complexity indicators
 
-**Screenshot:** *(Insert Screenshot 1)*
+**Screenshot:** 
+![Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-26/Screenshot%202026-06-26%20185334.png)
 
 
 ### Workflow Simulation
@@ -45,11 +46,6 @@ The simulator provides an interactive learning experience that walks through the
 ![Final](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-26/Screenshot%202026-06-26%20185546.png)
 
 
-# Generated HTML File
-
-**File Included**
-
-`Prior_Authorization_Workflow_Simulator.html`
 
 
 # Completed Workflow Summary
