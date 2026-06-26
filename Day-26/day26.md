@@ -33,7 +33,8 @@ The simulator provides an interactive learning experience that walks through the
 - Days elapsed counter
 - Efficiency score
 
-**Screenshot:** *(Insert Screenshot 2)*
+**Screenshot:** 
+![Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-26/Screenshot%202026-06-26%20185438.png)
 
 
 ### Workflow Summary
