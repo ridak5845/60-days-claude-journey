@@ -11,33 +11,32 @@ What I built: A single-file, self-contained HTML chat simulator that walks throu
 #### Start screen
 The story opens with a short framing line before any dialogue begins — nothing auto-plays until the learner chooses to start.
 
-![screenshot](
+![screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-27/Start%20Screen.png)
 
 ####  Interactive story conversation with Rahul and Priya
 
-![Screenshot](
+![Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-27/Scene-1.png)
 
-![Screenshot](
+![Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-27/Scene-2.jpeg)
 
-![Screenshot](
+![Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-27/Scene-3.png)
 
-![Screenshot](
 
 ####  Insurance review and denial workflow
 
-![Screenshot](
+![Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-27/Scene-4.jpeg)
 
-![Screenshot](
+![Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-27/Scene-5.png)
 
 #### Appeal process and final approval
 
-![Screenshot](
+![Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-27/Scene-6.png)
 
-![Screenshot](
+![Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-27/Scene-7.png)
 
 #### Patient and healthcare system takeaways screen
 
-![Screenshot](
+![Screenshot](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-27/Scene-8.png)
 
 #### Generated HTML File
 
