@@ -41,7 +41,7 @@ The story opens with a short framing line before any dialogue begins — nothing
 
 #### Generated HTML File
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-27/prior_authorization_story_simulator.html)
 
 **The simulator presents an interactive, choice-driven story that explains the Prior Authorization process through conversations between a patient and a healthcare operations specialist.**
 
