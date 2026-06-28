@@ -14,7 +14,7 @@ The Hospital Admission Readiness Simulator is an interactive application that de
 ![Admission Form](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-28/screenshot-1782642050286.png)
 
 ### 2. Initial Readiness Analysis
-![Readiness Analysis](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-28/screenshot-1782642o79649.png)
+![Readiness Analysis](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-28/screenshot-1782642079649.png)
 
 ### 3. Workflow Actions & Risk Tracking
 ![Workflow Actions](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-28/screenshot-1782642112031.png)
