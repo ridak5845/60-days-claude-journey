@@ -11,25 +11,25 @@ The Hospital Admission Readiness Simulator is an interactive application that de
 ## Simulator Screenshots
 
 ### 1. Admission Form
-![Admission Form](screenshots/admission-form.png)
+![Admission Form](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-28/screenshot-1782642050286.png)
 
 ### 2. Initial Readiness Analysis
-![Readiness Analysis](screenshots/readiness-analysis.png)
+![Readiness Analysis](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-28/screenshot-1782642o79649.png)
 
 ### 3. Workflow Actions & Risk Tracking
-![Workflow Actions](screenshots/workflow-actions.png)
+![Workflow Actions](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-28/screenshot-1782642112031.png)
 
 ### 4. Completed Workflow
-![Completed Workflow](screenshots/completed-workflow.png)
+![Completed Workflow](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-28/screenshot-1782642207116.png)
 
 ### 5. Final Admission Ready Status
-![Admission Ready](screenshots/admission-ready.png)
+![Admission Ready](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-28/screenshot-1782642233442.png)
 
 ---
 
 ## Generated HTML File
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-28/hospital_admission_readiness_simulator.html)
 
 A single-file interactive HTML application that simulates the complete hospital admission readiness workflow, including readiness scoring, workflow actions, risk tracking, admission timeline, and care coordination.
 
