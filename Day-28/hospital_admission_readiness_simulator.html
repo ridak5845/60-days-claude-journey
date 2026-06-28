@@ -1,0 +1,1020 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: '#0a0e15',
+          surface: '#11151d',
+          line: '#1f2530',
+          linesoft: '#171c25',
+          text: '#eceef1',
+          dim: '#9aa3b0',
+          faint: '#5d6573',
+          red: '#ec5f5f',
+          amber: '#e3a544',
+          green: '#4cce91',
+          blue: '#6ea8fe',
+          purple: '#b39ddb',
+        },
+        fontFamily: {
+          display: ['Space Grotesk', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0a0e15;
+    --surface: #11151d;
+    --line: #1f2530;
+    --line-soft: #171c25;
+    --text: #eceef1;
+    --text-dim: #9aa3b0;
+    --text-faint: #5d6573;
+    --red: #ec5f5f;
+    --amber: #e3a544;
+    --green: #4cce91;
+    --blue: #6ea8fe;
+    --purple: #b39ddb;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  .hars-root {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    min-height: 100vh;
+  }
+  .hars-root .font-display { font-family: var(--display); }
+  .hars-root .font-mono { font-family: var(--mono); }
+
+  .hars-eyebrow {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .hars-divider { border-color: var(--line); }
+  .hars-divider-soft { border-color: var(--line-soft); }
+
+  .hars-field-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-faint);
+    display: block;
+    margin-bottom: 7px;
+  }
+  .hars-select, .hars-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 13.5px;
+    padding: 11px 12px;
+    border-radius: 4px;
+    outline: none;
+    appearance: none;
+    transition: border-color 0.15s ease;
+  }
+  .hars-select:focus, .hars-input:focus { border-color: var(--blue); }
+  .hars-select option { background: var(--surface); color: var(--text); }
+
+  .hars-sample-tag {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--text-faint);
+  }
+
+  .hars-btn-primary {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 14px;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    padding: 13px 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.1s ease;
+  }
+  .hars-btn-primary:hover:not(:disabled) { opacity: 0.88; }
+  .hars-btn-primary:active:not(:disabled) { transform: scale(0.99); }
+  .hars-btn-primary:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .hars-btn-action {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--line);
+    padding: 9px 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s ease, background 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .hars-btn-action:hover:not(:disabled) { border-color: var(--text-dim); background: var(--surface); }
+  .hars-btn-action:disabled {
+    opacity: 0.45;
+    cursor: default;
+    color: var(--green);
+    border-color: var(--line-soft);
+  }
+  .hars-btn-action .hars-check { color: var(--green); font-family: var(--mono); }
+
+  .hars-btn-ghost {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: transparent;
+    color: var(--blue);
+    border: 1px solid var(--line);
+    padding: 11px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+  .hars-btn-ghost:hover:not(:disabled) { border-color: var(--blue); }
+  .hars-btn-ghost:disabled { opacity: 0.35; cursor: not-allowed; color: var(--text-faint); }
+
+  .hars-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .hars-tag.approved, .hars-tag.complete, .hars-tag.signed, .hars-tag.verified, .hars-tag.assigned { color: var(--green); }
+  .hars-tag.pending, .hars-tag.in_progress, .hars-tag.verifying, .hars-tag.pending_signature { color: var(--amber); }
+  .hars-tag.denied, .hars-tag.missing, .hars-tag.not_started, .hars-tag.not_verified, .hars-tag.unassigned { color: var(--red); }
+
+  .hars-bar-track {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--line);
+    overflow: hidden;
+  }
+  .hars-bar-fill { height: 100%; transition: width 0.35s ease, background 0.35s ease; }
+
+  .hars-score-ring-label {
+    font-family: var(--mono);
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .hars-banner {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+    background: var(--surface);
+    padding: 13px 16px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    border-radius: 3px;
+    line-height: 1.6;
+  }
+  .hars-banner.critical { border-left-color: var(--red); }
+  .hars-banner.info { border-left-color: var(--blue); }
+  .hars-banner.good { border-left-color: var(--green); }
+  .hars-banner strong { color: var(--text); }
+
+  .hars-card-title {
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-faint);
+  }
+
+  .hars-timeline-wrap { display: flex; overflow-x: auto; padding-bottom: 6px; gap: 2px; }
+  .hars-timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 64px;
+    position: relative;
+    flex: 1;
+  }
+  .hars-timeline-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--line);
+    border: 2px solid var(--line);
+    z-index: 1;
+  }
+  .hars-timeline-step.done .hars-timeline-dot { background: var(--green); border-color: var(--green); }
+  .hars-timeline-step.active .hars-timeline-dot { background: var(--bg); border-color: var(--blue); box-shadow: 0 0 0 3px rgba(110,168,254,0.18); }
+  .hars-timeline-line {
+    position: absolute;
+    top: 4px;
+    left: -50%;
+    width: 100%;
+    height: 1px;
+    background: var(--line);
+    z-index: 0;
+  }
+  .hars-timeline-step.done .hars-timeline-line { background: var(--green); }
+  .hars-timeline-step:first-child .hars-timeline-line { display: none; }
+  .hars-timeline-label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    text-align: center;
+    color: var(--text-faint);
+    margin-top: 9px;
+    line-height: 1.4;
+    padding: 0 2px;
+  }
+  .hars-timeline-step.done .hars-timeline-label { color: var(--text-dim); }
+  .hars-timeline-step.active .hars-timeline-label { color: var(--blue); }
+
+  .hars-speaker-name {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .hars-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .hars-card-list { margin: 0; padding-left: 14px; font-size: 12px; color: var(--text-dim); }
+  .hars-card-list li { margin-bottom: 4px; }
+
+  .hars-fade-in { animation: harsFadeIn 0.3s ease; }
+  @keyframes harsFadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hars-fade-in { animation: none; }
+    .hars-bar-fill, .hars-btn-primary { transition: none; }
+  }
+</style>
+
+<div class="hars-root">
+  <div id="harsApp"></div>
+</div>
+<script>
+'use strict';
+'use strict';
+
+/* ============================ DATA ============================ */
+var DIAGNOSES = [
+  { id: 'mi', label: 'Acute MI' },
+  { id: 'chf', label: 'CHF' },
+  { id: 'pneumonia', label: 'Pneumonia' },
+  { id: 'elective', label: 'Elective Surgery' },
+  { id: 'hip', label: 'Hip Fracture' }
+];
+var ADMISSION_TYPES = [
+  { id: 'inpatient', label: 'Inpatient' },
+  { id: 'observation', label: 'Observation' },
+  { id: 'emergency', label: 'Emergency' },
+  { id: 'icu', label: 'ICU' },
+  { id: 'sameday', label: 'Same-Day Surgery' }
+];
+var PA_STATUSES = [
+  { id: 'approved', label: 'Approved' },
+  { id: 'pending', label: 'Pending' },
+  { id: 'denied', label: 'Denied' }
+];
+var PROVIDERS = [
+  'Brightstone Regional Medical Center (sample)',
+  'Lakeview Health System (sample)',
+  'Cedar Hollow General Hospital (sample)',
+  'Northgate Community Hospital (sample)'
+];
+var PHYSICIANS = [
+  'Dr. Aanya Sharma (sample)',
+  'Dr. Marcus Webb (sample)',
+  'Dr. Elena Petrova (sample)',
+  'Dr. Jordan Lee (sample)'
+];
+var SAMPLE_PAYER = 'Meridian Health Plan (sample)';
+
+var WEIGHTS = { pa: 0.25, documentation: 0.20, physicianOrders: 0.20, insurance: 0.15, consent: 0.10, bed: 0.10 };
+
+function diagnosisLabel(id) { var d = DIAGNOSES.find(function (x) { return x.id === id; }); return d ? d.label : id; }
+function admissionTypeLabel(id) { var d = ADMISSION_TYPES.find(function (x) { return x.id === id; }); return d ? d.label : id; }
+function isCriteriaDiagnosis(diagnosis) { return diagnosis === 'mi' || diagnosis === 'chf'; }
+
+function bedUnitFor(s) {
+  if (s.admissionType === 'icu') return 'ICU \u2013 Bed 6 (sample)';
+  if (s.admissionType === 'sameday') return 'Same-Day Surgery Unit \u2013 Bay 2 (sample)';
+  if (s.diagnosis === 'mi' || s.diagnosis === 'chf') return '4 West \u2013 Telemetry (sample)';
+  if (s.diagnosis === 'hip') return '3 South \u2013 Ortho/Med-Surg (sample)';
+  return '3 South \u2013 Med/Surg (sample)';
+}
+function orderSetFor(diagnosis) {
+  var map = {
+    mi: 'Acute MI Admission Order Set (sample)',
+    chf: 'CHF Admission Order Set (sample)',
+    pneumonia: 'Pneumonia Admission Order Set (sample)',
+    elective: 'Elective Surgery Pre-Op Order Set (sample)',
+    hip: 'Hip Fracture Admission Order Set (sample)'
+  };
+  return map[diagnosis] || 'Standard Admission Order Set (sample)';
+}
+function denialReasonFor(diagnosis) {
+  if (isCriteriaDiagnosis(diagnosis)) return 'Submitted documentation did not establish medical necessity against InterQual criteria for the requested level of care (sample reason).';
+  return 'Service was deemed not medically necessary at the requested level of care based on payer clinical review (sample reason).';
+}
+function losFor(s) {
+  if (s.admissionType === 'sameday') return '< 1 day (illustrative)';
+  if (s.admissionType === 'observation') return '1\u20132 midnights (illustrative)';
+  if (s.diagnosis === 'mi') return '3\u20135 days (illustrative)';
+  if (s.diagnosis === 'chf') return '4\u20136 days (illustrative)';
+  if (s.diagnosis === 'pneumonia') return '3\u20135 days (illustrative)';
+  if (s.diagnosis === 'hip') return '3\u20134 days (illustrative)';
+  if (s.diagnosis === 'elective') return '1\u20133 days (illustrative)';
+  return '2\u20134 days (illustrative)';
+}
+
+/* ============================ STATE ============================ */
+function freshState() {
+  return {
+    screen: 'setup',
+    setup: { provider: '', physician: '', diagnosis: '', admissionType: '', paStatusInitial: '', admissionDate: '' },
+    pa: {
+      status: '',
+      actions: { followUp: false, uploadDocs: false, contactPhysician: false },
+      denied: { reviewReason: false, contactInsurance: false, appealSubmitted: false, appealResolved: false }
+    },
+    insurance: { status: 'not_verified' },
+    bed: { status: 'unassigned' },
+    documentation: { status: 'missing', criteriaAcknowledged: false },
+    physicianOrders: { status: 'not_started' },
+    consent: { status: 'not_started' },
+    nursingNotified: false,
+    patientArrivalPrepared: false,
+    ui: { showCriteriaGate: false, decisionRevealed: false },
+    log: []
+  };
+}
+var state = freshState();
+
+function addLog(msg) {
+  state.log.unshift(msg);
+  if (state.log.length > 6) state.log.length = 6;
+}
+
+/* ============================ SCORING ============================ */
+function paScore(s) {
+  if (s.pa.status === 'approved') return 100;
+  if (s.pa.status === 'pending') {
+    var n = (s.pa.actions.followUp ? 1 : 0) + (s.pa.actions.uploadDocs ? 1 : 0) + (s.pa.actions.contactPhysician ? 1 : 0);
+    return Math.min(80, 35 + n * 15);
+  }
+  if (s.pa.status === 'denied') {
+    var m = (s.pa.denied.reviewReason ? 1 : 0) + (s.pa.denied.contactInsurance ? 1 : 0) + (s.pa.denied.appealSubmitted ? 1 : 0);
+    return Math.min(30, m * 10);
+  }
+  return 0;
+}
+function insuranceScoreOf(status) {
+  if (status === 'verified') return 100;
+  if (status === 'verifying') return 50;
+  return 0;
+}
+function bedScoreOf(status) { return status === 'assigned' ? 100 : 0; }
+function docScoreOf(status) {
+  if (status === 'complete') return 100;
+  if (status === 'in_progress') return 60;
+  return 20;
+}
+function poScoreOf(status) {
+  if (status === 'signed') return 100;
+  if (status === 'pending_signature') return 50;
+  return 0;
+}
+function consentScoreOf(status) { return status === 'signed' ? 100 : 0; }
+
+function categoryScores(s) {
+  return {
+    pa: paScore(s),
+    insurance: insuranceScoreOf(s.insurance.status),
+    bed: bedScoreOf(s.bed.status),
+    documentation: docScoreOf(s.documentation.status),
+    physicianOrders: poScoreOf(s.physicianOrders.status),
+    consent: consentScoreOf(s.consent.status)
+  };
+}
+function isIcuDeniedCap(s) { return s.setup.admissionType === 'icu' && s.pa.status === 'denied'; }
+
+function totalScore(s) {
+  var c = categoryScores(s);
+  var raw = c.pa * WEIGHTS.pa + c.documentation * WEIGHTS.documentation + c.physicianOrders * WEIGHTS.physicianOrders +
+    c.insurance * WEIGHTS.insurance + c.consent * WEIGHTS.consent + c.bed * WEIGHTS.bed;
+  if (isIcuDeniedCap(s)) raw = Math.min(raw, 70);
+  return Math.round(raw);
+}
+
+function riskLevel(v) {
+  if (v <= 30) return { label: 'Low', color: 'var(--green)' };
+  if (v <= 60) return { label: 'Medium', color: 'var(--amber)' };
+  return { label: 'High', color: 'var(--red)' };
+}
+function risks(s) {
+  var c = categoryScores(s);
+  var docRisk = 100 - c.documentation;
+  var insRisk = Math.min(100, (100 - c.insurance) + (s.pa.status === 'denied' ? 20 : 0));
+  var bedRisk = 100 - c.bed;
+  var clinicalMultiplier = (isCriteriaDiagnosis(s.setup.diagnosis) || s.setup.admissionType === 'icu') ? 1.3 : 1.0;
+  var clinicalRisk = Math.min(100, Math.round((100 - c.documentation) * clinicalMultiplier));
+  return { documentation: docRisk, insurance: insRisk, bed: bedRisk, clinical: clinicalRisk };
+}
+
+/* ============================ ACTIONS ============================ */
+function maybeResolvePendingPA() {
+  var pa = state.pa;
+  if (pa.status === 'pending' && pa.actions.followUp && pa.actions.uploadDocs && pa.actions.contactPhysician) {
+    pa.status = 'approved';
+    addLog('Payer responded: Prior Authorization Approved.');
+  }
+}
+
+function actionAnalyze() {
+  var s = state.setup;
+  if (!s.provider || !s.physician || !s.diagnosis || !s.admissionType || !s.paStatusInitial || !s.admissionDate) return;
+  state.pa.status = s.paStatusInitial;
+  state.insurance.status = 'verifying';
+  state.bed.status = 'unassigned';
+  state.documentation.status = 'in_progress';
+  state.physicianOrders.status = 'pending_signature';
+  state.consent.status = 'not_started';
+  state.screen = 'workspace';
+  addLog('Initial admission readiness analysis generated.');
+  render();
+}
+
+function actionFollowUp() {
+  if (state.pa.status !== 'pending') return;
+  state.pa.actions.followUp = true;
+  maybeResolvePendingPA();
+  render();
+}
+function actionUploadDocumentation() {
+  var doc = state.documentation;
+  var needsCriteria = isCriteriaDiagnosis(state.setup.diagnosis);
+  if (doc.status === 'missing') {
+    doc.status = 'in_progress';
+  } else if (doc.status === 'in_progress') {
+    if (needsCriteria && !doc.criteriaAcknowledged) {
+      state.ui.showCriteriaGate = true;
+    } else {
+      doc.status = 'complete';
+    }
+  }
+  if (state.pa.status === 'pending') { state.pa.actions.uploadDocs = true; maybeResolvePendingPA(); }
+  render();
+}
+function actionAcknowledgeCriteria() {
+  state.documentation.criteriaAcknowledged = true;
+  state.documentation.status = 'complete';
+  state.ui.showCriteriaGate = false;
+  if (state.pa.status === 'pending') { state.pa.actions.uploadDocs = true; maybeResolvePendingPA(); }
+  render();
+}
+function actionContactPhysician() {
+  var po = state.physicianOrders;
+  if (po.status === 'not_started') po.status = 'pending_signature';
+  else if (po.status === 'pending_signature') po.status = 'signed';
+  if (state.pa.status === 'pending') { state.pa.actions.contactPhysician = true; maybeResolvePendingPA(); }
+  render();
+}
+function actionVerifyInsurance() {
+  var ins = state.insurance;
+  if (ins.status === 'not_verified') ins.status = 'verifying';
+  else if (ins.status === 'verifying') ins.status = 'verified';
+  render();
+}
+function actionAssignBed() { state.bed.status = 'assigned'; render(); }
+function actionCompleteConsent() { state.consent.status = 'signed'; render(); }
+function actionNotifyNursing() { state.nursingNotified = true; render(); }
+function actionPreparePatientArrival() { state.patientArrivalPrepared = true; render(); }
+
+function actionReviewReason() {
+  if (state.pa.status !== 'denied') return;
+  state.pa.denied.reviewReason = true;
+  render();
+}
+function actionContactInsuranceDenial() {
+  if (state.pa.status !== 'denied' || !state.pa.denied.reviewReason) return;
+  state.pa.denied.contactInsurance = true;
+  render();
+}
+function actionSubmitAppeal() {
+  if (state.pa.status !== 'denied' || !state.pa.denied.contactInsurance) return;
+  state.pa.denied.appealSubmitted = true;
+  addLog('Appeal submitted \u2014 under review.');
+  render();
+}
+function actionCheckAppealDecision() {
+  if (!state.pa.denied.appealSubmitted || state.pa.denied.appealResolved) return;
+  state.pa.denied.appealResolved = true;
+  state.pa.status = 'approved';
+  addLog('Appeal successful \u2014 Prior Authorization Approved.');
+  render();
+}
+function actionFinalizeDecision() {
+  state.ui.decisionRevealed = true;
+  render();
+}
+function actionRestart() {
+  state = freshState();
+  render();
+}
+
+/* ============================ TIMELINE ============================ */
+function timelineSteps(s) {
+  var paDone = s.pa.status === 'approved';
+  var insDone = s.insurance.status === 'verified';
+  var bedDone = s.bed.status === 'assigned';
+  var docDone = s.documentation.status === 'complete';
+  var consentDone = s.consent.status === 'signed';
+  var arrivalDone = s.patientArrivalPrepared;
+  var regDone = s.patientArrivalPrepared && insDone;
+  var clinicalDone = s.patientArrivalPrepared && s.nursingNotified && bedDone;
+  var poDone = s.physicianOrders.status === 'signed';
+  var completeDone = paDone && insDone && bedDone && docDone && consentDone && arrivalDone && regDone && clinicalDone && poDone;
+  return [
+    { label: 'PA Review', done: paDone },
+    { label: 'Insurance Verification', done: insDone },
+    { label: 'Bed Assignment', done: bedDone },
+    { label: 'Documentation', done: docDone },
+    { label: 'Consent', done: consentDone },
+    { label: 'Patient Arrival', done: arrivalDone },
+    { label: 'Registration', done: regDone },
+    { label: 'Clinical Assessment', done: clinicalDone },
+    { label: 'Admission Complete', done: completeDone }
+  ];
+}
+
+
+/* ============================ LABELS ============================ */
+var STATUS_LABELS = {
+  approved: 'Approved', pending: 'Pending', denied: 'Denied',
+  not_verified: 'Not Verified', verifying: 'Verifying', verified: 'Verified',
+  unassigned: 'Unassigned', assigned: 'Assigned',
+  missing: 'Missing', in_progress: 'In Progress', complete: 'Complete',
+  not_started: 'Not Started', pending_signature: 'Pending Signature', signed: 'Signed'
+};
+
+function esc(str) {
+  return String(str).replace(/[&<>"']/g, function (c) {
+    return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+  });
+}
+
+function tag(status) {
+  var label = STATUS_LABELS[status] || status;
+  return '<span class="hars-tag ' + status + '">' + esc(label) + '</span>';
+}
+
+function barRow(scoreVal, colorVar) {
+  return '<div class="hars-bar-track"><div class="hars-bar-fill" style="width:' + scoreVal + '%; background:' + colorVar + ';"></div></div>';
+}
+
+function scoreColor(score) {
+  if (score >= 90) return 'var(--green)';
+  if (score >= 70) return 'var(--blue)';
+  if (score >= 50) return 'var(--amber)';
+  return 'var(--red)';
+}
+
+/* ============================ SETUP SCREEN ============================ */
+function setupValid() {
+  var s = state.setup;
+  return !!(s.provider && s.physician && s.diagnosis && s.admissionType && s.paStatusInitial && s.admissionDate);
+}
+
+function optionsHtml(list, current, useIdLabel) {
+  var html = '<option value="" ' + (current ? '' : 'selected') + ' disabled>Select\u2026</option>';
+  list.forEach(function (item) {
+    var val = useIdLabel ? item.id : item;
+    var lbl = useIdLabel ? item.label : item;
+    html += '<option value="' + esc(val) + '" ' + (current === val ? 'selected' : '') + '>' + esc(lbl) + '</option>';
+  });
+  return html;
+}
+
+function renderSetup() {
+  var s = state.setup;
+  var today = new Date().toISOString().slice(0, 10);
+  if (!s.admissionDate) s.admissionDate = today;
+
+  var html = '';
+  html += '<div class="max-w-2xl mx-auto px-6 py-12 hars-fade-in">';
+  html += '  <div class="hars-eyebrow mb-3">Admission Coordinator Workspace</div>';
+  html += '  <h1 class="font-display text-2xl font-semibold mb-2" style="letter-spacing:-0.01em;">Hospital Admission Readiness Simulator</h1>';
+  html += '  <p class="text-sm mb-10" style="color:var(--text-faint);">Enter the admission details to generate an initial readiness analysis. All names below are illustrative training data, not real provider or payer information.</p>';
+
+  html += '  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-4">';
+
+  html += '    <div>';
+  html += '      <label class="hars-field-label">Provider <span class="hars-sample-tag">(sample)</span></label>';
+  html += '      <select class="hars-select" onchange="updateSetup(\'provider\', this.value)">' + optionsHtml(PROVIDERS, s.provider, false) + '</select>';
+  html += '    </div>';
+
+  html += '    <div>';
+  html += '      <label class="hars-field-label">Attending Physician <span class="hars-sample-tag">(sample)</span></label>';
+  html += '      <select class="hars-select" onchange="updateSetup(\'physician\', this.value)">' + optionsHtml(PHYSICIANS, s.physician, false) + '</select>';
+  html += '    </div>';
+
+  html += '    <div>';
+  html += '      <label class="hars-field-label">Diagnosis</label>';
+  html += '      <select class="hars-select" onchange="updateSetup(\'diagnosis\', this.value)">' + optionsHtml(DIAGNOSES, s.diagnosis, true) + '</select>';
+  html += '    </div>';
+
+  html += '    <div>';
+  html += '      <label class="hars-field-label">Admission Type</label>';
+  html += '      <select class="hars-select" onchange="updateSetup(\'admissionType\', this.value)">' + optionsHtml(ADMISSION_TYPES, s.admissionType, true) + '</select>';
+  html += '    </div>';
+
+  html += '    <div>';
+  html += '      <label class="hars-field-label">Prior Authorization Status</label>';
+  html += '      <select class="hars-select" onchange="updateSetup(\'paStatusInitial\', this.value)">' + optionsHtml(PA_STATUSES, s.paStatusInitial, true) + '</select>';
+  html += '    </div>';
+
+  html += '    <div>';
+  html += '      <label class="hars-field-label">Admission Date</label>';
+  html += '      <input type="date" class="hars-input" value="' + esc(s.admissionDate) + '" onchange="updateSetup(\'admissionDate\', this.value)" />';
+  html += '    </div>';
+
+  html += '  </div>';
+
+  if (s.admissionType === 'observation') {
+    html += observationBanner();
+  }
+
+  html += '  <button class="hars-btn-primary mt-6" id="analyzeBtn" onclick="actionAnalyze()" ' + (setupValid() ? '' : 'disabled') + '>\uD83C\uDFE5 Analyze Admission Readiness</button>';
+  html += '</div>';
+  return html;
+}
+
+function observationBanner() {
+  return '<div class="hars-banner mt-2 mb-2"><strong>Observation status:</strong> CMS 2-Midnight Rule applies \u2014 different cost-sharing, SNF eligibility, and billing than inpatient. Medicare patients require written MOON notification.</div>';
+}
+
+function updateSetup(field, value) {
+  state.setup[field] = value;
+  render();
+}
+
+/* ============================ WORKSPACE: HEADER ============================ */
+function renderHeaderRecap() {
+  var s = state.setup;
+  var html = '<div class="flex flex-wrap items-baseline justify-between gap-3 mb-1">';
+  html += '  <div>';
+  html += '    <div class="hars-eyebrow mb-2">Admission Coordinator Workspace</div>';
+  html += '    <h1 class="font-display text-xl font-semibold" style="letter-spacing:-0.01em;">' + esc(diagnosisLabel(s.diagnosis)) + ' \u00b7 ' + esc(admissionTypeLabel(s.admissionType)) + '</h1>';
+  html += '  </div>';
+  html += '  <button class="hars-btn-ghost" onclick="actionRestart()">\u21bb New Admission</button>';
+  html += '</div>';
+  html += '<div class="font-mono text-xs mb-6" style="color:var(--text-faint);">' + esc(s.provider) + ' \u00b7 ' + esc(s.physician) + ' \u00b7 Admission date ' + esc(s.admissionDate) + '</div>';
+  return html;
+}
+
+/* ============================ WORKSPACE: SCORE ============================ */
+function renderScoreBlock() {
+  var score = totalScore(state);
+  var color = scoreColor(score);
+  var label = state.ui.decisionRevealed ? 'Current Readiness' : 'Initial Analysis \u2014 Readiness Score';
+  var html = '<div class="mb-8 pb-7 border-b hars-divider">';
+  html += '  <div class="hars-eyebrow mb-3">' + label + '</div>';
+  html += '  <div class="flex items-end gap-4 mb-3">';
+  html += '    <span class="hars-score-ring-label" style="color:' + color + ';">' + score + '%</span>';
+  html += '    <span class="font-mono text-xs pb-2" style="color:var(--text-faint);">readiness composite</span>';
+  html += '  </div>';
+  html += barRow(score, color);
+  if (isIcuDeniedCap(state)) {
+    html += '  <div class="text-xs mt-3" style="color:var(--red);">Capped at 70% \u2014 ICU admission with a denied prior authorization cannot reach readiness through administrative tasks alone. Appeal must be resolved.</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* ============================ WORKSPACE: STATUS GRID ============================ */
+function statusRow(label, statusTag, detail) {
+  var html = '<div class="hars-row-item flex items-center justify-between gap-4 py-3 border-b hars-divider-soft">';
+  html += '  <div>';
+  html += '    <div class="text-sm" style="color:var(--text);">' + esc(label) + '</div>';
+  if (detail) html += '    <div class="font-mono text-xs mt-1" style="color:var(--text-faint);">' + detail + '</div>';
+  html += '  </div>';
+  html += '  ' + statusTag;
+  html += '</div>';
+  return html;
+}
+
+function renderStatusGrid() {
+  var s = state;
+  var html = '<div class="mb-8">';
+  html += '  <div class="hars-card-title mb-3">Status</div>';
+  html += statusRow('Prior Authorization', tag(s.pa.status), 'Payer: ' + esc(SAMPLE_PAYER));
+  html += statusRow('Insurance Verification', tag(s.insurance.status), 'Payer: ' + esc(SAMPLE_PAYER));
+  html += statusRow('Bed Assignment', tag(s.bed.status), s.bed.status === 'assigned' ? esc(bedUnitFor(s.setup)) : 'Target unit (sample): ' + esc(bedUnitFor(s.setup)));
+  html += statusRow('Clinical Documentation', tag(s.documentation.status), null);
+  html += statusRow('Physician Orders', tag(s.physicianOrders.status), esc(orderSetFor(s.setup.diagnosis)));
+  html += statusRow('Consent', tag(s.consent.status), null);
+  html += '</div>';
+  return html;
+}
+
+/* ============================ CRITERIA BANNER ============================ */
+function renderCriteriaBanner() {
+  if (!isCriteriaDiagnosis(state.setup.diagnosis)) return '';
+  return '<div class="hars-banner info mb-8"><strong>Medical necessity criteria:</strong> InterQual/Milliman thresholds apply \u2014 ensure documentation meets medical necessity standards before UR review.</div>';
+}
+
+/* ============================ PA ACTION PANEL ============================ */
+function actionBtn(label, onclick, done, disabled) {
+  return '<button class="hars-btn-action" onclick="' + onclick + '" ' + (disabled ? 'disabled' : '') + '>' +
+    '<span>' + esc(label) + '</span>' + (done ? '<span class="hars-check">\u2713 done</span>' : '') + '</button>';
+}
+
+function renderPAPanel() {
+  var pa = state.pa;
+  var html = '<div class="mb-8">';
+  html += '  <div class="hars-card-title mb-3">Prior Authorization</div>';
+
+  if (pa.status === 'approved') {
+    html += '  <div class="hars-banner good">Prior authorization is approved. No further PA action required \u2014 continue with the remaining readiness items below.</div>';
+    html += '</div>';
+    return html;
+  }
+
+  if (pa.status === 'pending') {
+    html += '  <div class="hars-banner mb-3">Prior authorization is pending with ' + esc(SAMPLE_PAYER) + '. Work the items below to move it toward a decision. Upload Documentation and Contact Physician in the Workflow Actions panel also count toward resolving this pending authorization.</div>';
+    html += '  <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">';
+    html += actionBtn('\uD83D\uDCDE Follow Up with Payer', 'actionFollowUp()', pa.actions.followUp, pa.actions.followUp);
+    html += actionBtn('\uD83D\uDCE4 Upload Supporting Docs', 'actionUploadDocumentation()', pa.actions.uploadDocs, pa.actions.uploadDocs);
+    html += actionBtn('\u260E\uFE0F Contact Physician', 'actionContactPhysician()', pa.actions.contactPhysician, pa.actions.contactPhysician);
+    html += '  </div>';
+    html += '</div>';
+    return html;
+  }
+
+  // denied
+  var d = pa.denied;
+  html += '  <div class="hars-banner critical mb-3"><strong>Denied.</strong> ' + esc(denialReasonFor(state.setup.diagnosis)) + '</div>';
+  html += '  <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">';
+  html += actionBtn('\uD83D\uDCC4 Review Denial Reason', 'actionReviewReason()', d.reviewReason, d.reviewReason);
+  html += actionBtn('\u260E\uFE0F Contact Insurance', 'actionContactInsuranceDenial()', d.contactInsurance, d.contactInsurance || !d.reviewReason);
+  html += actionBtn('\uD83D\uDCE8 Submit Appeal', 'actionSubmitAppeal()', d.appealSubmitted, d.appealSubmitted || !d.contactInsurance);
+  html += '  </div>';
+  if (d.appealSubmitted && !d.appealResolved) {
+    html += '  <div class="hars-banner mb-2">Appeal submitted \u2014 under review with ' + esc(SAMPLE_PAYER) + '.</div>';
+    html += '  ' + actionBtn('\uD83D\uDD0D Check Appeal Decision', 'actionCheckAppealDecision()', false, false);
+  }
+  if (d.appealResolved) {
+    html += '  <div class="hars-banner good">Appeal successful \u2014 prior authorization is now approved.</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* ============================ WORKFLOW ACTIONS ============================ */
+function renderWorkflowActions() {
+  var s = state;
+  var insLabel = s.insurance.status === 'not_verified' ? 'Verify Insurance' : (s.insurance.status === 'verifying' ? 'Confirm Insurance Verification' : 'Insurance Verified');
+  var docLabel = s.documentation.status === 'missing' ? 'Upload Documentation' : (s.documentation.status === 'in_progress' ? 'Complete Documentation Review' : 'Documentation Complete');
+  var poLabel = s.physicianOrders.status === 'not_started' ? 'Contact Physician' : (s.physicianOrders.status === 'pending_signature' ? 'Confirm Order Signature' : 'Orders Signed');
+
+  var html = '<div class="mb-8">';
+  html += '  <div class="hars-card-title mb-3">Workflow Actions</div>';
+  html += '  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">';
+  html += actionBtn('\uD83D\uDECF\uFE0F Assign Bed', 'actionAssignBed()', s.bed.status === 'assigned', s.bed.status === 'assigned');
+  html += actionBtn('\uD83E\uDE9A ' + insLabel, 'actionVerifyInsurance()', s.insurance.status === 'verified', s.insurance.status === 'verified');
+  html += actionBtn('\uD83D\uDCD1 ' + docLabel, 'actionUploadDocumentation()', s.documentation.status === 'complete', s.documentation.status === 'complete');
+  html += actionBtn('\u270D\uFE0F Complete Consent', 'actionCompleteConsent()', s.consent.status === 'signed', s.consent.status === 'signed');
+  html += actionBtn('\u260E\uFE0F ' + poLabel, 'actionContactPhysician()', s.physicianOrders.status === 'signed', s.physicianOrders.status === 'signed');
+  html += actionBtn('\uD83D\uDD14 Notify Nursing', 'actionNotifyNursing()', s.nursingNotified, s.nursingNotified);
+  html += actionBtn('\uD83C\uDEAA Prepare Patient Arrival', 'actionPreparePatientArrival()', s.patientArrivalPrepared, s.patientArrivalPrepared);
+  html += '  </div>';
+
+  if (state.ui.showCriteriaGate) {
+    html += '  <div class="hars-banner critical mt-3">';
+    html += '    <strong>Medical necessity criteria:</strong> InterQual/Milliman thresholds apply \u2014 ensure documentation meets medical necessity standards before UR review.<br/>';
+    html += '    <button class="hars-btn-ghost mt-2" onclick="actionAcknowledgeCriteria()">Acknowledge &amp; Complete Documentation</button>';
+    html += '  </div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* ============================ RISK TRACKING ============================ */
+function riskRow(label, val) {
+  var lvl = riskLevel(val);
+  var html = '<div class="mb-3">';
+  html += '  <div class="flex items-baseline justify-between mb-1.5">';
+  html += '    <span class="text-sm" style="color:var(--text);">' + esc(label) + '</span>';
+  html += '    <span class="hars-tag font-mono text-xs" style="color:' + lvl.color + ';">' + lvl.label + '</span>';
+  html += '  </div>';
+  html += barRow(val, lvl.color);
+  html += '</div>';
+  return html;
+}
+
+function renderRiskPanel() {
+  var r = risks(state);
+  var html = '<div class="mb-8">';
+  html += '  <div class="hars-card-title mb-3">Risk Tracking</div>';
+  html += riskRow('Documentation Risk', r.documentation);
+  html += riskRow('Insurance Risk', r.insurance);
+  html += riskRow('Bed Risk', r.bed);
+  html += riskRow('Clinical Risk', r.clinical);
+  html += '</div>';
+  return html;
+}
+
+/* ============================ TIMELINE ============================ */
+function renderTimeline() {
+  var steps = timelineSteps(state);
+  var firstActiveFound = false;
+  var html = '<div class="mb-8">';
+  html += '  <div class="hars-card-title mb-4">Admission Timeline</div>';
+  html += '  <div class="hars-timeline-wrap">';
+  steps.forEach(function (step) {
+    var cls = step.done ? 'done' : '';
+    if (!step.done && !firstActiveFound) { cls = 'active'; firstActiveFound = true; }
+    html += '    <div class="hars-timeline-step ' + cls + '">';
+    html += '      <div class="hars-timeline-line"></div>';
+    html += '      <div class="hars-timeline-dot"></div>';
+    html += '      <div class="hars-timeline-label">' + esc(step.label) + '</div>';
+    html += '    </div>';
+  });
+  html += '  </div>';
+  html += '</div>';
+  return html;
+}
+
+/* ============================ CARE COORDINATION ============================ */
+function speakerCard(name, color, items) {
+  var html = '<div>';
+  html += '  <div class="hars-speaker-name mb-2"><span class="hars-dot" style="background:' + color + ';"></span>' + esc(name) + '</div>';
+  html += '  <ul class="hars-card-list">';
+  items.forEach(function (it) { html += '<li>' + it + '</li>'; });
+  html += '  </ul>';
+  html += '</div>';
+  return html;
+}
+
+function renderCareCoordination() {
+  var s = state;
+  var risk = risks(s);
+  var urRiskLabel = riskLevel(Math.max(risk.documentation, risk.clinical)).label;
+
+  var html = '<div class="mb-8">';
+  html += '  <div class="hars-card-title mb-4">Care Coordination</div>';
+  html += '  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">';
+
+  html += speakerCard('Attending', 'var(--blue)', [
+    esc(s.setup.physician || 'Not assigned'),
+    'Order set: ' + esc(orderSetFor(s.setup.diagnosis)),
+    'Physician orders: ' + esc(STATUS_LABELS[s.physicianOrders.status])
+  ]);
+
+  html += speakerCard('Case Manager', 'var(--amber)', [
+    'Current readiness: ' + totalScore(s) + '%',
+    'PA status: ' + esc(STATUS_LABELS[s.pa.status]),
+    'Coordinating ' + (s.documentation.status === 'complete' ? 'final sign-off' : 'open readiness items')
+  ]);
+
+  html += speakerCard('Nursing', 'var(--green)', [
+    'Bed: ' + esc(STATUS_LABELS[s.bed.status]) + ' \u2014 ' + esc(bedUnitFor(s.setup)),
+    'Notified: ' + (s.nursingNotified ? 'Yes' : 'Not yet'),
+    'Clinical assessment ' + (s.nursingNotified && s.bed.status === 'assigned' ? 'ready to begin' : 'pending bed/notification')
+  ]);
+
+  html += speakerCard('Utilization Review', 'var(--purple)', [
+    'Concurrent review in progress',
+    'Denial risk identification: ' + esc(urRiskLabel),
+    'Applying InterQual/Milliman criteria',
+    'PA status: ' + esc(STATUS_LABELS[s.pa.status])
+  ]);
+
+  html += speakerCard('Discharge Planner', '#f08a8a', [
+    'Anticipated LOS: ' + esc(losFor(s.setup)),
+    'Estimate only \u2014 not a clinical determination',
+    'Planning begins once admission is confirmed'
+  ]);
+
+  html += '  </div>';
+  html += '</div>';
+  return html;
+}
+
+/* ============================ GOVERNANCE SNAPSHOT ============================ */
+function renderGovernanceSnapshot() {
+  if (totalScore(state) < 75) return '';
+  return '<div class="hars-banner info mb-8 hars-fade-in"><strong>Governance Snapshot</strong> \u2014 Industry benchmarks (estimates only): PA turnaround 3\u20135 days \u00b7 Inpatient denial rate ~8\u201310% (CMS) \u00b7 PA rework cost ~$11/transaction (CAQH).</div>';
+}
+
+/* ============================ FINAL DECISION ============================ */
+function missingItemsAndActions() {
+  var s = state;
+  var items = [];
+  if (s.pa.status !== 'approved') items.push({ missing: 'Prior authorization is ' + STATUS_LABELS[s.pa.status].toLowerCase() + '.', action: s.pa.status === 'denied' ? 'Complete the appeal process and confirm approval.' : 'Complete the remaining pending-authorization actions.' });
+  if (s.insurance.status !== 'verified') items.push({ missing: 'Insurance verification is ' + STATUS_LABELS[s.insurance.status].toLowerCase() + '.', action: 'Run Verify Insurance until coverage is confirmed.' });
+  if (s.bed.status !== 'assigned') items.push({ missing: 'No bed has been assigned.', action: 'Assign a bed in the requested unit.' });
+  if (s.documentation.status !== 'complete') items.push({ missing: 'Clinical documentation is ' + STATUS_LABELS[s.documentation.status].toLowerCase() + '.', action: 'Complete documentation review' + (isCriteriaDiagnosis(s.setup.diagnosis) ? ' and acknowledge medical necessity criteria.' : '.') });
+  if (s.physicianOrders.status !== 'signed') items.push({ missing: 'Physician orders are ' + STATUS_LABELS[s.physicianOrders.status].toLowerCase() + '.', action: 'Contact the physician to obtain a signature.' });
+  if (s.consent.status !== 'signed') items.push({ missing: 'Consent has not been signed.', action: 'Complete the consent process with the patient/representative.' });
+  if (isIcuDeniedCap(s)) items.push({ missing: 'ICU admission with a denied prior authorization cannot proceed on administrative tasks alone.', action: 'Resolve the appeal to convert the authorization to approved.' });
+  return items;
+}
+
+function renderFinalDecision() {
+  if (!state.ui.decisionRevealed) {
+    return '<button class="hars-btn-ghost" onclick="actionFinalizeDecision()">\u2705 Run Final Admission Decision</button>';
+  }
+  var score = totalScore(state);
+  var html = '<div class="hars-fade-in">';
+  if (score >= 90) {
+    html += '  <div class="hars-banner good">';
+    html += '    <div class="font-display text-base font-semibold mb-2" style="color:var(--text);">\u2705 Admit \u2014 Readiness ' + score + '%</div>';
+    html += '    <div class="text-xs" style="color:var(--text-dim); line-height:1.7;">';
+    html += esc(state.setup.provider) + ' \u00b7 ' + esc(state.setup.physician) + '<br/>';
+    html += diagnosisLabel(state.setup.diagnosis) + ' \u00b7 ' + admissionTypeLabel(state.setup.admissionType) + ' \u00b7 Admission date ' + esc(state.setup.admissionDate) + '<br/>';
+    html += 'PA ' + STATUS_LABELS[state.pa.status] + ' \u00b7 Insurance ' + STATUS_LABELS[state.insurance.status] + ' \u00b7 Bed ' + esc(bedUnitFor(state.setup)) + '<br/>';
+    html += 'Documentation ' + STATUS_LABELS[state.documentation.status] + ' \u00b7 Physician orders ' + STATUS_LABELS[state.physicianOrders.status] + ' \u00b7 Consent ' + STATUS_LABELS[state.consent.status];
+    html += '    </div>';
+    html += '  </div>';
+  } else {
+    var items = missingItemsAndActions();
+    var r = risks(state);
+    var remaining = [];
+    ['documentation', 'insurance', 'bed', 'clinical'].forEach(function (k) {
+      var lvl = riskLevel(r[k]);
+      if (lvl.label !== 'Low') remaining.push(k.charAt(0).toUpperCase() + k.slice(1) + ' risk: ' + lvl.label);
+    });
+    html += '  <div class="hars-banner critical">';
+    html += '    <div class="font-display text-base font-semibold mb-2" style="color:var(--text);">\u26A0 Not Ready \u2014 Readiness ' + score + '%</div>';
+    if (items.length) {
+      html += '    <div class="text-xs mt-3" style="color:var(--text-dim);"><strong style="color:var(--text);">Missing items</strong></div>';
+      html += '    <ul class="hars-card-list mt-1">' + items.map(function (i) { return '<li>' + esc(i.missing) + '</li>'; }).join('') + '</ul>';
+      html += '    <div class="text-xs mt-3" style="color:var(--text-dim);"><strong style="color:var(--text);">Required actions</strong></div>';
+      html += '    <ul class="hars-card-list mt-1">' + items.map(function (i) { return '<li>' + esc(i.action) + '</li>'; }).join('') + '</ul>';
+    }
+    html += '    <div class="text-xs mt-3" style="color:var(--text-dim);"><strong style="color:var(--text);">Remaining risks</strong></div>';
+    html += '    <ul class="hars-card-list mt-1">' + (remaining.length ? remaining.map(function (rm) { return '<li>' + esc(rm) + '</li>'; }).join('') : '<li>None \u2014 all risk categories Low.</li>') + '</ul>';
+    html += '  </div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* ============================ FOOTER ============================ */
+function renderFooter() {
+  return '<div class="text-center py-6 font-mono" style="font-size:10.5px; color:var(--text-faint); border-top:1px solid var(--line);">Training simulation \u00b7 all provider, physician, and payer names are illustrative training data, not real entities</div>';
+}
+
+/* ============================ MAIN RENDER ============================ */
+function renderWorkspace() {
+  var html = '<div class="max-w-3xl mx-auto px-6 py-10 hars-fade-in">';
+  html += renderHeaderRecap();
+  if (state.setup.admissionType === 'observation') html += observationBanner() + '<div class="mb-6"></div>';
+  html += renderScoreBlock();
+  html += renderStatusGrid();
+  html += renderCriteriaBanner();
+  html += renderPAPanel();
+  html += renderWorkflowActions();
+  html += renderRiskPanel();
+  html += renderTimeline();
+  html += renderCareCoordination();
+  html += renderGovernanceSnapshot();
+  html += '<div class="mb-8">' + renderFinalDecision() + '</div>';
+  html += '</div>';
+  html += renderFooter();
+  return html;
+}
+
+function render() {
+  var root = document.getElementById('harsApp');
+  if (!root) return;
+  root.innerHTML = state.screen === 'setup' ? renderSetup() : renderWorkspace();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  render();
+});
+</script>
