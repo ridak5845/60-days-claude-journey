@@ -62,7 +62,7 @@ Introduces the simulation, objectives, and seven-stage workflow.
 
 ### 2. Company Profile
 
-![Company Profile](screenshots/company-profile.png)
+![Company Profile](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-29/Screenshot_29-6-2026_162229_.jpeg)
 
 Randomly generated company including:
 
