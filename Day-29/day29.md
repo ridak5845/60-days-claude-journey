@@ -55,7 +55,7 @@ No backend, APIs, databases, or external assets were used.
 
 ### 1. Welcome Screen
 
-![Welcome Screen](screenshots/welcome.png)
+![Welcome Screen](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-29/screenshot-1782730315700.png)
 
 Introduces the simulation, objectives, and seven-stage workflow.
 
