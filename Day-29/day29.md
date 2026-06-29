@@ -123,7 +123,7 @@ A final negotiation score is calculated.
 
 ### 6. CEO Boardroom
 
-![CEO Dashboard](screenshots/ceo.png)
+![CEO Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-29/Screenshot_29-6-2026_162759_.jpeg)
 
 Five executive-level leadership questions evaluate strategic thinking and crisis management.
 
