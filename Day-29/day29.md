@@ -130,7 +130,7 @@ Five executive-level leadership questions evaluate strategic thinking and crisis
 
 ### 7. AI Strategy
 
-![AI Strategy](screenshots/ai-strategy.png)
+![AI Strategy](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-29/Screenshot_29-6-2026_162842_.jpeg)
 
 Select two AI investments:
 
