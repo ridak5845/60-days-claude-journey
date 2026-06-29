@@ -95,7 +95,7 @@ Displays:
 
 ### 4. War Room
 
-![War Room](screenshots/war-room.png)
+![War Room](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-29/Screenshot_29-6-2026_162435_.jpeg)
 
 Choose three strategic responses from six available actions.
 
