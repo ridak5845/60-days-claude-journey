@@ -78,7 +78,7 @@ Randomly generated company including:
 
 ### 3. Crisis Detection
 
-![Crisis Screen](screenshots/crisis.png)
+![Crisis Screen](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-29/Screenshot_29-6-2026_16232_.jpeg)
 
 Example crisis:
 
