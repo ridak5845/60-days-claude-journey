@@ -110,7 +110,7 @@ Business metrics update dynamically:
 
 ### 5. Supplier Negotiation
 
-![Negotiation](screenshots/negotiation.png)
+![Negotiation](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-29/Screenshot_29-6-2026_16265_.jpeg)
 
 Four negotiation rounds where each decision changes:
 
