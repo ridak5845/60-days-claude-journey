@@ -164,7 +164,7 @@ Displays:
 
 ### Generated HTML File
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-29/operation-lifeline.html)
 
 A complete self-contained HTML application built with React via CDN.
 
