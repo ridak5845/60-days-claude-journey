@@ -22,6 +22,10 @@ Optimize an existing supply chain like a real operations leader.
 **SUPPLIER**
 ![SUPPLIER](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-30/Screenshot_30-6-2026_17532_.jpeg)
 
+
+**FACTORY**
+![FACTORY](
+
 ### HTML File
 
 [HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-30/supply-chain-builder.html)
