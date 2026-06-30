@@ -28,7 +28,21 @@ Optimize an existing supply chain like a real operations leader.
 
 
 **WAREHOUSE**
-![WAREHOUSE](
+![WAREHOUSE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-30/screenshot-1782822283049.png)
+
+
+**TRANSPORT**
+![TRANSPORT](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-30/screenshot-1782822304956.png)
+
+
+**INVENTORY**
+![INVENTORY](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-30/screenshot-1782822336890.png)
+
+
+**DASHBOARD**
+![DASHBOARD](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-30/Screenshot_30-6-2026_17563_.jpeg)
+
+
 
 ### HTML File
 
