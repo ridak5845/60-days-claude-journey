@@ -14,7 +14,7 @@ Optimize an existing supply chain like a real operations leader.
 
 ### HTML File
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-30/supply-chain-builder.html)
 
 ## Project Overview
 
