@@ -12,7 +12,11 @@ Optimize an existing supply chain like a real operations leader.
 #### Screenshots of the Application
 
 **WELCOME PAGE**
-[WELCOME](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-30/screenshot-1782822155154.png)
+![WELCOME](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-30/screenshot-1782822155154.png)
+
+
+**COMPANY**
+![COMPANY](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-30/screenshot-1782822155154.png)
 
 ### HTML File
 
