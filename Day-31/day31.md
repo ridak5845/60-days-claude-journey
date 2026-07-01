@@ -28,7 +28,7 @@ Manage live disruptions like the Head of Operations by responding to real-time o
 
 # Generated HTML Application
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-31/ai-supply-chain-control-tower.html)
 
 This single-file HTML application simulates an AI-powered Supply Chain Control Tower where users manage live operational disruptions, monitor KPIs, make strategic decisions, and receive a performance evaluation at the end of each shift.
 
