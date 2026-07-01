@@ -11,19 +11,19 @@ Manage live disruptions like the Head of Operations by responding to real-time o
 
 ## 1. Welcome Screen
 
-![Welcome Screen](welcome-screen.png)
+![Welcome Screen](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-31/screenshot-1782892421109.png)
 
 ---
 
 ## 2. Live Control Tower Dashboard
 
-![Control Tower Dashboard](dashboard.png)
+![Control Tower Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-31/screenshot-1782892833161.png)
 
 ---
 
 ## 3. Final Performance Report
 
-![Final Report](final-report.png)
+![Final Report](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-31/screenshot-1782893025056.png)
 
 
 # Generated HTML Application
