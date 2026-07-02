@@ -11,32 +11,47 @@ This project was completed as **Day 32 of the 60 Days Claude AI Challenge**. The
 
 ## 1. Welcome Page
 
+![Welcome](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-32/welcome-page.png)
+
 
 ## 2. Brand Brief
+
+![Brand](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-32/brand.png)
 
 
 ## 3. Audience Analysis
 
+![Audience](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-32/audience.png)
+
 
 ## 4. Platform Strategy
+
+![Platform](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-32/platform.jpeg)
 
 
 ## 5. Content Pillars
 
+![Pillars](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-32/pillars.jpeg)
+
 
 ## 6. 30-Day Roadmap
+
+![Roadmap](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-32/roadmap.jpeg)
 
 
 ## 7. Curveball Challenge
 
+![curveball](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-32/curveball.jpeg)
+
 
 ## 8. Growth Report
 
+![Report](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-32/report.jpeg)
 
 
 # Generated HTML File
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-32/marketing_strategist.html)
 
 
 The simulator was built as a single interactive HTML application that includes:
