@@ -13,19 +13,23 @@ The application guides users through two realistic scenarios that demonstrate ho
 
 ## 1. Intro Screen
 
+![intro](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-33/Intro.jpeg)
 
 ## 2. Headline Analysis
 
+![headline](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-33/headline.jpeg)
 
 ## 3. Emotional Manipulation Analysis
 
+![Emotion](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-33/emotion.jpeg)
 
 ## 4. Media Integrity Dashboard
 
+![dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-33/dashboard.jpeg)
 
 # Generated HTML File
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-33/media_integrity_analyzer.html)
 
 The application was developed as a single-page HTML application using:
 - HTML5
