@@ -16,24 +16,30 @@ The Marketing Detective application is an interactive case-solving experience wh
 
 ### 1. Marketing Detective Home Screen
 
+![HomeScreen](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-34/welcome-33.png)
 
 ### 2. Evidence Board
 
+![Evidence](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-34/evidence.png)
 
 ### 3. Investigation Workspace
 
+![Investigation](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-34/case%20file.png)
 
 ### 4. Case Solving Screen
 
+![SOLVING SCREEN](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-34/case%20progress.jpeg)
 
 ### 5. Solved Case Report
 
+![Report](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-34/solve.png)
 
 ### 6. Completion Screen
 
+![Verdict](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-34/verdict.jpeg)
 
 # Generated HTML Application
-
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-34/marketing_detective.html)
 
 
 This single-page HTML application was built using:
