@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧩 Prompt Puzzle — Master AI Prompting Through Play</title>
+<style>
+:root{
+  --bg:#0a0e15; --surface:#12161f; --surface2:#171c27; --line:#232a37; --line-soft:#1b212c;
+  --text:#eef1f6; --text-dim:#9aa7bb; --text-faint:#5c6579;
+  --accent:#7c9cff; --accent2:#b39ddb; --green:#4cce91; --amber:#e3a544; --red:#ec5f5f;
+  --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.pp-app{max-width:960px;margin:0 auto;padding:30px 22px 70px;}
+.pp-header{text-align:center;margin-bottom:26px;}
+.pp-title{font-family:var(--display);font-size:26px;font-weight:600;margin:0 0 6px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.pp-subtitle{color:var(--text-faint);font-size:13px;}
+.pp-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px;}
+.pp-btn{font-family:var(--body);font-weight:600;font-size:13px;padding:10px 18px;border-radius:9px;border:1px solid var(--line);background:var(--surface2);color:var(--text);cursor:pointer;transition:all .15s ease;}
+.pp-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 14px rgba(124,156,255,.15);}
+.pp-btn.primary{background:linear-gradient(90deg,var(--accent),#5f7ee8);border:none;color:#fff;}
+.pp-btn.primary:hover{box-shadow:0 4px 18px rgba(124,156,255,.35);}
+.pp-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+.pp-grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.pp-opt{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;cursor:pointer;transition:all .15s ease;}
+.pp-opt:hover{border-color:var(--accent);}
+.pp-opt.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;}
+.pp-section-title{font-family:var(--display);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-faint);margin:0 0 12px;}
+.pp-progress-track{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:22px;}
+.pp-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .4s ease;}
+.pp-scorebar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:11.5px;color:var(--text-dim);margin-bottom:18px;}
+.pp-scorebar span b{color:var(--text);}
+.pp-badge{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:20px;border:1px solid var(--line);color:var(--text-faint);}
+.pp-badge.type{color:var(--accent);border-color:var(--accent);}
+.pp-scenario-meta{display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+.pp-output-box{background:var(--surface2);border:1px solid var(--line-soft);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--text-dim);margin-bottom:18px;}
+.pp-output-box b{color:var(--text);}
+.pp-dropzone{min-height:120px;border:2px dashed var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--surface2);margin-bottom:14px;transition:border-color .15s ease;}
+.pp-dropzone.over{border-color:var(--accent);background:#171c2c;}
+.pp-blockpool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.pp-block{font-size:12.5px;padding:9px 13px;border-radius:8px;background:var(--surface2);border:1px solid var(--line);cursor:grab;transition:all .15s ease;user-select:none;}
+.pp-block:hover{border-color:var(--accent);}
+.pp-block.correct-flag{border-color:var(--green);}
+.pp-block.wrong-flag{border-color:var(--red);}
+.pp-block.dragging{opacity:.4;}
+.pp-block.placed{background:var(--surface);border-color:var(--accent);cursor:pointer;}
+.pp-block .rm{margin-left:8px;color:var(--text-faint);}
+.pp-clean-block{font-size:12.5px;padding:10px 13px;border-radius:8px;background:var(--surface2);border:1px solid var(--line);margin-bottom:8px;cursor:pointer;transition:all .15s ease;position:relative;}
+.pp-clean-block:hover{border-color:var(--accent);}
+.pp-clean-block.marked{border-color:var(--red);background:#241417;text-decoration:line-through;color:var(--text-faint);}
+.pp-hint-box{font-size:12px;color:var(--amber);background:#241d10;border:1px solid #3a2f16;border-radius:8px;padding:10px 12px;margin-bottom:14px;display:none;}
+.pp-toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--accent);color:var(--text);padding:12px 18px;border-radius:10px;font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:999;animation:pp-toast-in .3s ease, pp-toast-out .3s ease 2.4s forwards;}
+@keyframes pp-toast-in{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pp-toast-out{to{opacity:0;transform:translateY(10px);}}
+.pp-flash{animation:pp-flash .5s ease;}
+@keyframes pp-flash{0%{transform:scale(1);}50%{transform:scale(1.06);}100%{transform:scale(1);}}
+.pp-report h2{font-family:var(--display);font-size:22px;margin:0 0 4px;}
+.pp-rank{font-family:var(--mono);font-size:13px;color:var(--accent2);margin-bottom:20px;}
+.pp-report-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+.pp-report-stat{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center;}
+.pp-report-stat .val{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--accent);}
+.pp-report-stat .lbl{font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;margin-top:4px;}
+.pp-dna{display:flex;gap:5px;height:22px;border-radius:6px;overflow:hidden;margin-bottom:6px;}
+.pp-dna div{flex:1;}
+.pp-dna-legend{display:flex;gap:14px;font-size:11px;color:var(--text-faint);margin-bottom:20px;flex-wrap:wrap;}
+.pp-dna-legend span{display:inline-flex;align-items:center;gap:5px;}
+.pp-dna-legend i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+.pp-feedback{font-size:13.5px;color:var(--text-dim);line-height:1.7;background:var(--surface2);border-radius:10px;padding:14px 16px;margin-bottom:16px;}
+.pp-final-prompt{font-family:var(--mono);font-size:12.5px;color:var(--green);background:#0e1a15;border:1px solid #1e3a2a;border-radius:10px;padding:14px 16px;white-space:pre-wrap;margin-bottom:20px;}
+.pp-principle{font-size:12px;color:var(--accent2);background:#191527;border:1px solid #2a2245;border-radius:8px;padding:10px 12px;margin-top:14px;}
+.pp-explain{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);display:none;}
+.pp-explain.show{display:block;}
+.pp-explain-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px;}
+.pp-explain-box{background:var(--surface2);border-radius:9px;padding:12px 14px;font-size:12px;}
+.pp-explain-box.weak{border-left:3px solid var(--red);}
+.pp-explain-box.opt{border-left:3px solid var(--green);}
+.pp-explain-box.over{border-left:3px solid var(--amber);}
+.pp-explain-box h5{margin:0 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-faint);}
+@media(max-width:640px){.pp-grid2,.pp-report-grid,.pp-explain-col{grid-template-columns:1fr;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="pp-app" id="ppApp"></div>
+
+<script>
+(function(){
+
+// ---------------- SCENARIO DATA (Data Analytics / SQL — Beginner) ----------------
+const SCENARIOS = [
+{
+  id:1,
+  title:"Monthly Sales Summary",
+  desiredOutput:"A clean SQL query that returns total sales per month for 2024, sorted chronologically, with readable column names.",
+  correctBlocks:[
+    "Write a SQL query for a 'sales' table with columns order_date and amount.",
+    "Group results by month for the year 2024.",
+    "Return columns named 'month' and 'total_sales'.",
+    "Sort results chronologically by month."
+  ],
+  distractorBlocks:[
+    "Explain what SQL is in general.",
+    "Also write the same query in Python pandas.",
+    "Make the query as short as possible, ignore readability."
+  ],
+  weakPrompt:"Write sql for monthly sales.",
+  optimizedPrompt:"Write a SQL query for a 'sales' table (columns: order_date, amount) that groups total sales by month for 2024. Return columns named 'month' and 'total_sales', sorted chronologically.",
+  overEngineeredPrompt:"As the world's greatest SQL master, write a query for a 'sales' table with order_date and amount, grouped by month for 2024, sorted, named month/total_sales, explain every clause in depth, provide 3 alternative dialects (MySQL, PostgreSQL, SQL Server), include index recommendations, discuss query optimization theory, and format the answer as a formal whitepaper.",
+  weakOutput:"SELECT SUM(amount) FROM sales GROUP BY MONTH(order_date);\n-- Ambiguous column names, no year filter, no sort order, unclear which SQL dialect.",
+  optimizedOutput:"SELECT DATE_TRUNC('month', order_date) AS month, SUM(amount) AS total_sales\nFROM sales\nWHERE EXTRACT(YEAR FROM order_date) = 2024\nGROUP BY month\nORDER BY month;",
+  principle:"Specify the table schema, exact filters, output column names, and sort order — vague prompts produce vague, unusable queries."
+},
+{
+  id:2,
+  title:"Top Customers by Revenue",
+  desiredOutput:"A SQL query that returns the top 5 customers by total revenue, with clear formatting.",
+  correctBlocks:[
+    "Write a SQL query for tables 'customers' and 'orders' joined on customer_id.",
+    "Calculate total revenue per customer using order_amount.",
+    "Return the top 5 customers only, ordered by revenue descending.",
+    "Include customer_name and total_revenue columns."
+  ],
+  distractorBlocks:[
+    "Also suggest marketing strategies for these customers.",
+    "Include every customer regardless of rank.",
+    "Use a NoSQL syntax instead of SQL."
+  ],
+  weakPrompt:"give me top customers sql",
+  optimizedPrompt:"Write a SQL query joining 'customers' and 'orders' on customer_id, calculating total revenue per customer from order_amount. Return the top 5 customers by total_revenue descending, with columns customer_name and total_revenue.",
+  overEngineeredPrompt:"Please act as a senior database architect and write the most comprehensive SQL query imaginable joining customers and orders, computing revenue, ranking customers, explaining every possible edge case, adding CTEs, window functions, performance benchmarks, and a full narrative essay on customer lifetime value theory.",
+  weakOutput:"SELECT * FROM customers, orders WHERE customers.id = orders.customer_id;\n-- No aggregation, no ranking, no limit, ambiguous join.",
+  optimizedOutput:"SELECT c.customer_name, SUM(o.order_amount) AS total_revenue\nFROM customers c\nJOIN orders o ON c.customer_id = o.customer_id\nGROUP BY c.customer_name\nORDER BY total_revenue DESC\nLIMIT 5;",
+  principle:"Name the exact tables, join keys, aggregation logic, and result limit — this removes ambiguity about what 'top' means."
+},
+{
+  id:3,
+  title:"Find Duplicate Records",
+  desiredOutput:"A SQL query that identifies duplicate email entries in a 'users' table.",
+  correctBlocks:[
+    "Write a SQL query for a 'users' table with an 'email' column.",
+    "Group by email and count occurrences.",
+    "Return only emails that appear more than once.",
+    "Include the count of duplicates per email."
+  ],
+  distractorBlocks:[
+    "Delete the duplicate rows automatically.",
+    "Explain GDPR compliance for user data.",
+    "Sort alphabetically by first name."
+  ],
+  weakPrompt:"find duplicates in users table",
+  optimizedPrompt:"Write a SQL query for a 'users' table with an 'email' column that groups by email, counts occurrences, and returns only emails appearing more than once, including the duplicate count.",
+  overEngineeredPrompt:"As an expert data quality engineer, write an exhaustive SQL solution to detect, categorize, and remediate all types of duplicate data across the users table, including fuzzy matching, Levenshtein distance calculations, a full data governance policy, and a 10-step deduplication framework with rollback strategy.",
+  weakOutput:"SELECT email FROM users;\n-- Returns all emails, doesn't identify duplicates at all.",
+  optimizedOutput:"SELECT email, COUNT(*) AS duplicate_count\nFROM users\nGROUP BY email\nHAVING COUNT(*) > 1;",
+  principle:"Use precise conditions (HAVING COUNT > 1) instead of vague verbs like 'find' — the AI needs the exact logical test."
+},
+{
+  id:4,
+  title:"Average Order Value by Region",
+  desiredOutput:"A SQL query calculating average order value grouped by customer region.",
+  correctBlocks:[
+    "Write a SQL query for tables 'orders' and 'customers' joined on customer_id.",
+    "Calculate the average order_amount per region.",
+    "Group results by the 'region' column.",
+    "Round the average to 2 decimal places."
+  ],
+  distractorBlocks:[
+    "Convert all amounts to a different currency.",
+    "Also create a bar chart image of the results.",
+    "Only look at orders from a single region."
+  ],
+  weakPrompt:"avg order value by region sql query",
+  optimizedPrompt:"Write a SQL query joining 'orders' and 'customers' on customer_id, calculating the average order_amount per region, grouped by region, with the average rounded to 2 decimal places.",
+  overEngineeredPrompt:"As a distinguished analytics consultant, produce a fully annotated SQL query with statistical variance analysis, confidence intervals, regional economic context, a full explanation of averaging methodologies, and a companion 500-word report on regional purchasing behavior.",
+  weakOutput:"SELECT region, AVG(order_amount) FROM orders JOIN customers ON orders.customer_id = customers.customer_id GROUP BY region;\n-- No rounding, unclear precision, no alias for readability.",
+  optimizedOutput:"SELECT c.region, ROUND(AVG(o.order_amount), 2) AS avg_order_value\nFROM orders o\nJOIN customers c ON o.customer_id = c.customer_id\nGROUP BY c.region;",
+  principle:"Specify formatting details like rounding and aliases — small precision requests prevent messy, hard-to-read output."
+},
+{
+  id:5,
+  title:"Inactive Customers Report",
+  desiredOutput:"A SQL query listing customers who haven't placed an order in the last 90 days.",
+  correctBlocks:[
+    "Write a SQL query for tables 'customers' and 'orders'.",
+    "Find customers with no orders in the last 90 days from today.",
+    "Return customer_id and customer_name only.",
+    "Use a LEFT JOIN or subquery to detect absence of recent orders."
+  ],
+  distractorBlocks:[
+    "Automatically send them a re-engagement email.",
+    "Include customers who ordered yesterday.",
+    "Return all columns from both tables."
+  ],
+  weakPrompt:"sql query inactive customers",
+  optimizedPrompt:"Write a SQL query for 'customers' and 'orders' tables that finds customers with no orders in the last 90 days from today, using a LEFT JOIN or subquery. Return only customer_id and customer_name.",
+  overEngineeredPrompt:"As a customer retention scientist, write an all-encompassing SQL and statistical framework to identify churn risk, segment customers into cohorts, apply RFM analysis, and produce a full churn-prediction narrative with visualizations and a 12-month retention strategy roadmap.",
+  weakOutput:"SELECT * FROM customers WHERE customer_id NOT IN (SELECT customer_id FROM orders);\n-- Ignores the 90-day window entirely, returns all columns.",
+  optimizedOutput:"SELECT c.customer_id, c.customer_name\nFROM customers c\nLEFT JOIN orders o ON c.customer_id = o.customer_id AND o.order_date >= CURRENT_DATE - INTERVAL '90 days'\nWHERE o.order_id IS NULL;",
+  principle:"Define time windows explicitly ('last 90 days') and the join type needed — 'inactive' is meaningless without a concrete time boundary."
+},
+{
+  id:6,
+  title:"Product Category Performance",
+  desiredOutput:"A SQL query showing total units sold and revenue per product category, sorted by revenue.",
+  correctBlocks:[
+    "Write a SQL query for tables 'products' and 'order_items' joined on product_id.",
+    "Calculate total units sold (SUM of quantity) and total revenue (SUM of quantity*price) per category.",
+    "Group by product category.",
+    "Sort results by total revenue descending."
+  ],
+  distractorBlocks:[
+    "Include supplier contact information.",
+    "Only show categories with negative revenue.",
+    "Convert the query to a stored procedure."
+  ],
+  weakPrompt:"sql for category sales",
+  optimizedPrompt:"Write a SQL query joining 'products' and 'order_items' on product_id, calculating total units sold and total revenue per category, grouped by category and sorted by revenue descending.",
+  overEngineeredPrompt:"As a chief revenue data scientist, write an exhaustive multi-dimensional SQL analysis of category performance including seasonality decomposition, year-over-year trend forecasting, elasticity modeling, and a full slide-deck narrative summarizing category strategy for the executive board.",
+  weakOutput:"SELECT category, quantity FROM products JOIN order_items ON products.id=order_items.product_id;\n-- No aggregation, no revenue calc, no sorting.",
+  optimizedOutput:"SELECT p.category, SUM(oi.quantity) AS units_sold, SUM(oi.quantity * oi.price) AS total_revenue\nFROM products p\nJOIN order_items oi ON p.product_id = oi.product_id\nGROUP BY p.category\nORDER BY total_revenue DESC;",
+  principle:"Break compound metrics ('units sold AND revenue') into explicit calculation instructions so nothing gets silently dropped."
+}
+];
+
+const CHALLENGE_TYPES = ["build","clean","choose"];
+
+// ---------------- STATE ----------------
+let state = {};
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function initGame(){
+  const shuffledScenarios = shuffle(SCENARIOS);
+  const rounds = shuffledScenarios.map((sc,i)=>({scenario:sc, type: CHALLENGE_TYPES[i % CHALLENGE_TYPES.length]}));
+  state = {
+    rounds,
+    current:0,
+    score:0,
+    moves:0,
+    wrongPlacements:0,
+    hintsUsed:0,
+    startTime:Date.now(),
+    roundResults:[],
+    optimizationBonus:0,
+    placedBlocks:[],
+    poolBlocks:[],
+    markedClean:[],
+    cleanBlocks:[],
+    chosenOption:null,
+    hintShown:false,
+    submitted:false
+  };
+  renderRound();
+}
+
+function totalTime(){
+  return Math.round((Date.now()-state.startTime)/1000);
+}
+
+function toast(msg){
+  const t=document.createElement('div');
+  t.className='pp-toast';
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2800);
+}
+
+function scoreBarHTML(){
+  const r = state.current+1, total = state.rounds.length;
+  return `<div class="pp-progress-track"><div class="pp-progress-fill" style="width:${(state.current/total)*100}%"></div></div>
+  <div class="pp-scorebar">
+    <span>Round <b>${r}/${total}</b></span>
+    <span>Score <b>${state.score}</b></span>
+    <span>Moves <b>${state.moves}</b></span>
+    <span>Wrong <b>${state.wrongPlacements}</b></span>
+    <span>Hints <b>${state.hintsUsed}</b></span>
+    <span>Time <b>${totalTime()}s</b></span>
+  </div>`;
+}
+
+// ---------------- RENDER ROUND ----------------
+function renderRound(){
+  const round = state.rounds[state.current];
+  const sc = round.scenario;
+  const type = round.type;
+  state.placedBlocks=[];
+  state.markedClean=[];
+  state.chosenOption=null;
+  state.hintShown=false;
+  state.submitted=false;
+
+  let bodyHTML = "";
+  if(type==="build") bodyHTML = renderBuild(sc);
+  else if(type==="clean") bodyHTML = renderClean(sc);
+  else if(type==="choose") bodyHTML = renderChoose(sc);
+
+  const typeLabel = type==="build"?"Build the Prompt":type==="clean"?"Clean the Prompt":"Choose the Best Prompt";
+
+  document.getElementById('ppApp').innerHTML = `
+    <div class="pp-header">
+      <div class="pp-title">🧩 Prompt Puzzle</div>
+      <div class="pp-subtitle">Master AI Prompting Through Play — Data Analytics / SQL · Beginner</div>
+    </div>
+    ${scoreBarHTML()}
+    <div class="pp-card" id="roundCard">
+      <div class="pp-scenario-meta">
+        <span class="pp-badge type">${typeLabel}</span>
+        <span class="pp-badge">${sc.title}</span>
+      </div>
+      <div class="pp-output-box"><b>Desired Output:</b> ${sc.desiredOutput}</div>
+      <div class="pp-hint-box" id="hintBox"></div>
+      ${bodyHTML}
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+        <button class="pp-btn" id="hintBtn">💡 Hint (-2 pts)</button>
+        <button class="pp-btn primary" id="submitBtn">Submit Answer</button>
+      </div>
+      <div class="pp-explain" id="explainBox"></div>
+    </div>
+  `;
+
+  document.getElementById('hintBtn').onclick = showHint;
+  document.getElementById('submitBtn').onclick = ()=>submitRound(type, sc);
+
+  if(type==="build") wireBuildDnD();
+  if(type==="clean") wireCleanClicks();
+  if(type==="choose") wireChooseClicks();
+}
+
+function showHint(){
+  const round = state.rounds[state.current];
+  const sc = round.scenario;
+  state.hintsUsed++;
+  state.hintShown=true;
+  const box=document.getElementById('hintBox');
+  box.style.display='block';
+  box.textContent = "💡 " + sc.principle;
+  toast("Hint used (-2 points)");
+  document.getElementById('hintBtn').disabled=true;
+}
+
+// ----- BUILD THE PROMPT -----
+function renderBuild(sc){
+  const all = shuffle([...sc.correctBlocks, ...sc.distractorBlocks]);
+  state.poolBlocks = all;
+  return `
+    <div class="pp-section-title">Drag the correct blocks into the prompt zone, in order</div>
+    <div class="pp-dropzone" id="dropzone"></div>
+    <div class="pp-section-title">Available Blocks</div>
+    <div class="pp-blockpool" id="blockpool">
+      ${all.map((b,i)=>`<div class="pp-block" draggable="true" data-idx="${i}" data-text="${escapeAttr(b)}">${b}</div>`).join('')}
+    </div>
+  `;
+}
+
+function escapeAttr(s){return s.replace(/"/g,'&quot;');}
+
+function wireBuildDnD(){
+  const pool = document.getElementById('blockpool');
+  const zone = document.getElementById('dropzone');
+  let dragged=null;
+
+  function attachDrag(el){
+    el.addEventListener('dragstart',(e)=>{dragged=el; el.classList.add('dragging');});
+    el.addEventListener('dragend',()=>{el.classList.remove('dragging');});
+    el.addEventListener('click',()=>{
+      if(el.parentElement===pool){ moveToZone(el); } else { moveToPool(el); }
+    });
+  }
+  pool.querySelectorAll('.pp-block').forEach(attachDrag);
+
+  zone.addEventListener('dragover',(e)=>{e.preventDefault(); zone.classList.add('over');});
+  zone.addEventListener('dragleave',()=>zone.classList.remove('over'));
+  zone.addEventListener('drop',(e)=>{
+    e.preventDefault(); zone.classList.remove('over');
+    if(dragged) moveToZone(dragged);
+  });
+  pool.addEventListener('dragover',(e)=>e.preventDefault());
+  pool.addEventListener('drop',(e)=>{
+    e.preventDefault();
+    if(dragged && dragged.parentElement===zone) moveToPool(dragged);
+  });
+
+  function moveToZone(el){
+    el.classList.add('placed');
+    zone.appendChild(el);
+    state.moves++;
+    refreshScoreBarDOM();
+  }
+  function moveToPool(el){
+    el.classList.remove('placed');
+    pool.appendChild(el);
+    state.moves++;
+    refreshScoreBarDOM();
+  }
+}
+
+function refreshScoreBarDOM(){
+  const app = document.getElementById('ppApp');
+  const oldTrack = app.querySelector('.pp-progress-track');
+  const oldBar = app.querySelector('.pp-scorebar');
+  if(!oldTrack || !oldBar) return;
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = scoreBarHTML();
+  oldTrack.replaceWith(wrapper.querySelector('.pp-progress-track'));
+  oldBar.replaceWith(wrapper.querySelector('.pp-scorebar'));
+}
+
+// ----- CLEAN THE PROMPT -----
+function renderClean(sc){
+  const lines = shuffle([...sc.correctBlocks, ...sc.distractorBlocks]);
+  state.cleanBlocks = lines;
+  return `
+    <div class="pp-section-title">This prompt has unnecessary / harmful lines. Click to mark lines for removal, then submit.</div>
+    <div id="cleanList">
+      ${lines.map((l,i)=>`<div class="pp-clean-block" data-idx="${i}">${l}</div>`).join('')}
+    </div>
+  `;
+}
+
+function wireCleanClicks(){
+  const list = document.getElementById('cleanList');
+  if(!list) return;
+  list.querySelectorAll('.pp-clean-block').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const idx = parseInt(el.dataset.idx);
+      el.classList.toggle('marked');
+      if(el.classList.contains('marked')){
+        state.markedClean.push(idx);
+      } else {
+        state.markedClean = state.markedClean.filter(i=>i!==idx);
+      }
+      state.moves++;
+      refreshScoreBarDOM();
+    });
+  });
+}
+
+// ----- CHOOSE THE BEST PROMPT -----
+function renderChoose(sc){
+  const opts = shuffle([
+    {key:"weak", text:sc.weakPrompt},
+    {key:"optimized", text:sc.optimizedPrompt},
+    {key:"over", text:sc.overEngineeredPrompt}
+  ]);
+  state.chooseOptions = opts;
+  return `
+    <div class="pp-section-title">Which prompt would produce the best, most usable result?</div>
+    <div class="pp-grid2">
+      ${opts.map((o,i)=>`<div class="pp-opt" data-key="${o.key}" data-idx="${i}"><b style="font-family:var(--mono);font-size:11px;color:var(--text-faint);">OPTION ${i+1}</b><div style="margin-top:6px;">${o.text}</div></div>`).join('')}
+    </div>
+  `;
+}
+
+function wireChooseClicks(){
+  const opts = document.querySelectorAll('.pp-opt');
+  if(!opts.length) return;
+  opts.forEach(el=>{
+    el.addEventListener('click',()=>{
+      document.querySelectorAll('.pp-opt').forEach(o=>o.classList.remove('selected'));
+      el.classList.add('selected');
+      state.chosenOption = el.dataset.key;
+      state.moves++;
+      refreshScoreBarDOM();
+    });
+  });
+}
+
+// ---------------- SUBMIT / SCORING ----------------
+function submitRound(type, sc){
+  if(state.submitted) return;
+  let accuracy=0, wrongThisRound=0, bonus=0;
+  let resultText="";
+
+  if(type==="build"){
+    const zone = document.getElementById('dropzone');
+    const placed = [...zone.querySelectorAll('.pp-block')].map(b=>b.dataset.text);
+    const correctSet = sc.correctBlocks;
+    let correctCount=0;
+    placed.forEach((p)=>{
+      if(correctSet.includes(p)) correctCount++;
+      else wrongThisRound++;
+    });
+    let orderedRight = 0;
+    for(let i=0;i<Math.min(placed.length, correctSet.length); i++){
+      if(placed[i]===correctSet[i]) orderedRight++;
+    }
+    accuracy = Math.round((correctCount/correctSet.length)*100);
+    if(orderedRight===correctSet.length && placed.length===correctSet.length){
+      bonus += 10;
+      resultText = "Perfect block order! All correct blocks placed correctly.";
+    } else {
+      resultText = `${correctCount}/${correctSet.length} correct blocks placed, ${wrongThisRound} incorrect blocks included.`;
+    }
+  } else if(type==="clean"){
+    const distractorIdxs = [];
+    state.cleanBlocks.forEach((line,i)=>{ if(sc.distractorBlocks.includes(line)) distractorIdxs.push(i); });
+    const marked = state.markedClean;
+    let correctMarks=0;
+    marked.forEach(i=>{ if(distractorIdxs.includes(i)) correctMarks++; else wrongThisRound++; });
+    const missed = distractorIdxs.filter(i=>!marked.includes(i)).length;
+    accuracy = Math.round((correctMarks/distractorIdxs.length)*100);
+    if(correctMarks===distractorIdxs.length && wrongThisRound===0){
+      bonus += 10;
+      resultText = "All noise removed, nothing valid deleted — clean prompt achieved!";
+    } else {
+      resultText = `Removed ${correctMarks}/${distractorIdxs.length} noisy lines correctly, ${missed} missed, ${wrongThisRound} valid lines wrongly removed.`;
+    }
+  } else if(type==="choose"){
+    if(!state.chosenOption){
+      toast("Please select an option first.");
+      return;
+    }
+    if(state.chosenOption==="optimized"){
+      accuracy=100; bonus+=10;
+      resultText = "Correct! The optimized prompt balances clarity and specificity.";
+    } else if(state.chosenOption==="weak"){
+      accuracy=20;
+      wrongThisRound=1;
+      resultText = "That prompt is too vague — it under-specifies the task.";
+    } else {
+      accuracy=40;
+      wrongThisRound=1;
+      resultText = "That prompt is over-engineered — excessive, unfocused instructions dilute the task.";
+    }
+  }
+
+  if(state.hintShown) accuracy = Math.max(0, accuracy-10);
+  const roundScore = Math.max(0, Math.round(accuracy*0.9) + bonus - (wrongThisRound*3));
+  state.score += roundScore;
+  state.wrongPlacements += wrongThisRound;
+  state.optimizationBonus += bonus;
+  state.roundResults.push({scenario:sc.title, type, accuracy, roundScore});
+  state.submitted = true;
+
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('hintBtn').disabled = true;
+
+  const explainBox = document.getElementById('explainBox');
+  explainBox.classList.add('show');
+  explainBox.innerHTML = `
+    <div class="pp-section-title">Result</div>
+    <div style="font-size:13px;color:var(--text-dim);margin-bottom:10px;">${resultText}<br>Accuracy: <b style="color:var(--text)">${accuracy}%</b> · Round Score: <b style="color:var(--green)">+${roundScore}</b></div>
+    <div class="pp-explain-col">
+      <div class="pp-explain-box weak"><h5>Weak Prompt → Weak Output</h5><div><i>${sc.weakPrompt}</i></div><div style="margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--text-faint);white-space:pre-wrap;">${sc.weakOutput}</div></div>
+      <div class="pp-explain-box opt"><h5>Optimized Prompt → Great Output</h5><div><i>${sc.optimizedPrompt}</i></div><div style="margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--text-faint);white-space:pre-wrap;">${sc.optimizedOutput}</div></div>
+    </div>
+    <div class="pp-principle">📐 Prompt Principle: ${sc.principle}</div>
+    <div style="margin-top:16px;"><button class="pp-btn primary" id="nextBtn">${state.current<state.rounds.length-1?"Next Round →":"View Report →"}</button></div>
+  `;
+  document.getElementById('nextBtn').onclick = nextRound;
+  document.getElementById('roundCard').classList.add('pp-flash');
+  toast(accuracy>=80?"🔥 Great prompting!":accuracy>=50?"👍 Decent attempt":"⚠️ Needs work");
+  refreshScoreBarDOM();
+}
+
+function nextRound(){
+  if(state.current < state.rounds.length-1){
+    state.current++;
+    renderRound();
+  } else {
+    renderReport();
+  }
+}
+
+// ---------------- REPORT ----------------
+function computeRank(avgAcc){
+  if(avgAcc>=90) return {rank:"🏆 Prompt Grandmaster", rating:"S"};
+  if(avgAcc>=75) return {rank:"🥇 Prompt Architect", rating:"A"};
+  if(avgAcc>=60) return {rank:"🥈 Prompt Engineer", rating:"B"};
+  if(avgAcc>=40) return {rank:"🥉 Prompt Apprentice", rating:"C"};
+  return {rank:"🌱 Prompt Novice", rating:"D"};
+}
+
+function renderReport(){
+  const totalRounds = state.roundResults.length;
+  const avgAccuracy = Math.round(state.roundResults.reduce((s,r)=>s+r.accuracy,0)/totalRounds);
+  const {rank,rating} = computeRank(avgAccuracy);
+  const time = totalTime();
+
+  const clarity = Math.min(100, avgAccuracy);
+  const specificity = Math.max(10, 100 - state.wrongPlacements*8);
+  const structure = Math.max(10, 100 - state.hintsUsed*10);
+  const efficiency = Math.max(10, 100 - Math.round(time/5));
+  const dna = [
+    {label:"Clarity", val:clarity, color:"var(--accent)"},
+    {label:"Specificity", val:specificity, color:"var(--green)"},
+    {label:"Structure", val:structure, color:"var(--amber)"},
+    {label:"Efficiency", val:efficiency, color:"var(--accent2)"}
+  ];
+
+  let feedback = "";
+  if(avgAccuracy>=80) feedback = "You consistently identify the precise, well-scoped prompt over vague or bloated alternatives. You understand that specificity (schemas, formats, constraints) is what separates usable AI output from guesswork.";
+  else if(avgAccuracy>=55) feedback = "You're building solid instincts for structured prompting, but occasionally miss a specificity detail or get pulled toward over-engineered phrasing. Focus on naming exact outputs and constraints every time.";
+  else feedback = "You're still developing a feel for what makes a prompt 'good.' Practice spotting the difference between vague requests and prompts that specify schema, format, and scope explicitly.";
+
+  const nextMilestone = avgAccuracy>=90 ? "Try Advanced difficulty to test prompt design under ambiguous real-world constraints." : avgAccuracy>=60 ? "Aim for 90%+ accuracy with zero hints to unlock Prompt Grandmaster rank." : "Replay this set focusing on reading the 'Desired Output' carefully before choosing blocks.";
+
+  const finalOptimized = SCENARIOS[0].optimizedPrompt;
+
+  document.getElementById('ppApp').innerHTML = `
+    <div class="pp-header">
+      <div class="pp-title">🧩 Prompt Puzzle</div>
+      <div class="pp-subtitle">Prompt Performance Report</div>
+    </div>
+    <div class="pp-card pp-report">
+      <h2>${rating} Rating — ${state.score} pts</h2>
+      <div class="pp-rank">${rank}</div>
+      <div class="pp-report-grid">
+        <div class="pp-report-stat"><div class="val">${avgAccuracy}%</div><div class="lbl">Accuracy</div></div>
+        <div class="pp-report-stat"><div class="val">${time}s</div><div class="lbl">Time</div></div>
+        <div class="pp-report-stat"><div class="val">${state.moves}</div><div class="lbl">Moves</div></div>
+        <div class="pp-report-stat"><div class="val">${state.wrongPlacements}</div><div class="lbl">Wrong Placements</div></div>
+        <div class="pp-report-stat"><div class="val">${state.hintsUsed}</div><div class="lbl">Hints Used</div></div>
+        <div class="pp-report-stat"><div class="val">+${state.optimizationBonus}</div><div class="lbl">Optimization Bonus</div></div>
+      </div>
+      <div class="pp-section-title">Prompt DNA</div>
+      <div class="pp-dna">
+        ${dna.map(d=>`<div style="background:${d.color};opacity:${0.35+d.val/200}"></div>`).join('')}
+      </div>
+      <div class="pp-dna-legend">
+        ${dna.map(d=>`<span><i style="background:${d.color}"></i>${d.label}: ${d.val}%</span>`).join('')}
+      </div>
+      <div class="pp-section-title">Feedback</div>
+      <div class="pp-feedback">${feedback}</div>
+      <div class="pp-section-title">Next Milestone</div>
+      <div class="pp-feedback">🎯 ${nextMilestone}</div>
+      <div class="pp-section-title">Example Final Optimized Prompt</div>
+      <div class="pp-final-prompt">${finalOptimized}</div>
+      <button class="pp-btn primary" id="replayBtn">🔁 Replay with New Scenarios</button>
+    </div>
+  `;
+  document.getElementById('replayBtn').onclick = initGame;
+}
+
+// ---------------- BOOT ----------------
+initGame();
+
+})();
+</script>
+</body>
+</html>
