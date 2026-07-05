@@ -11,38 +11,36 @@
 
  **Prompt Puzzle – Round 1**
 
- ![Round1](
+ ![Round1](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-35/round%201.jpeg)
  
 **Prompt Puzzle – Round 2**
 
-![round2](
+![round2](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-35/round%202.jpeg)
 
 **Prompt Puzzle – Round 3**
 
-![round3](
+![round3](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-35/round3.jpeg)
 
 **Prompt Puzzle – Round 4**
 
-![round4](
+![round4](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-35/round%204.jpeg)
 
 **Prompt Puzzle – Round 5**
 
-![round5](
+![round5](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-35/round%205.jpeg)
 
 **Prompt Puzzle – Round 6**
 
-![round6](
+![round6](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-35/round6.jpeg)
 
 **Prompt Performance Report**
 
-![report](
-
-
+![report](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-35/report-35.jpeg)
 
 
 ## 📄 Generated HTML File
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-35/prompt_puzzle.html)
 
 ## 📊 Prompt Performance Report
 
