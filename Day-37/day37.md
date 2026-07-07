@@ -18,34 +18,34 @@ This exercise helped strengthen my understanding of organizational workflows, ac
 
 ## Task Compass Home & Final Results
 
-![Task Compass Results](results.png)
+![Task Compass Results](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-37/result.jpeg)
 
 
 
 ## Ownership Challenges
 
-![Ownership Challenge 1](ownership-1.png)
+![Ownership Challenge 1](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-37/q1.jpeg)
 
-![Ownership Challenge 2](ownership-2.png)
+![Ownership Challenge 2](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-37/q2.png)
 
-![Ownership Challenge 3](ownership-3.png)
+![Ownership Challenge 3](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-37/q4.png)
 
 
 
 ## Task Routing
 
-![Task Routing](routing.png)
+![Task Routing](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-37/s2q2.png)
 
 
 
 ## Collaboration Challenge
 
-![Collaboration Challenge](collaboration.png)
+![Collaboration Challenge](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-37/s3q3.png)
 
 
 # Generated HTML File
 
-[HTML FILE](
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-37/task_compass.html)
 
 
 
