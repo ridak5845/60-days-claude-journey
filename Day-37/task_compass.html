@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Compass — Corporate Office</title>
+<style>
+  :root{
+    --bg:#0a0e15;
+    --surface:rgba(255,255,255,0.04);
+    --surface-2:rgba(255,255,255,0.07);
+    --line:rgba(255,255,255,0.09);
+    --text:#eceef3;
+    --text-dim:#9aa3b5;
+    --text-faint:#5d6478;
+    --accent:#7c9dfa;
+    --accent2:#b39ddb;
+    --hr:#f2a154;
+    --fin:#4cce91;
+    --it:#6ea8fe;
+    --ops:#e3a544;
+    --legal:#ec5f5f;
+    --mkt:#e07bb0;
+    --ea:#7fd6c8;
+    --dm:#c9a5f0;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+    --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(124,157,250,0.14), transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, rgba(179,157,219,0.12), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    font-size:15px;
+    line-height:1.55;
+  }
+  .tc-app{max-width:920px;margin:0 auto;padding:28px 20px 70px;}
+
+  /* Header */
+  .tc-header{text-align:center;margin-bottom:22px;}
+  .tc-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px;}
+  .tc-title{font-family:var(--display);font-size:32px;font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .tc-subtitle{color:var(--text-dim);font-size:14px;margin:0;}
+
+  /* Progress */
+  .tc-progress{display:flex;gap:8px;justify-content:center;margin:22px 0 8px;}
+  .tc-progress-step{flex:1;max-width:160px;height:6px;border-radius:4px;background:var(--surface);overflow:hidden;position:relative;}
+  .tc-progress-step .fill{position:absolute;inset:0;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .5s ease;}
+  .tc-progress-labels{display:flex;justify-content:center;gap:8px;margin-bottom:26px;}
+  .tc-progress-labels span{flex:1;max-width:160px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint);}
+  .tc-progress-labels span.active{color:var(--accent);}
+
+  /* Card surface base */
+  .tc-panel{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:26px;
+    backdrop-filter:blur(10px);
+    animation:tcFadeIn .4s ease;
+  }
+  @keyframes tcFadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  .tc-stage-label{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  .tc-stage-heading{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 4px;}
+  .tc-stage-desc{color:var(--text-dim);font-size:13.5px;margin:0 0 20px;}
+
+  /* Ticket / task card */
+  .tc-ticket{
+    background:linear-gradient(135deg, rgba(124,157,250,0.10), rgba(179,157,219,0.06));
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 20px;
+    margin-bottom:22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .tc-ticket::before{
+    content:"";position:absolute;top:0;left:0;width:4px;height:100%;
+    background:linear-gradient(180deg,var(--accent),var(--accent2));
+  }
+  .tc-ticket-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);margin-bottom:8px;}
+  .tc-ticket-text{font-size:15.5px;color:var(--text);font-weight:500;}
+
+  /* Role cards */
+  .tc-role-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:22px;}
+  .tc-role-card{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 12px;
+    text-align:center;
+    cursor:grab;
+    user-select:none;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease, opacity .15s ease;
+    position:relative;
+  }
+  .tc-role-card:hover{transform:translateY(-3px);border-color:var(--role-color,var(--accent));box-shadow:0 8px 22px -10px var(--role-color,var(--accent));}
+  .tc-role-card.dragging{opacity:.35;}
+  .tc-role-card.used{opacity:.3;pointer-events:none;}
+  .tc-role-icon{font-size:26px;margin-bottom:8px;display:block;}
+  .tc-role-name{font-family:var(--display);font-size:12.5px;font-weight:600;color:var(--text);}
+  .tc-role-card .dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--role-color,var(--accent));}
+
+  /* Drop slot(s) */
+  .tc-slot-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:20px;}
+  .tc-slot{
+    min-width:150px;min-height:78px;flex:1;
+    border:2px dashed var(--line);
+    border-radius:14px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:10px;text-align:center;
+    transition:border-color .2s ease, background .2s ease, transform .15s ease;
+    font-family:var(--mono);font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;
+  }
+  .tc-slot.highlight{border-color:var(--accent);background:rgba(124,157,250,0.08);}
+  .tc-slot.filled{border-style:solid;border-color:var(--role-color,var(--accent));background:var(--surface-2);}
+  .tc-slot.filled .tc-role-icon{font-size:22px;margin-bottom:4px;}
+  .tc-slot.filled .tc-role-name{color:var(--text);font-size:12px;}
+  .tc-slot.dragover{border-color:var(--accent2);transform:scale(1.03);}
+  .tc-slot-arrow{color:var(--text-faint);font-size:18px;}
+
+  .tc-slot-step-label{font-size:9.5px;color:var(--text-faint);margin-bottom:4px;}
+
+  /* Buttons */
+  .tc-btn{
+    font-family:var(--display);font-weight:600;font-size:13.5px;
+    padding:12px 22px;border-radius:11px;border:1px solid var(--line);
+    background:var(--surface-2);color:var(--text);cursor:pointer;
+    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .tc-btn:hover{transform:translateY(-1px);border-color:var(--accent);}
+  .tc-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+  .tc-btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#0a0e15;border:none;}
+  .tc-btn.primary:hover{filter:brightness(1.08);}
+  .tc-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:8px;}
+
+  /* Reveal panel */
+  .tc-reveal{
+    margin-top:20px;padding-top:20px;border-top:1px solid var(--line);
+    animation:tcFadeIn .4s ease;
+  }
+  .tc-reveal-row{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;}
+  .tc-reveal-label{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint);min-width:110px;padding-top:2px;}
+  .tc-reveal-value{font-size:13.5px;color:var(--text);flex:1;}
+  .tc-chip{display:inline-block;font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface-2);border:1px solid var(--line);margin:2px 4px 2px 0;color:var(--text);}
+
+  /* Multi-select role for stage 3 */
+  .tc-role-card.selected{border-color:var(--role-color,var(--accent));background:var(--surface-2);box-shadow:0 0 0 2px var(--role-color,var(--accent)) inset;}
+  .tc-role-card.selected .tc-role-name{color:var(--text);}
+  .tc-select-hint{font-size:12px;color:var(--text-faint);margin-bottom:14px;}
+
+  /* Toast / celebration */
+  .tc-toast{
+    position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--surface-2);border:1px solid var(--line);border-radius:12px;
+    padding:12px 20px;font-size:13px;color:var(--text);opacity:0;pointer-events:none;
+    transition:all .35s ease;z-index:50;backdrop-filter:blur(8px);
+  }
+  .tc-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* Results */
+  .tc-results-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0;}
+  @media(max-width:640px){.tc-results-grid{grid-template-columns:1fr;}}
+  .tc-bar-row{margin-bottom:16px;}
+  .tc-bar-label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--text-dim);margin-bottom:6px;font-family:var(--mono);}
+  .tc-bar-track{height:10px;border-radius:6px;background:var(--surface-2);overflow:hidden;}
+  .tc-bar-fill{height:100%;border-radius:6px;width:0%;transition:width 1s cubic-bezier(.2,.8,.2,1);background:linear-gradient(90deg,var(--accent),var(--accent2));}
+
+  .tc-radar-wrap{display:flex;align-items:center;justify-content:center;}
+
+  .tc-reflection-list{display:flex;flex-direction:column;gap:14px;margin-top:6px;}
+  .tc-reflection-item{padding:14px 16px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);}
+  .tc-reflection-title{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:6px;}
+  .tc-reflection-text{font-size:13.5px;color:var(--text);}
+  .tc-insight{
+    margin-top:22px;padding:18px 20px;border-radius:14px;
+    background:linear-gradient(135deg, rgba(124,157,250,0.12), rgba(179,157,219,0.08));
+    border:1px solid var(--line);font-style:italic;font-size:14px;color:var(--text);
+  }
+
+  .tc-restart-wrap{text-align:center;margin-top:30px;}
+
+  .tc-confetti{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden;}
+  .tc-confetti span{
+    position:absolute;top:-20px;width:8px;height:14px;opacity:.9;
+    animation:tcFall linear forwards;
+    border-radius:2px;
+  }
+  @keyframes tcFall{to{transform:translateY(110vh) rotate(360deg);opacity:0;}}
+
+  .tc-intro-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:18px 0 22px;}
+  .tc-intro-card{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer;text-align:left;transition:transform .15s ease,border-color .15s ease;}
+  .tc-intro-card:hover{transform:translateY(-3px);border-color:var(--accent);}
+  .tc-intro-card h4{margin:0 0 4px;font-family:var(--display);font-size:13.5px;}
+  .tc-intro-card p{margin:0;font-size:11.5px;color:var(--text-faint);}
+
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+
+  @media(max-width:600px){
+    .tc-title{font-size:24px;}
+    .tc-panel{padding:18px;}
+    .tc-role-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
+  }
+</style>
+</head>
+<body>
+
+<div class="tc-app" id="tcApp">
+
+  <div class="tc-header">
+    <div class="tc-eyebrow">Task Compass · Corporate Office</div>
+    <h1 class="tc-title">Task Compass</h1>
+    <p class="tc-subtitle">Learn how work flows through real organizations.</p>
+  </div>
+
+  <div class="tc-progress" id="tcProgressBars">
+    <div class="tc-progress-step"><div class="fill"></div></div>
+    <div class="tc-progress-step"><div class="fill"></div></div>
+    <div class="tc-progress-step"><div class="fill"></div></div>
+  </div>
+  <div class="tc-progress-labels" id="tcProgressLabels">
+    <span data-stage="1">Ownership</span>
+    <span data-stage="2">Routing</span>
+    <span data-stage="3">Collaboration</span>
+  </div>
+
+  <div id="tcMain"></div>
+
+</div>
+
+<div class="tc-toast" id="tcToast"></div>
+<div class="tc-confetti" id="tcConfetti"></div>
+
+<script>
+(function(){
+
+/* ============ DATA ============ */
+
+var ROLES = [
+  {id:'hr',    name:'HR', icon:'🧑\u200d💼', color:'var(--hr)',   full:'Human Resources'},
+  {id:'fin',   name:'Finance', icon:'💰', color:'var(--fin)',  full:'Finance'},
+  {id:'it',    name:'IT Support', icon:'🖥️', color:'var(--it)', full:'IT Support'},
+  {id:'ops',   name:'Operations Mgr', icon:'⚙️', color:'var(--ops)', full:'Operations Manager'},
+  {id:'legal', name:'Legal & Compliance', icon:'⚖️', color:'var(--legal)', full:'Legal & Compliance'},
+  {id:'mkt',   name:'Marketing & Comms', icon:'📣', color:'var(--mkt)', full:'Marketing & Communications'},
+  {id:'ea',    name:'Executive Assistant', icon:'🗂️', color:'var(--ea)', full:'Executive Assistant'},
+  {id:'dm',    name:'Dept. Manager', icon:'🧭', color:'var(--dm)', full:'Department Manager'}
+];
+function roleById(id){ for(var i=0;i<ROLES.length;i++){ if(ROLES[i].id===id) return ROLES[i]; } return null; }
+
+var STAGE1 = [
+  {
+    ticket:"An employee's laptop can't connect to the office VPN before a client call.",
+    owner:'it',
+    why:"IT Support owns technical access issues like VPN connectivity — they have the tools and permissions to diagnose and fix network access problems.",
+    assist:['ops']
+  },
+  {
+    ticket:"A new hire's paperwork and benefits enrollment still isn't complete a week after their start date.",
+    owner:'hr',
+    why:"HR owns onboarding, contracts, and benefits enrollment — it's core to their function of managing the employee lifecycle.",
+    assist:['fin','it']
+  },
+  {
+    ticket:"The Marketing department's quarterly expenses have gone over budget.",
+    owner:'fin',
+    why:"Finance owns budget tracking and spending oversight across departments, even when the overspend originates elsewhere.",
+    assist:['dm']
+  },
+  {
+    ticket:"A vendor contract needs to be reviewed before anyone signs it.",
+    owner:'legal',
+    why:"Legal & Compliance owns contract review to catch liability, compliance, and risk issues before commitments are made.",
+    assist:['fin','dm']
+  },
+  {
+    ticket:"Leadership wants to announce a company reorg at an internal town hall.",
+    owner:'mkt',
+    why:"Marketing & Communications owns crafting and delivering internal messaging so it lands clearly and consistently.",
+    assist:['ea','hr']
+  },
+  {
+    ticket:"An employee has filed a harassment complaint against a colleague.",
+    owner:'hr',
+    why:"HR owns employee relations issues like this, since they're trained to investigate fairly and confidentially.",
+    assist:['legal']
+  },
+  {
+    ticket:"The CEO's calendar needs to be coordinated around an important client visit.",
+    owner:'ea',
+    why:"The Executive Assistant owns calendar and logistics coordination for leadership — it's central to the role.",
+    assist:['ops']
+  },
+  {
+    ticket:"The office supply and facilities budget is running low mid-quarter.",
+    owner:'ops',
+    why:"Operations Manager owns day-to-day facilities and supply logistics, including catching budget shortfalls early.",
+    assist:['fin']
+  },
+  {
+    ticket:"A department's reports keep arriving late, causing repeated delays downstream.",
+    owner:'dm',
+    why:"The Department Manager owns their team's workflow and output — they're closest to the cause and best placed to fix it.",
+    assist:['ops']
+  }
+];
+
+var STAGE2 = [
+  {
+    ticket:"An employee submits a request for reimbursement after a business trip.",
+    steps:['ea','dm','fin'],
+    explain:"Requests like this typically start with whoever helps compile documentation (Executive Assistant), then need manager sign-off before Finance processes payment — this keeps spending accountable without slowing every small request down."
+  },
+  {
+    ticket:"IT discovers unusual activity suggesting a possible security incident.",
+    steps:['it','ops','legal','ea','mkt'],
+    explain:"Security incidents usually route through IT first for containment, then Operations for internal coordination, Legal to assess exposure and obligations, the Executive Assistant to notify leadership, and finally Marketing & Communications if any external statement becomes necessary. Each step adds judgment the previous one doesn't have."
+  },
+  {
+    ticket:"HR needs to roll out a new company-wide remote work policy.",
+    steps:['hr','legal','dm','mkt'],
+    explain:"Policy changes usually originate in HR, get checked by Legal for compliance risk, are reviewed by Department Managers who'll need to enforce them day-to-day, and are finally communicated broadly by Marketing & Communications so the rollout is consistent."
+  }
+];
+
+var STAGE3 = [
+  {
+    ticket:"An employee satisfaction survey shows a sharp decline this quarter.",
+    owner:'hr',
+    supporting:['dm','ops','mkt'],
+    reasoning:"HR owns culture and engagement, but a sharp decline is rarely one thing — Department Managers see team-level friction firsthand, Operations may reveal environment or workload issues, and Marketing & Communications can help shape how leadership responds and communicates next steps.",
+    flow:"HR gathers survey data → shares findings with Department Managers for team-level context → loops in Operations on workload/environment factors → Marketing & Comms helps message the response back to staff."
+  },
+  {
+    ticket:"A data breach affecting employee records is discovered.",
+    owner:'it',
+    supporting:['legal','hr','mkt'],
+    reasoning:"IT owns containment and technical investigation, but a breach involving employee data also carries legal exposure (Legal & Compliance), affects the people whose data was exposed (HR), and may require an external or internal statement (Marketing & Communications).",
+    flow:"IT contains and investigates → Legal assesses obligations and risk → HR prepares to support affected employees → Marketing & Comms drafts any necessary communication."
+  },
+  {
+    ticket:"The company is expanding into a new office location.",
+    owner:'ops',
+    supporting:['fin','hr','legal'],
+    reasoning:"Operations owns the logistics of standing up a new location, but it can't move without Finance approving budget, HR planning staffing and relocation, and Legal reviewing leases and local compliance.",
+    flow:"Operations scopes the plan → Finance confirms budget → HR plans staffing → Legal reviews contracts and local requirements."
+  }
+];
+
+/* ============ STATE ============ */
+
+var state = {
+  stage:1,
+  s1Index:0, s1Answers:[],
+  s2Index:0, s2Answers:[],
+  s3Index:0, s3Answers:[],
+  dragRoleId:null
+};
+
+var mainEl = document.getElementById('tcMain');
+
+/* ============ UTIL ============ */
+
+function el(tag, cls, html){
+  var e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+function showToast(msg){
+  var t = document.getElementById('tcToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800);
+}
+
+function updateProgress(){
+  var bars = document.querySelectorAll('#tcProgressBars .fill');
+  var totalPerStage = [STAGE1.length, STAGE2.length, STAGE3.length];
+  var idxPerStage = [state.s1Index, state.s2Index, state.s3Index];
+  for(var i=0;i<3;i++){
+    var stageNum = i+1;
+    var pct = 0;
+    if(state.stage > stageNum) pct = 100;
+    else if(state.stage === stageNum) pct = Math.min(100, (idxPerStage[i]/totalPerStage[i])*100);
+    bars[i].style.width = pct + '%';
+  }
+  var labels = document.querySelectorAll('#tcProgressLabels span');
+  labels.forEach(function(l){
+    l.classList.toggle('active', parseInt(l.getAttribute('data-stage'),10) === state.stage);
+  });
+}
+
+function roleCardEl(role, opts){
+  opts = opts || {};
+  var card = el('div', 'tc-role-card');
+  card.style.setProperty('--role-color', role.color);
+  card.setAttribute('draggable','true');
+  card.setAttribute('data-role', role.id);
+  card.innerHTML =
+    '<span class="dot"></span>' +
+    '<span class="tc-role-icon">'+role.icon+'</span>' +
+    '<span class="tc-role-name">'+role.name+'</span>';
+
+  card.addEventListener('dragstart', function(e){
+    state.dragRoleId = role.id;
+    card.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    try{ e.dataTransfer.setData('text/plain', role.id); }catch(err){}
+  });
+  card.addEventListener('dragend', function(){
+    card.classList.remove('dragging');
+  });
+
+  if(opts.onClick){
+    card.addEventListener('click', function(){ opts.onClick(role, card); });
+  }
+  return card;
+}
+
+function fillSlotVisual(slotEl, role){
+  slotEl.classList.add('filled');
+  slotEl.style.setProperty('--role-color', role.color);
+  var stepLabel = slotEl.getAttribute('data-step-label') || '';
+  slotEl.innerHTML =
+    (stepLabel ? '<span class="tc-slot-step-label">'+stepLabel+'</span>' : '') +
+    '<span class="tc-role-icon">'+role.icon+'</span>' +
+    '<span class="tc-role-name">'+role.name+'</span>';
+}
+
+function spawnConfetti(){
+  var wrap = document.getElementById('tcConfetti');
+  var colors = ['#7c9dfa','#b39ddb','#4cce91','#e3a544','#ec5f5f','#e07bb0'];
+  for(var i=0;i<40;i++){
+    var s = document.createElement('span');
+    s.style.left = (Math.random()*100)+'vw';
+    s.style.background = colors[Math.floor(Math.random()*colors.length)];
+    s.style.animationDuration = (2.2+Math.random()*1.6)+'s';
+    s.style.animationDelay = (Math.random()*0.4)+'s';
+    wrap.appendChild(s);
+    (function(node){ setTimeout(function(){ node.remove(); }, 4200); })(s);
+  }
+}
+
+/* ============ STAGE 1 : WHO OWNS THIS ============ */
+
+function renderStage1(){
+  state.stage = 1;
+  mainEl.innerHTML = '';
+  var task = STAGE1[state.s1Index];
+
+  var panel = el('div','tc-panel');
+  panel.appendChild(el('div','tc-stage-label','Stage 1 · '+(state.s1Index+1)+' / '+STAGE1.length));
+  panel.appendChild(el('h2','tc-stage-heading','Who Owns This?'));
+  panel.appendChild(el('p','tc-stage-desc','Drag the role that should be the primary owner into the slot below.'));
+
+  var ticket = el('div','tc-ticket');
+  ticket.appendChild(el('div','tc-ticket-tag','Incoming Task'));
+  ticket.appendChild(el('div','tc-ticket-text', task.ticket));
+  panel.appendChild(ticket);
+
+  var slotRow = el('div','tc-slot-row');
+  var slot = el('div','tc-slot','Drop owner here');
+  slot.id = 'tcOwnerSlot';
+  slotRow.appendChild(slot);
+  panel.appendChild(slotRow);
+
+  var roleGrid = el('div','tc-role-grid');
+  roleGrid.id = 'tcRoleGrid1';
+  ROLES.forEach(function(role){
+    var card = roleCardEl(role, {
+      onClick: function(r){ placeOwner(r); }
+    });
+    roleGrid.appendChild(card);
+  });
+  panel.appendChild(roleGrid);
+
+  slot.addEventListener('dragover', function(e){ e.preventDefault(); slot.classList.add('dragover'); });
+  slot.addEventListener('dragleave', function(){ slot.classList.remove('dragover'); });
+  slot.addEventListener('drop', function(e){
+    e.preventDefault();
+    slot.classList.remove('dragover');
+    var id = state.dragRoleId;
+    if(id) placeOwner(roleById(id));
+  });
+
+  var revealHolder = el('div');
+  revealHolder.id = 'tcReveal1';
+  panel.appendChild(revealHolder);
+
+  var actions = el('div','tc-actions');
+  var submitBtn = el('button','tc-btn primary','Submit');
+  submitBtn.id = 'tcSubmit1';
+  submitBtn.disabled = true;
+  submitBtn.addEventListener('click', function(){ submitStage1(); });
+  actions.appendChild(submitBtn);
+  panel.appendChild(actions);
+
+  mainEl.appendChild(panel);
+  updateProgress();
+
+  function placeOwner(role){
+    fillSlotVisual(slot, role);
+    slot.setAttribute('data-role', role.id);
+    document.getElementById('tcSubmit1').disabled = false;
+  }
+}
+
+function submitStage1(){
+  var task = STAGE1[state.s1Index];
+  var slot = document.getElementById('tcOwnerSlot');
+  var chosen = slot.getAttribute('data-role');
+  var correct = chosen === task.owner;
+  state.s1Answers.push({chosen:chosen, correct:correct, chosenWasAssist: task.assist.indexOf(chosen) !== -1});
+
+  document.getElementById('tcSubmit1').disabled = true;
+  document.querySelectorAll('#tcRoleGrid1 .tc-role-card').forEach(function(c){ c.style.pointerEvents='none'; c.style.opacity='0.55'; });
+
+  var ownerRole = roleById(task.owner);
+  var reveal = document.getElementById('tcReveal1');
+  reveal.className = 'tc-reveal';
+  reveal.innerHTML =
+    '<div class="tc-reveal-row"><div class="tc-reveal-label">Primary Owner</div><div class="tc-reveal-value">'+ownerRole.icon+' <strong>'+ownerRole.name+'</strong></div></div>' +
+    '<div class="tc-reveal-row"><div class="tc-reveal-label">Why</div><div class="tc-reveal-value">'+task.why+'</div></div>' +
+    '<div class="tc-reveal-row"><div class="tc-reveal-label">May Assist</div><div class="tc-reveal-value">'+task.assist.map(function(id){var r=roleById(id);return '<span class="tc-chip">'+r.icon+' '+r.name+'</span>';}).join('')+'</div></div>';
+
+  var nextBtn = el('button','tc-btn primary','Continue →');
+  nextBtn.style.marginTop = '16px';
+  nextBtn.addEventListener('click', function(){
+    state.s1Index++;
+    if(state.s1Index >= STAGE1.length){
+      state.s1Index = STAGE1.length;
+      renderStage2();
+    } else {
+      renderStage1();
+    }
+  });
+  reveal.appendChild(nextBtn);
+
+  showToast(correct ? "Nice — that's the primary owner." : "Different owner than expected — see why below.");
+}
+
+/* ============ STAGE 2 : TASK ROUTING ============ */
+
+function renderStage2(){
+  state.stage = 2;
+  mainEl.innerHTML = '';
+  var task = STAGE2[state.s2Index];
+  var n = task.steps.length;
+
+  var panel = el('div','tc-panel');
+  panel.appendChild(el('div','tc-stage-label','Stage 2 · '+(state.s2Index+1)+' / '+STAGE2.length));
+  panel.appendChild(el('h2','tc-stage-heading','Task Routing'));
+  panel.appendChild(el('p','tc-stage-desc','Drag roles into order — build the workflow this task should follow.'));
+
+  var ticket = el('div','tc-ticket');
+  ticket.appendChild(el('div','tc-ticket-tag','Incoming Task'));
+  ticket.appendChild(el('div','tc-ticket-text', task.ticket));
+  panel.appendChild(ticket);
+
+  var slotRow = el('div','tc-slot-row');
+  slotRow.id = 'tcRouteRow';
+  for(var i=0;i<n;i++){
+    var slot = el('div','tc-slot','Step '+(i+1));
+    slot.setAttribute('data-step-label', 'Step '+(i+1));
+    slot.setAttribute('data-index', i);
+    slotRow.appendChild(slot);
+    if(i < n-1){
+      slotRow.appendChild(el('div','tc-slot-arrow','→'));
+    }
+  }
+  panel.appendChild(slotRow);
+
+  var roleGrid = el('div','tc-role-grid');
+  roleGrid.id = 'tcRoleGrid2';
+  ROLES.forEach(function(role){
+    var card = roleCardEl(role, {
+      onClick: function(r, cardEl){ placeNextStep(r, cardEl); }
+    });
+    roleGrid.appendChild(card);
+  });
+  panel.appendChild(roleGrid);
+
+  Array.prototype.forEach.call(slotRow.querySelectorAll('.tc-slot'), function(slot){
+    slot.addEventListener('dragover', function(e){ e.preventDefault(); slot.classList.add('dragover'); });
+    slot.addEventListener('dragleave', function(){ slot.classList.remove('dragover'); });
+    slot.addEventListener('drop', function(e){
+      e.preventDefault();
+      slot.classList.remove('dragover');
+      var id = state.dragRoleId;
+      if(!id) return;
+      if(slot.classList.contains('filled')) return;
+      var role = roleById(id);
+      var cardEl = roleGrid.querySelector('.tc-role-card[data-role="'+id+'"]');
+      if(cardEl && cardEl.classList.contains('used')) return;
+      fillSlotVisual(slot, role);
+      slot.setAttribute('data-role', role.id);
+      if(cardEl) cardEl.classList.add('used');
+      checkRouteComplete();
+    });
+  });
+
+  var revealHolder = el('div');
+  revealHolder.id = 'tcReveal2';
+  panel.appendChild(revealHolder);
+
+  var actions = el('div','tc-actions');
+  var resetBtn = el('button','tc-btn','Reset');
+  resetBtn.addEventListener('click', renderStage2);
+  var submitBtn = el('button','tc-btn primary','Submit');
+  submitBtn.id = 'tcSubmit2';
+  submitBtn.disabled = true;
+  submitBtn.addEventListener('click', function(){ submitStage2(); });
+  actions.appendChild(resetBtn);
+  actions.appendChild(submitBtn);
+  panel.appendChild(actions);
+
+  mainEl.appendChild(panel);
+  updateProgress();
+
+  function placeNextStep(role, cardEl){
+    if(cardEl.classList.contains('used')) return;
+    var slots = slotRow.querySelectorAll('.tc-slot');
+    for(var i=0;i<slots.length;i++){
+      if(!slots[i].classList.contains('filled')){
+        fillSlotVisual(slots[i], role);
+        slots[i].setAttribute('data-role', role.id);
+        cardEl.classList.add('used');
+        break;
+      }
+    }
+    checkRouteComplete();
+  }
+
+  function checkRouteComplete(){
+    var slots = slotRow.querySelectorAll('.tc-slot');
+    var filled = 0;
+    slots.forEach(function(s){ if(s.classList.contains('filled')) filled++; });
+    document.getElementById('tcSubmit2').disabled = filled < slots.length;
+  }
+}
+
+function submitStage2(){
+  var task = STAGE2[state.s2Index];
+  var slotRow = document.getElementById('tcRouteRow');
+  var slots = slotRow.querySelectorAll('.tc-slot');
+  var chosen = [];
+  slots.forEach(function(s){ chosen.push(s.getAttribute('data-role')); });
+
+  var correctCount = 0;
+  for(var i=0;i<task.steps.length;i++){
+    if(chosen[i] === task.steps[i]) correctCount++;
+  }
+  var fullyCorrect = correctCount === task.steps.length;
+  state.s2Answers.push({chosen:chosen, correctCount:correctCount, total:task.steps.length, fullyCorrect:fullyCorrect});
+
+  document.getElementById('tcSubmit2').disabled = true;
+  document.querySelectorAll('#tcRoleGrid2 .tc-role-card').forEach(function(c){ c.style.pointerEvents='none'; });
+
+  // animate movement along the correct path
+  animateRoute(task.steps, function(){
+    var reveal = document.getElementById('tcReveal2');
+    reveal.className = 'tc-reveal';
+    var correctChain = task.steps.map(function(id){ var r=roleById(id); return '<span class="tc-chip">'+r.icon+' '+r.name+'</span>'; }).join(' <span style="color:var(--text-faint)">→</span> ');
+    reveal.innerHTML =
+      '<div class="tc-reveal-row"><div class="tc-reveal-label">Common Path</div><div class="tc-reveal-value">'+correctChain+'</div></div>' +
+      '<div class="tc-reveal-row"><div class="tc-reveal-label">Why This Order</div><div class="tc-reveal-value">'+task.explain+'</div></div>' +
+      '<div class="tc-reveal-row"><div class="tc-reveal-label">Your Match</div><div class="tc-reveal-value">'+correctCount+' / '+task.steps.length+' steps matched the common path</div></div>';
+
+    var nextBtn = el('button','tc-btn primary','Continue →');
+    nextBtn.style.marginTop = '16px';
+    nextBtn.addEventListener('click', function(){
+      state.s2Index++;
+      if(state.s2Index >= STAGE2.length){
+        renderStage3();
+      } else {
+        renderStage2();
+      }
+    });
+    reveal.appendChild(nextBtn);
+  });
+
+  showToast(fullyCorrect ? "Great routing — that matches the common path." : "Submitted — see the common path below.");
+}
+
+function animateRoute(steps, done){
+  var slotRow = document.getElementById('tcRouteRow');
+  var slots = slotRow.querySelectorAll('.tc-slot');
+  var i = 0;
+  function step(){
+    if(i > 0) slots[i-1].style.boxShadow = 'none';
+    if(i >= slots.length){ done(); return; }
+    slots[i].style.transition = 'box-shadow .25s ease, transform .25s ease';
+    slots[i].style.boxShadow = '0 0 0 3px var(--accent2)';
+    slots[i].style.transform = 'scale(1.05)';
+    setTimeout(function(){ slots[i].style.transform='scale(1)'; }, 220);
+    i++;
+    setTimeout(step, 380);
+  }
+  step();
+}
+
+/* ============ STAGE 3 : COLLABORATION CHALLENGE ============ */
+
+function renderStage3(){
+  state.stage = 3;
+  mainEl.innerHTML = '';
+  var scenario = STAGE3[state.s3Index];
+  var selected = [];
+
+  var panel = el('div','tc-panel');
+  panel.appendChild(el('div','tc-stage-label','Stage 3 · '+(state.s3Index+1)+' / '+STAGE3.length));
+  panel.appendChild(el('h2','tc-stage-heading','Collaboration Challenge'));
+  panel.appendChild(el('p','tc-stage-desc','Bigger situations need more than one owner. Select up to 4 roles that should be involved.'));
+
+  var ticket = el('div','tc-ticket');
+  ticket.appendChild(el('div','tc-ticket-tag','Situation'));
+  ticket.appendChild(el('div','tc-ticket-text', scenario.ticket));
+  panel.appendChild(ticket);
+
+  panel.appendChild(el('div','tc-select-hint','Tap up to 4 roles. First tap = order 1, and so on.'));
+
+  var roleGrid = el('div','tc-role-grid');
+  roleGrid.id = 'tcRoleGrid3';
+  ROLES.forEach(function(role){
+    var card = roleCardEl(role, {
+      onClick: function(r, cardEl){ toggleSelect(r, cardEl); }
+    });
+    card.removeAttribute('draggable');
+    roleGrid.appendChild(card);
+  });
+  panel.appendChild(roleGrid);
+
+  var revealHolder = el('div');
+  revealHolder.id = 'tcReveal3';
+  panel.appendChild(revealHolder);
+
+  var actions = el('div','tc-actions');
+  var submitBtn = el('button','tc-btn primary','Submit');
+  submitBtn.id = 'tcSubmit3';
+  submitBtn.disabled = true;
+  submitBtn.addEventListener('click', function(){ submitStage3(scenario, selected); });
+  actions.appendChild(submitBtn);
+  panel.appendChild(actions);
+
+  mainEl.appendChild(panel);
+  updateProgress();
+
+  function toggleSelect(role, cardEl){
+    var idx = selected.indexOf(role.id);
+    if(idx !== -1){
+      selected.splice(idx,1);
+      cardEl.classList.remove('selected');
+    } else {
+      if(selected.length >= 4) { showToast('Up to 4 roles only.'); return; }
+      selected.push(role.id);
+      cardEl.classList.add('selected');
+    }
+    document.getElementById('tcSubmit3').disabled = selected.length === 0;
+  }
+}
+
+function submitStage3(scenario, selected){
+  var hasOwner = selected.indexOf(scenario.owner) !== -1;
+  var supportMatches = selected.filter(function(id){ return scenario.supporting.indexOf(id) !== -1 && id !== scenario.owner; }).length;
+  state.s3Answers.push({
+    selected: selected.slice(),
+    hasOwner: hasOwner,
+    supportMatches: supportMatches,
+    totalSupportOptions: scenario.supporting.length,
+    countSelected: selected.length
+  });
+
+  document.getElementById('tcSubmit3').disabled = true;
+  document.querySelectorAll('#tcRoleGrid3 .tc-role-card').forEach(function(c){ c.style.pointerEvents='none'; });
+
+  var ownerRole = roleById(scenario.owner);
+  var reveal = document.getElementById('tcReveal3');
+  reveal.className = 'tc-reveal';
+  reveal.innerHTML =
+    '<div class="tc-reveal-row"><div class="tc-reveal-label">Primary Owner</div><div class="tc-reveal-value">'+ownerRole.icon+' <strong>'+ownerRole.name+'</strong></div></div>' +
+    '<div class="tc-reveal-row"><div class="tc-reveal-label">Supporting Teams</div><div class="tc-reveal-value">'+scenario.supporting.map(function(id){var r=roleById(id);return '<span class="tc-chip">'+r.icon+' '+r.name+'</span>';}).join('')+'</div></div>' +
+    '<div class="tc-reveal-row"><div class="tc-reveal-label">Reasoning</div><div class="tc-reveal-value">'+scenario.reasoning+'</div></div>' +
+    '<div class="tc-reveal-row"><div class="tc-reveal-label">Comm. Flow</div><div class="tc-reveal-value">'+scenario.flow+'</div></div>';
+
+  var nextBtn = el('button','tc-btn primary', state.s3Index >= STAGE3.length-1 ? 'See Results →' : 'Continue →');
+  nextBtn.style.marginTop = '16px';
+  nextBtn.addEventListener('click', function(){
+    state.s3Index++;
+    if(state.s3Index >= STAGE3.length){
+      renderResults();
+    } else {
+      renderStage3();
+    }
+  });
+  reveal.appendChild(nextBtn);
+
+  showToast(hasOwner ? "Good instinct on the primary owner." : "Different primary owner than expected — see reasoning below.");
+}
+
+/* ============ SCORING ============ */
+
+function computeScores(){
+  // Ownership: % of stage1 tasks where chosen role was the correct primary owner
+  var ownershipCorrect = state.s1Answers.filter(function(a){ return a.correct; }).length;
+  var ownershipScore = Math.round((ownershipCorrect / STAGE1.length) * 100);
+
+  // Delegation: reflects picking the right *single* owner rather than defaulting to certain roles;
+  // also credit stage3 for correctly identifying a primary owner among many
+  var s3OwnerCorrect = state.s3Answers.filter(function(a){ return a.hasOwner; }).length;
+  var delegationRaw = (ownershipCorrect + s3OwnerCorrect) / (STAGE1.length + STAGE3.length);
+  var delegationScore = Math.round(delegationRaw * 100);
+
+  // Collaboration: % of supporting roles correctly identified in stage 3
+  var totalSupportPossible = 0, totalSupportHit = 0;
+  state.s3Answers.forEach(function(a){ totalSupportPossible += a.totalSupportOptions; totalSupportHit += a.supportMatches; });
+  var collaborationScore = totalSupportPossible ? Math.round((totalSupportHit/totalSupportPossible)*100) : 0;
+
+  // Workflow Thinking: % of stage2 steps matched correctly
+  var totalSteps = 0, matchedSteps = 0;
+  state.s2Answers.forEach(function(a){ totalSteps += a.total; matchedSteps += a.correctCount; });
+  var workflowScore = totalSteps ? Math.round((matchedSteps/totalSteps)*100) : 0;
+
+  return {
+    ownership: ownershipScore,
+    delegation: delegationScore,
+    collaboration: collaborationScore,
+    workflow: workflowScore
+  };
+}
+
+function buildReflection(scores){
+  var strongList = [];
+  var overAssignNote = null;
+  var underCollabNote = null;
+
+  var cats = [
+    {key:'ownership', label:'Ownership'},
+    {key:'delegation', label:'Delegation'},
+    {key:'collaboration', label:'Collaboration'},
+    {key:'workflow', label:'Workflow Thinking'}
+  ];
+  cats.forEach(function(c){
+    if(scores[c.key] >= 70) strongList.push(c.label);
+  });
+  if(strongList.length === 0) strongList.push('Working through unfamiliar territory — that\'s a fine place to start.');
+
+  // over-assign detection: single-owner tasks (stage1) where chosen was actually a listed assist role
+  var overAssignCount = state.s1Answers.filter(function(a){ return !a.correct && a.chosenWasAssist; }).length;
+  if(overAssignCount > 0){
+    overAssignNote = "In "+overAssignCount+" case"+(overAssignCount>1?'s':'')+", you picked a role that typically assists rather than owns — a common instinct when a role feels closely connected to the problem.";
+  } else {
+    overAssignNote = "You generally avoided handing ownership to a role that would only be assisting — a sign of clear thinking about accountability.";
+  }
+
+  // under-collaboration detection: stage3 selections with fewer than 2 supporting roles selected correctly, or countSelected low
+  var lowCollabCount = state.s3Answers.filter(function(a){ return a.countSelected <= 1; }).length;
+  if(lowCollabCount > 0){
+    underCollabNote = "In "+lowCollabCount+" larger situation"+(lowCollabCount>1?'s':'')+", you assigned very few roles — worth considering whether more teams should have been looped in.";
+  } else {
+    underCollabNote = "You tended to loop in multiple teams for bigger situations, which reflects how complex problems usually get solved in practice.";
+  }
+
+  var insightPool = [
+    "Many real workplace problems are solved by teams rather than individuals.",
+    "Ownership doesn't mean working alone — it means being accountable for pulling the right people in.",
+    "The order work moves through an organization is rarely arbitrary; it reflects who has the judgment needed at each step.",
+    "Escalation isn't a failure of ownership — it's often the correct next step."
+  ];
+  var insight = insightPool[Math.floor(Math.random()*insightPool.length)];
+
+  return {
+    strongText: "You showed solid understanding in: " + strongList.join(', ') + ".",
+    overAssignNote: overAssignNote,
+    underCollabNote: underCollabNote,
+    insight: insight
+  };
+}
+
+/* ============ RADAR CHART (SVG) ============ */
+
+function renderRadar(scores){
+  var labels = ['Ownership','Delegation','Collaboration','Workflow'];
+  var values = [scores.ownership, scores.delegation, scores.collaboration, scores.workflow];
+  var size = 260, cx = size/2, cy = size/2, maxR = 92;
+  var n = values.length;
+  var angleStep = (Math.PI*2)/n;
+
+  function pointFor(i, r){
+    var angle = -Math.PI/2 + i*angleStep;
+    return [cx + r*Math.cos(angle), cy + r*Math.sin(angle)];
+  }
+
+  var svg = '<svg viewBox="0 0 '+size+' '+size+'" width="100%" height="260" style="max-width:280px;">';
+
+  // grid rings
+  [0.25,0.5,0.75,1].forEach(function(f){
+    var pts = [];
+    for(var i=0;i<n;i++){ var p = pointFor(i, maxR*f); pts.push(p[0]+','+p[1]); }
+    svg += '<polygon points="'+pts.join(' ')+'" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>';
+  });
+  // axes + labels
+  for(var i=0;i<n;i++){
+    var p = pointFor(i, maxR);
+    svg += '<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0]+'" y2="'+p[1]+'" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>';
+    var lp = pointFor(i, maxR+22);
+    var anchor = (Math.abs(lp[0]-cx) < 4) ? 'middle' : (lp[0] > cx ? 'start' : 'end');
+    svg += '<text x="'+lp[0]+'" y="'+lp[1]+'" fill="#9aa3b5" font-size="9.5" font-family="JetBrains Mono, monospace" text-anchor="'+anchor+'">'+labels[i]+'</text>';
+  }
+  // data polygon
+  var dataPts = [];
+  for(var i=0;i<n;i++){
+    var r = (values[i]/100)*maxR;
+    var p = pointFor(i, r);
+    dataPts.push(p[0]+','+p[1]);
+  }
+  svg += '<polygon points="'+dataPts.join(' ')+'" fill="rgba(124,157,250,0.28)" stroke="#7c9dfa" stroke-width="2"/>';
+  for(var i=0;i<n;i++){
+    var r = (values[i]/100)*maxR;
+    var p = pointFor(i, r);
+    svg += '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" fill="#b39ddb"/>';
+  }
+  svg += '</svg>';
+  return svg;
+}
+
+/* ============ RESULTS ============ */
+
+function renderResults(){
+  mainEl.innerHTML = '';
+  document.getElementById('tcProgressBars').style.display = 'none';
+  document.getElementById('tcProgressLabels').style.display = 'none';
+
+  var scores = computeScores();
+  var reflection = buildReflection(scores);
+
+  var panel = el('div','tc-panel');
+  panel.appendChild(el('div','tc-stage-label','Complete'));
+  panel.appendChild(el('h2','tc-stage-heading','Your Understanding'));
+  panel.appendChild(el('p','tc-stage-desc','Not a score — a picture of how you think about ownership and collaboration at work.'));
+
+  var grid = el('div','tc-results-grid');
+
+  var barsCol = el('div');
+  var cats = [
+    {key:'ownership', label:'Ownership'},
+    {key:'delegation', label:'Delegation'},
+    {key:'collaboration', label:'Collaboration'},
+    {key:'workflow', label:'Workflow Thinking'}
+  ];
+  cats.forEach(function(c){
+    var row = el('div','tc-bar-row');
+    row.innerHTML = '<div class="tc-bar-label"><span>'+c.label+'</span><span>'+scores[c.key]+'%</span></div><div class="tc-bar-track"><div class="tc-bar-fill" data-target="'+scores[c.key]+'"></div></div>';
+    barsCol.appendChild(row);
+  });
+  grid.appendChild(barsCol);
+
+  var radarCol = el('div','tc-radar-wrap');
+  radarCol.innerHTML = renderRadar(scores);
+  grid.appendChild(radarCol);
+
+  panel.appendChild(grid);
+
+  panel.appendChild(el('h2','tc-stage-heading','Reflection'));
+  var reflList = el('div','tc-reflection-list');
+  reflList.appendChild(makeReflectionItem('What You Understood Well', reflection.strongText));
+  reflList.appendChild(makeReflectionItem('Where You Tended to Over-Assign', reflection.overAssignNote));
+  reflList.appendChild(makeReflectionItem('Where Collaboration Was Underestimated', reflection.underCollabNote));
+  panel.appendChild(reflList);
+
+  var insight = el('div','tc-insight', '"' + reflection.insight + '"');
+  panel.appendChild(insight);
+
+  var restartWrap = el('div','tc-restart-wrap');
+  var restartBtn = el('button','tc-btn primary','Play Again');
+  restartBtn.addEventListener('click', restartGame);
+  restartWrap.appendChild(restartBtn);
+  panel.appendChild(restartWrap);
+
+  mainEl.appendChild(panel);
+
+  setTimeout(function(){
+    document.querySelectorAll('.tc-bar-fill').forEach(function(f){
+      f.style.width = f.getAttribute('data-target') + '%';
+    });
+  }, 80);
+
+  spawnConfetti();
+}
+
+function makeReflectionItem(title, text){
+  var item = el('div','tc-reflection-item');
+  item.appendChild(el('div','tc-reflection-title', title));
+  item.appendChild(el('div','tc-reflection-text', text));
+  return item;
+}
+
+function restartGame(){
+  state = { stage:1, s1Index:0, s1Answers:[], s2Index:0, s2Answers:[], s3Index:0, s3Answers:[], dragRoleId:null };
+  document.getElementById('tcProgressBars').style.display = 'flex';
+  document.getElementById('tcProgressLabels').style.display = 'flex';
+  renderStage1();
+}
+
+/* ============ INIT ============ */
+renderStage1();
+
+})();
+</script>
+
+</body>
+</html>
