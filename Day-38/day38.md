@@ -13,21 +13,20 @@ The application offers multiple typing modes, live WPM tracking, accuracy measur
 
 ## 1. Typing Speed Studio
 
-![Typing Speed Studio - Main Interface](typing-speed-studio.png)
+![Typing Speed Studio - Main Interface](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-38/38-1.png)
 
 
 ## 2. Generated HTML File
 
-![Generated HTML](generated-html.png)
+![Generated HTML](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-38/typing-speed-studio.html)
 
 
 ## 3. Analytics Dashboard
 
-![Analytics Dashboard 1](analytics-dashboard-1.png)
+![Analytics Dashboard 1](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-38/38-4.png)
 
-![Analytics Dashboard 2](analytics-dashboard-2.png)
+![Analytics Dashboard 2](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-38/38-2.png)
 
-![Analytics Dashboard 3](analytics-dashboard-3.png)
 
 
 # Key Learnings
