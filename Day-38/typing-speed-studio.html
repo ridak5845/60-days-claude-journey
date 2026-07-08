@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typing Speed Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e15;
+    --surface: #111723;
+    --surface-2: #161d2b;
+    --line: #232b3a;
+    --line-soft: #1a2130;
+    --text: #eef1f6;
+    --text-dim: #93a0b5;
+    --text-faint: #576277;
+    --accent: #ffb454;
+    --accent-dim: #6b5330;
+    --correct: #4cce91;
+    --incorrect: #ec5f6b;
+    --incorrect-bg: rgba(236,95,107,0.15);
+    --cursor: #ffb454;
+    --blue: #6ea8fe;
+    --purple: #b39ddb;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --radius: 10px;
+  }
+
+  [data-theme="light"] {
+    --bg: #f5f3ee;
+    --surface: #ffffff;
+    --surface-2: #f0ede6;
+    --line: #ded9cd;
+    --line-soft: #e8e4da;
+    --text: #23201a;
+    --text-dim: #6b6558;
+    --text-faint: #a39d8d;
+    --accent: #b5701f;
+    --accent-dim: #e8d4b0;
+    --correct: #227a54;
+    --incorrect: #c23c4a;
+    --incorrect-bg: rgba(194,60,74,0.12);
+    --cursor: #b5701f;
+  }
+
+  [data-theme="ocean"] {
+    --bg: #071018;
+    --surface: #0d1926;
+    --surface-2: #112033;
+    --line: #1c3348;
+    --line-soft: #16283a;
+    --text: #e4f0f6;
+    --text-dim: #8fa9bd;
+    --text-faint: #4f6b80;
+    --accent: #4fd6d6;
+    --accent-dim: #1a4d4d;
+    --correct: #4fd6a0;
+    --incorrect: #ff7a8a;
+    --incorrect-bg: rgba(255,122,138,0.13);
+    --cursor: #4fd6d6;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s ease, color .3s ease;
+  }
+  ::selection { background: var(--accent-dim); }
+  button { font-family: inherit; cursor: pointer; }
+  a { color: inherit; }
+
+  .tss-app { max-width: 1080px; margin: 0 auto; padding: 28px 24px 60px; }
+
+  /* ===== Header ===== */
+  .tss-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 26px; flex-wrap: wrap; gap: 14px;
+  }
+  .tss-brand { display: flex; align-items: baseline; gap: 10px; }
+  .tss-logo {
+    font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.02em;
+  }
+  .tss-logo .dot { color: var(--accent); }
+  .tss-tagline { font-size: 11.5px; color: var(--text-faint); font-family: var(--mono); letter-spacing: 0.04em; }
+
+  .tss-header-controls { display: flex; align-items: center; gap: 8px; }
+  .tss-icon-btn {
+    background: var(--surface); border: 1px solid var(--line); color: var(--text-dim);
+    width: 36px; height: 36px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center;
+    font-size: 15px; transition: all .15s ease;
+  }
+  .tss-icon-btn:hover { color: var(--text); border-color: var(--accent); }
+  .tss-icon-btn.active { color: var(--accent); border-color: var(--accent); }
+
+  /* ===== Mode bar ===== */
+  .tss-mode-bar {
+    display: flex; flex-wrap: wrap; gap: 8px; padding: 12px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    margin-bottom: 14px;
+  }
+  .tss-mode-btn {
+    background: transparent; border: 1px solid transparent; color: var(--text-faint);
+    font-size: 12.5px; font-family: var(--mono); padding: 7px 12px; border-radius: 7px;
+    display: flex; align-items: center; gap: 6px; transition: all .15s ease;
+  }
+  .tss-mode-btn:hover { color: var(--text); background: var(--surface-2); }
+  .tss-mode-btn.active { color: var(--bg); background: var(--accent); font-weight: 600; }
+
+  .tss-sub-bar {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    margin-bottom: 22px; min-height: 20px;
+  }
+  .tss-sub-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); font-family: var(--mono); margin-right: 4px; }
+  .tss-chip {
+    background: var(--surface-2); border: 1px solid var(--line); color: var(--text-dim);
+    font-family: var(--mono); font-size: 12px; padding: 5px 11px; border-radius: 999px; transition: all .15s ease;
+  }
+  .tss-chip:hover { color: var(--text); }
+  .tss-chip.active { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+  .tss-chip select { background: transparent; border: none; color: inherit; font-family: inherit; font-size: inherit; }
+
+  /* ===== Live stats ===== */
+  .tss-stats-row {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 18px;
+  }
+  .tss-stat {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .tss-stat-label { font-family: var(--mono); font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 6px; }
+  .tss-stat-value { font-family: var(--mono); font-size: 21px; font-weight: 600; color: var(--text); }
+  .tss-stat-value.accent { color: var(--accent); }
+  .tss-stat-value.good { color: var(--correct); }
+  .tss-stat-value.bad { color: var(--incorrect); }
+
+  .tss-progress-track {
+    height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; margin-bottom: 20px;
+  }
+  .tss-progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width .15s linear; }
+
+  /* ===== Typing area ===== */
+  .tss-type-stage {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 40px 36px; position: relative; margin-bottom: 20px; min-height: 220px;
+  }
+  .tss-type-stage.focused { border-color: var(--accent-dim); }
+  .tss-caption-row { display:flex; align-items:center; justify-content:space-between; margin-bottom: 18px;}
+  .tss-caption { font-family: var(--mono); font-size: 11px; color: var(--text-faint); letter-spacing: 0.04em; }
+  .tss-restart-hint { font-family: var(--mono); font-size: 11px; color: var(--text-faint); }
+  .tss-restart-hint kbd { background: var(--surface-2); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-family: var(--mono); }
+
+  .tss-text-display {
+    font-family: var(--mono); font-size: var(--type-size, 22px); line-height: 1.9;
+    letter-spacing: 0.01em; color: var(--text-faint);
+    user-select: none; -webkit-user-select: none;
+    filter: blur(0); transition: filter .2s ease;
+  }
+  .tss-text-display.blurred { filter: blur(4px); }
+  .tss-text-display .word { display: inline-block; margin-right: 0.55em; white-space: nowrap; }
+  .tss-char { position: relative; }
+  .tss-char.correct { color: var(--text); }
+  .tss-char.incorrect { color: var(--incorrect); background: var(--incorrect-bg); border-radius: 2px; }
+  .tss-char.incorrect.space { text-decoration: underline wavy var(--incorrect); }
+  .tss-char.extra { color: var(--incorrect); opacity: 0.75; text-decoration: underline; }
+  .tss-char.current::before {
+    content: ''; position: absolute; left: -1px; top: 1px; bottom: 1px; width: 2px;
+    background: var(--cursor); animation: tss-blink 1s step-end infinite;
+  }
+  @keyframes tss-blink { 50% { opacity: 0; } }
+  .tss-hidden-input {
+    position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px;
+  }
+  .tss-overlay-msg {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 10px; background: rgba(10,14,21,0.72); border-radius: 14px;
+    font-family: var(--display); font-size: 18px; color: var(--text);
+  }
+  [data-theme="light"] .tss-overlay-msg, [data-theme="ocean"] .tss-overlay-msg { background: rgba(0,0,0,0.35); }
+  .tss-overlay-msg span.sub { font-family: var(--body); font-size: 12.5px; color: var(--text-dim); font-weight: 400; }
+  .tss-overlay-msg button {
+    margin-top: 6px; background: var(--accent); color: var(--bg); border: none; font-weight: 600;
+    padding: 9px 20px; border-radius: 8px; font-size: 13px;
+  }
+
+  /* ===== Action row ===== */
+  .tss-action-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px; }
+  .tss-action-btn {
+    background: var(--surface); border: 1px solid var(--line); color: var(--text-dim);
+    padding: 8px 16px; border-radius: 8px; font-size: 12.5px; font-family: var(--mono);
+    display: flex; align-items: center; gap: 6px; transition: all .15s ease;
+  }
+  .tss-action-btn:hover { color: var(--text); border-color: var(--accent); }
+
+  /* ===== Custom text panel ===== */
+  .tss-custom-panel { display: none; margin-bottom: 16px; }
+  .tss-custom-panel.show { display: block; }
+  .tss-custom-panel textarea {
+    width: 100%; min-height: 90px; background: var(--surface); border: 1px solid var(--line);
+    color: var(--text); border-radius: var(--radius); padding: 12px; font-family: var(--mono); font-size: 13px;
+    resize: vertical;
+  }
+  .tss-custom-panel button {
+    margin-top: 8px; background: var(--accent); color: var(--bg); border: none; font-weight: 600;
+    padding: 8px 16px; border-radius: 8px; font-size: 12.5px;
+  }
+
+  /* ===== Results dashboard ===== */
+  .tss-results { display: none; }
+  .tss-results.show { display: block; animation: tss-fadein .35s ease; }
+  @keyframes tss-fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .tss-results-hero {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; margin-bottom: 20px;
+  }
+  .tss-hero-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px;
+  }
+  .tss-hero-wpm { font-family: var(--display); font-size: 64px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .tss-hero-wpm-label { font-family: var(--mono); font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 10px; }
+  .tss-hero-sub-row { display: flex; gap: 26px; margin-top: 18px; }
+  .tss-hero-sub-stat .v { font-family: var(--mono); font-size: 20px; font-weight: 600; }
+  .tss-hero-sub-stat .l { font-family: var(--mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+
+  .tss-chart-card canvas { width: 100%; height: 100%; display: block; }
+
+  .tss-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+  .tss-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .tss-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  .tss-panel h3 {
+    font-family: var(--display); font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--text-faint); margin: 0 0 14px;
+  }
+  .tss-char-breakdown { display: flex; gap: 16px; }
+  .tss-char-breakdown div { text-align: center; flex: 1; }
+  .tss-char-breakdown .n { font-family: var(--mono); font-size: 19px; font-weight: 600; }
+  .tss-char-breakdown .t { font-size: 10.5px; color: var(--text-faint); margin-top: 3px; }
+
+  .tss-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tss-badge {
+    display: flex; align-items: center; gap: 6px; background: var(--surface-2); border: 1px solid var(--line);
+    padding: 6px 12px; border-radius: 999px; font-size: 12px; color: var(--text-dim);
+  }
+  .tss-badge.new { border-color: var(--accent); color: var(--accent); }
+
+  .tss-heatmap { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tss-heat-key {
+    font-family: var(--mono); font-size: 12px; width: 30px; height: 30px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; color: var(--text);
+  }
+
+  .tss-summary-text { font-size: 13.5px; line-height: 1.7; color: var(--text-dim); }
+  .tss-summary-text b { color: var(--text); }
+  .tss-suggestion-list { margin: 10px 0 0; padding-left: 18px; font-size: 13px; color: var(--text-dim); }
+  .tss-suggestion-list li { margin-bottom: 6px; }
+
+  /* ===== History ===== */
+  .tss-history-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .tss-history-table th { text-align: left; font-family: var(--mono); font-size: 10px; text-transform: uppercase; color: var(--text-faint); padding: 0 10px 8px 0; border-bottom: 1px solid var(--line); font-weight: 500; }
+  .tss-history-table td { padding: 9px 10px 9px 0; border-bottom: 1px solid var(--line-soft); color: var(--text-dim); }
+  .tss-history-table tr:last-child td { border-bottom: none; }
+  .tss-history-table td.wpm { color: var(--text); font-family: var(--mono); font-weight: 600; }
+  .tss-empty-note { color: var(--text-faint); font-size: 12.5px; padding: 10px 0; }
+
+  .tss-actions-final { display: flex; justify-content: center; gap: 10px; margin-top: 6px; }
+  .tss-actions-final button {
+    background: var(--accent); color: var(--bg); border: none; font-weight: 600;
+    padding: 10px 22px; border-radius: 9px; font-size: 13px;
+  }
+  .tss-actions-final button.secondary { background: var(--surface-2); color: var(--text-dim); border: 1px solid var(--line); }
+
+  /* ===== Settings panel ===== */
+  .tss-settings-panel {
+    position: fixed; top: 0; right: -340px; width: 320px; height: 100%; background: var(--surface);
+    border-left: 1px solid var(--line); padding: 24px; z-index: 50; transition: right .25s ease;
+    overflow-y: auto;
+  }
+  .tss-settings-panel.open { right: 0; }
+  .tss-settings-panel h3 { font-family: var(--display); font-size: 14px; margin: 18px 0 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.05em; }
+  .tss-settings-panel h3:first-child { margin-top: 0; }
+  .tss-setting-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; font-size: 13px; }
+  .tss-setting-row select, .tss-setting-row input[type=range] { background: var(--surface-2); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; }
+  .tss-theme-swatches { display: flex; gap: 8px; margin-bottom: 10px; }
+  .tss-swatch { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line); cursor: pointer; }
+  .tss-swatch.active { border-color: var(--accent); }
+  .tss-overlay-scrim { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 40; display: none; }
+  .tss-overlay-scrim.show { display: block; }
+  .tss-close-settings { float: right; background: none; border: none; color: var(--text-faint); font-size: 18px; }
+
+  .tss-footer { text-align: center; padding: 24px; color: var(--text-faint); font-size: 10.5px; font-family: var(--mono); letter-spacing: 0.03em; }
+
+  @media (max-width: 760px) {
+    .tss-stats-row { grid-template-columns: repeat(3, 1fr); }
+    .tss-results-hero { grid-template-columns: 1fr; }
+    .tss-grid-3 { grid-template-columns: 1fr; }
+    .tss-grid-2 { grid-template-columns: 1fr; }
+    .tss-type-stage { padding: 24px 18px; }
+    .tss-text-display { font-size: 18px !important; }
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="tss-overlay-scrim" id="tssScrim" onclick="TSS.closeSettings()"></div>
+
+<div class="tss-settings-panel" id="tssSettings">
+  <button class="tss-close-settings" onclick="TSS.closeSettings()">✕</button>
+  <h3>Appearance</h3>
+  <div class="tss-theme-swatches">
+    <div class="tss-swatch active" data-theme="dark" style="background:#0a0e15" onclick="TSS.setTheme('dark')"></div>
+    <div class="tss-swatch" data-theme="light" style="background:#f5f3ee" onclick="TSS.setTheme('light')"></div>
+    <div class="tss-swatch" data-theme="ocean" style="background:#071827" onclick="TSS.setTheme('ocean')"></div>
+  </div>
+  <div class="tss-setting-row"><span>Font size</span><input type="range" id="tssFontSize" min="14" max="32" value="22" oninput="TSS.setFontSize(this.value)"></div>
+  <h3>Behavior</h3>
+  <div class="tss-setting-row"><span>Sound effects</span><input type="checkbox" id="tssSound" checked onchange="TSS.settings.sound=this.checked"></div>
+  <div class="tss-setting-row"><span>Blur unfocused text</span><input type="checkbox" id="tssBlur" onchange="TSS.settings.blur=this.checked;TSS.applyBlur()"></div>
+  <div class="tss-setting-row"><span>Stop on error</span><input type="checkbox" id="tssStopErr" onchange="TSS.settings.stopOnError=this.checked"></div>
+  <h3>Keyboard shortcuts</h3>
+  <div style="font-size:12px;color:var(--text-faint);line-height:2;">
+    <kbd>Tab</kbd> restart &nbsp; <kbd>Esc</kbd> pause/resume &nbsp; <kbd>Ctrl+Enter</kbd> finish zen mode
+  </div>
+  <h3>Data</h3>
+  <div class="tss-setting-row"><span>Session history</span><button class="tss-action-btn" onclick="TSS.clearHistory()">Clear all</button></div>
+</div>
+
+<div class="tss-app">
+
+  <div class="tss-header">
+    <div class="tss-brand">
+      <div class="tss-logo">Typing Speed Studio<span class="dot">.</span></div>
+    </div>
+    <div class="tss-header-controls">
+      <span class="tss-tagline" id="tssStreakTag">🔥 0 day streak</span>
+      <button class="tss-icon-btn" id="tssPauseBtn" title="Pause (Esc)" onclick="TSS.togglePause()">⏸</button>
+      <button class="tss-icon-btn" title="Settings" onclick="TSS.openSettings()">⚙</button>
+    </div>
+  </div>
+
+  <div class="tss-mode-bar" id="tssModeBar"></div>
+  <div class="tss-sub-bar" id="tssSubBar"></div>
+
+  <div class="tss-custom-panel" id="tssCustomPanel">
+    <textarea id="tssCustomText" placeholder="Paste or type your custom practice text here…"></textarea>
+    <button onclick="TSS.applyCustomText()">Use this text</button>
+  </div>
+
+  <div class="tss-stats-row" id="tssStatsRow"></div>
+  <div class="tss-progress-track"><div class="tss-progress-fill" id="tssProgressFill"></div></div>
+
+  <div class="tss-type-stage" id="tssStage">
+    <div class="tss-caption-row">
+      <span class="tss-caption" id="tssModeCaption">ADAPTIVE · GENERAL</span>
+      <span class="tss-restart-hint">press <kbd>Tab</kbd> to restart</span>
+    </div>
+    <div class="tss-text-display" id="tssTextDisplay"></div>
+    <textarea class="tss-hidden-input" id="tssHiddenInput" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+    <div class="tss-overlay-msg" id="tssOverlay" style="display:none;"></div>
+  </div>
+
+  <div class="tss-action-row">
+    <button class="tss-action-btn" onclick="TSS.restart()">↻ Restart</button>
+    <button class="tss-action-btn" id="tssPauseBtn2" onclick="TSS.togglePause()">⏸ Pause</button>
+    <button class="tss-action-btn" onclick="TSS.newPassage()">🔀 New text</button>
+  </div>
+
+  <div class="tss-results" id="tssResults"></div>
+
+  <div class="tss-panel" style="margin-top: 22px;">
+    <h3>Session History</h3>
+    <div id="tssHistoryWrap"><div class="tss-empty-note">Complete a session to start building your history.</div></div>
+  </div>
+
+  <div class="tss-footer">Typing Speed Studio · all stats computed locally, nothing leaves your browser</div>
+</div>
+
+<script>
+/* =========================================================================
+   TYPING SPEED STUDIO — core engine
+   ========================================================================= */
+const TSS = {};
+
+/* ---------- Content generators ---------- */
+const WORD_BANK = "the of and to in a is that it for on with as was he be at by have this from or one had not but what all were when we there can an your which their said if do will each about how up out them then she many some so these would other into has more her two like him see time could no make than first been its who now people my made over did down only way find use may water long little very after words called just where most know".split(' ');
+
+const QUOTES = [
+"The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle.",
+"In three words I can sum up everything I've learned about life: it goes on. Nothing lasts forever, and yet nothing is ever truly lost.",
+"Whether you think you can, or you think you can't, you're right. The mind shapes the path long before the feet ever move.",
+"It is our choices that show what we truly are, far more than our abilities. Ability is a gift; choice is a responsibility.",
+"The secret of getting ahead is getting started. The secret of getting started is breaking your complex overwhelming tasks into small manageable tasks.",
+"Success is not final, failure is not fatal: it is the courage to continue that counts in the long run of any life.",
+"You will face many defeats in life, but never let yourself be defeated. Accept your past without regret, handle your present with confidence."
+];
+
+const CODE_SNIPPETS = {
+  html: [
+`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="main-nav">
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+    </nav>
+  </header>
+</body>
+</html>`],
+  css: [
+`.card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--surface);
+  transition: transform 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}`],
+  javascript: [
+`function debounce(fn, delay) {
+  let timer = null;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+const handleResize = debounce(() => {
+  console.log(window.innerWidth, window.innerHeight);
+}, 250);`,
+`class EventEmitter {
+  constructor() {
+    this.listeners = {};
+  }
+  on(event, callback) {
+    if (!this.listeners[event]) this.listeners[event] = [];
+    this.listeners[event].push(callback);
+    return this;
+  }
+  emit(event, ...args) {
+    (this.listeners[event] || []).forEach(cb => cb(...args));
+  }
+}`],
+  python: [
+`def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    result = []
+    while left and right:
+        if left[0] <= right[0]:
+            result.append(left.pop(0))
+        else:
+            result.append(right.pop(0))
+    return result + left + right`,
+`class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+def reverse_linked_list(head):
+    prev = None
+    current = head
+    while current is not None:
+        next_node = current.next
+        current.next = prev
+        prev = current
+        current = next_node
+    return prev`],
+  java: [
+`public class BinarySearch {
+    public static int search(int[] arr, int target) {
+        int low = 0, high = arr.length - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (arr[mid] == target) return mid;
+            else if (arr[mid] < target) low = mid + 1;
+            else high = mid - 1;
+        }
+        return -1;
+    }
+}`],
+  cpp: [
+`#include <vector>
+#include <iostream>
+
+int fibonacci(int n) {
+    std::vector<int> memo(n + 1, -1);
+    memo[0] = 0;
+    memo[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        memo[i] = memo[i - 1] + memo[i - 2];
+    }
+    return memo[n];
+}`],
+  sql: [
+`SELECT customers.name, COUNT(orders.id) AS order_count
+FROM customers
+LEFT JOIN orders ON orders.customer_id = customers.id
+WHERE customers.created_at >= '2025-01-01'
+GROUP BY customers.name
+HAVING COUNT(orders.id) > 3
+ORDER BY order_count DESC;`]
+};
+
+const BUSINESS_SNIPPETS = [
+"Please find attached the revised quarterly projections for your review ahead of tomorrow's leadership meeting.",
+"Following up on our call, I wanted to confirm the revised timeline and next steps before we proceed with the vendor.",
+"We appreciate your patience as we finalize the contract terms; our legal team expects to circulate the draft by Friday.",
+"The board has approved the proposed budget increase, contingent on a formal cost-benefit analysis being submitted next quarter.",
+"Thank you for the thorough feedback on the proposal. We have incorporated your suggestions into the revised deliverable."
+];
+
+const MEDICAL_SNIPPETS = [
+"The patient presented with acute abdominal pain, elevated white blood cell count, and mild tachycardia upon initial examination.",
+"Administer 500 milligrams of amoxicillin orally every eight hours for ten days to treat the bacterial infection.",
+"Post-operative recovery included monitoring for signs of infection, managing pain with prescribed analgesics, and gradual mobilization.",
+"The differential diagnosis includes myocardial infarction, pulmonary embolism, and gastroesophageal reflux disease given the symptom profile.",
+"Routine bloodwork revealed elevated cholesterol and triglyceride levels, prompting a referral to a cardiologist for further evaluation."
+];
+
+const LEGAL_SNIPPETS = [
+"This agreement shall be governed by and construed in accordance with the laws of the jurisdiction in which it is executed.",
+"The plaintiff alleges breach of contract, seeking damages in an amount to be determined at trial, plus reasonable attorney fees.",
+"Notwithstanding anything to the contrary herein, either party may terminate this agreement upon thirty days written notice.",
+"The defendant hereby waives any right to a jury trial with respect to any dispute arising under this agreement.",
+"Confidential information disclosed under this agreement shall not be shared with third parties without prior written consent."
+];
+
+const CREATIVE_SNIPPETS = [
+"The lighthouse stood alone against the storm, its beam cutting through the rain like a blade through silk, patient and unyielding.",
+"She had always believed that autumn smelled like memory itself, woodsmoke and rain and something faintly like regret.",
+"The old clock in the hallway had stopped at midnight decades ago, and no one in the house had ever tried to fix it.",
+"Beneath the city's noise, the river moved slowly, indifferent to the lives that rushed along its concrete banks.",
+"He folded the letter twice before he had the courage to read it again, as though creasing it might soften the words."
+];
+
+const ACADEMIC_SNIPPETS = [
+"The study employed a mixed-methods approach, combining quantitative survey data with qualitative interviews to triangulate findings.",
+"Prior research has demonstrated a significant correlation between sleep deprivation and diminished cognitive performance in adults.",
+"The hypothesis was tested using a randomized controlled trial with a sample size of two hundred and forty participants.",
+"Results indicate a statistically significant effect (p < 0.05), though the effect size remains modest across all conditions.",
+"Further longitudinal research is required to determine whether these effects persist beyond the initial observation period."
+];
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function generateWords(count) {
+  const out = [];
+  for (let i = 0; i < count; i++) out.push(pick(WORD_BANK));
+  return out.join(' ');
+}
+
+function generatePassage(category, wordTarget) {
+  wordTarget = wordTarget || 60;
+  switch (category) {
+    case 'programming': {
+      const langs = Object.keys(CODE_SNIPPETS);
+      const lang = TSS.state.progLang && TSS.state.progLang !== 'random' ? TSS.state.progLang : pick(langs);
+      return { text: pick(CODE_SNIPPETS[lang]), meta: lang.toUpperCase() };
+    }
+    case 'business': return { text: repeatToLength(BUSINESS_SNIPPETS, wordTarget), meta: 'BUSINESS' };
+    case 'medical': return { text: repeatToLength(MEDICAL_SNIPPETS, wordTarget), meta: 'MEDICAL' };
+    case 'legal': return { text: repeatToLength(LEGAL_SNIPPETS, wordTarget), meta: 'LEGAL' };
+    case 'creative': return { text: repeatToLength(CREATIVE_SNIPPETS, wordTarget), meta: 'CREATIVE WRITING' };
+    case 'academic': return { text: repeatToLength(ACADEMIC_SNIPPETS, wordTarget), meta: 'ACADEMIC' };
+    case 'quote': return { text: pick(QUOTES), meta: 'QUOTE' };
+    default: return { text: generateWords(wordTarget), meta: 'GENERAL ENGLISH' };
+  }
+}
+
+function repeatToLength(bank, wordTarget) {
+  let words = [];
+  let pool = [...bank];
+  shuffle(pool);
+  let i = 0;
+  while (words.length < wordTarget) {
+    words = words.concat(pool[i % pool.length].split(' '));
+    i++;
+  }
+  return words.slice(0, wordTarget).join(' ');
+}
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+/* ---------- State ---------- */
+TSS.state = {
+  mode: 'time',
+  timeDur: 30,
+  wordCount: 25,
+  category: 'general',
+  progLang: 'random',
+  adaptiveLevel: 1,
+  focusMode: false,
+  zenMode: false,
+  running: false,
+  paused: false,
+  finished: false,
+  startTime: null,
+  elapsedBeforePause: 0,
+  pauseStart: null,
+  text: '',
+  typed: '',
+  charStates: [],
+  wpmSamples: [],
+  errorLog: {},
+  mistakes: 0,
+  totalKeystrokes: 0,
+  correctKeystrokes: 0,
+  currentStreak: 0,
+  bestStreak: 0,
+  timerHandle: null,
+};
+TSS.settings = { sound: true, blur: false, stopOnError: false, fontSize: 22 };
+
+const MODES = [
+  { id: 'time', label: 'Time', icon: '⏱' },
+  { id: 'words', label: 'Words', icon: '#' },
+  { id: 'quote', label: 'Quote', icon: '❝' },
+  { id: 'programming', label: 'Programming', icon: '</>' },
+  { id: 'custom', label: 'Custom Text', icon: '✎' },
+  { id: 'adaptive', label: 'Adaptive', icon: '◆' },
+  { id: 'focus', label: 'Focus', icon: '▤' },
+  { id: 'zen', label: 'Zen', icon: '☯' },
+];
+const CATEGORIES = ['general','business','medical','legal','creative','academic'];
+const PROG_LANGS = ['random','html','css','javascript','python','java','cpp','sql'];
+
+/* ---------- Init ---------- */
+function initModeBar() {
+  const bar = document.getElementById('tssModeBar');
+  bar.innerHTML = MODES.map(m =>
+    `<button class="tss-mode-btn ${TSS.state.mode===m.id?'active':''}" data-mode="${m.id}" onclick="TSS.selectMode('${m.id}')">${m.icon} ${m.label}</button>`
+  ).join('');
+}
+
+function renderSubBar() {
+  const bar = document.getElementById('tssSubBar');
+  const s = TSS.state;
+  let html = '';
+  if (s.mode === 'time') {
+    html += `<span class="tss-sub-label">Duration</span>`;
+    [15,30,60,120].forEach(d => html += `<button class="tss-chip ${s.timeDur===d?'active':''}" onclick="TSS.setTimeDur(${d})">${d}s</button>`);
+  } else if (s.mode === 'words') {
+    html += `<span class="tss-sub-label">Word Count</span>`;
+    [25,50,100,250].forEach(d => html += `<button class="tss-chip ${s.wordCount===d?'active':''}" onclick="TSS.setWordCount(${d})">${d}</button>`);
+  } else if (s.mode === 'programming') {
+    html += `<span class="tss-sub-label">Language</span>`;
+    PROG_LANGS.forEach(l => html += `<button class="tss-chip ${s.progLang===l?'active':''}" onclick="TSS.setProgLang('${l}')">${l==='random'?'Random':l.toUpperCase()}</button>`);
+  } else if (s.mode === 'adaptive') {
+    html += `<span class="tss-sub-label">Category</span>`;
+    ['general',...CATEGORIES,'programming'].forEach(c => html += `<button class="tss-chip ${s.category===c?'active':''}" onclick="TSS.setCategory('${c}')">${c}</button>`);
+    html += `<span class="tss-sub-label" style="margin-left:14px;">Difficulty</span><span class="tss-chip active">Auto · Lv ${s.adaptiveLevel}</span>`;
+  } else if (s.mode === 'quote') {
+    html += `<span class="tss-sub-label">Source</span><span class="tss-chip active">Curated quotes</span>`;
+  } else if (s.mode === 'custom') {
+    html += `<span class="tss-sub-label">Paste your own text below to begin</span>`;
+  } else if (s.mode === 'focus') {
+    html += `<span class="tss-sub-label">Category</span>`;
+    ['general',...CATEGORIES].forEach(c => html += `<button class="tss-chip ${s.category===c?'active':''}" onclick="TSS.setCategory('${c}')">${c}</button>`);
+  } else if (s.mode === 'zen') {
+    html += `<span class="tss-sub-label">Untimed practice — press</span><kbd style="font-family:var(--mono);background:var(--surface-2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;">Ctrl+Enter</kbd><span class="tss-sub-label">to finish</span>`;
+  }
+  bar.innerHTML = html;
+  document.getElementById('tssCustomPanel').classList.toggle('show', s.mode === 'custom');
+}
+
+function renderStatsRow() {
+  const s = TSS.state;
+  const row = document.getElementById('tssStatsRow');
+  const stats = [
+    ['WPM', s.liveWpm ?? 0, 'accent'],
+    ['Raw WPM', s.liveRawWpm ?? 0, ''],
+    ['Accuracy', (s.liveAccuracy ?? 100) + '%', ''],
+    ['Time', formatTime(s.liveElapsed ?? 0), ''],
+    ['Mistakes', s.mistakes, s.mistakes>0?'bad':''],
+    ['Streak', s.currentStreak, 'good'],
+  ];
+  row.innerHTML = stats.map(([l,v,c]) => `
+    <div class="tss-stat">
+      <div class="tss-stat-label">${l}</div>
+      <div class="tss-stat-value ${c}">${v}</div>
+    </div>`).join('');
+}
+
+function formatTime(sec) {
+  sec = Math.max(0, Math.round(sec));
+  const m = Math.floor(sec/60), r = sec%60;
+  return (m>0?m+':'+String(r).padStart(2,'0'):r+'s');
+}
+
+/* ---------- Passage building ---------- */
+TSS.newPassage = function() {
+  const s = TSS.state;
+  let category = s.category, wordTarget = 60;
+  if (s.mode === 'words') wordTarget = s.wordCount;
+  if (s.mode === 'time') wordTarget = Math.max(40, s.timeDur * 2.2);
+  if (s.mode === 'zen') wordTarget = 50;
+  if (s.mode === 'focus') wordTarget = 40;
+  let result;
+  if (s.mode === 'quote') result = generatePassage('quote');
+  else if (s.mode === 'programming') result = generatePassage('programming');
+  else if (s.mode === 'custom') { renderPassage(s.customText || 'Paste your custom text using the panel above.', 'CUSTOM'); return; }
+  else if (s.mode === 'adaptive') result = generatePassage(s.category === 'general' ? 'general' : s.category, wordTarget + s.adaptiveLevel * 5);
+  else result = generatePassage(category, wordTarget);
+  renderPassage(result.text, result.meta);
+};
+
+function renderPassage(text, metaLabel) {
+  const s = TSS.state;
+  s.text = text;
+  s.typed = '';
+  s.charStates = new Array(text.length).fill(null);
+  s.mistakes = 0;
+  s.totalKeystrokes = 0;
+  s.correctKeystrokes = 0;
+  s.currentStreak = 0;
+  s.wpmSamples = [];
+  s.errorLog = {};
+  s.running = false;
+  s.finished = false;
+  s.paused = false;
+  s.startTime = null;
+  s.elapsedBeforePause = 0;
+  s.liveWpm = 0; s.liveRawWpm = 0; s.liveAccuracy = 100; s.liveElapsed = 0;
+  clearInterval(s.timerHandle);
+  document.getElementById('tssModeCaption').textContent = (MODES.find(m=>m.id===s.mode).label + ' · ' + metaLabel).toUpperCase();
+  document.getElementById('tssOverlay').style.display = 'none';
+  document.getElementById('tssResults').classList.remove('show');
+  document.getElementById('tssResults').innerHTML = '';
+  document.getElementById('tssStage').style.display = '';
+  renderStatsRow();
+  drawText();
+  updateProgress();
+  focusInput();
+}
+
+function drawText() {
+  const s = TSS.state;
+  const disp = document.getElementById('tssTextDisplay');
+  const words = s.text.split(' ');
+  let idx = 0;
+  let html = '';
+  words.forEach((w, wi) => {
+    html += '<span class="word">';
+    for (let ci = 0; ci < w.length; ci++) {
+      html += charSpan(idx); idx++;
+    }
+    if (wi < words.length - 1) { html += charSpan(idx); idx++; } // space char
+    html += '</span>';
+  });
+  disp.innerHTML = html;
+  applyFocusVisibility();
+}
+
+function charSpan(i) {
+  const s = TSS.state;
+  const ch = s.text[i];
+  const state = s.charStates[i];
+  let cls = 'tss-char';
+  if (state === 'correct') cls += ' correct';
+  else if (state === 'incorrect') cls += (ch===' ') ? ' incorrect space' : ' incorrect';
+  if (i === s.typed.length) cls += ' current';
+  const display = ch === ' ' ? '&nbsp;' : escapeHtml(ch);
+  return `<span class="${cls}" data-i="${i}">${display}</span>`;
+}
+function escapeHtml(c) { return c.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function applyFocusVisibility() {
+  const s = TSS.state;
+  const disp = document.getElementById('tssTextDisplay');
+  if (s.mode !== 'focus') { disp.style.maxHeight=''; return; }
+  // Focus mode: only show current line — approximate by hiding all but a window around cursor
+}
+
+function updateProgress() {
+  const s = TSS.state;
+  let pct = 0;
+  if (s.mode === 'time') pct = s.liveElapsed ? Math.min(100, (s.liveElapsed / s.timeDur) * 100) : 0;
+  else pct = s.text.length ? Math.min(100, (s.typed.length / s.text.length) * 100) : 0;
+  document.getElementById('tssProgressFill').style.width = pct + '%';
+}
+
+/* ---------- Input handling ---------- */
+function focusInput() {
+  const inp = document.getElementById('tssHiddenInput');
+  inp.value = '';
+  setTimeout(()=>inp.focus(), 30);
+}
+
+document.getElementById('tssStage').addEventListener('click', focusInput);
+
+document.getElementById('tssHiddenInput').addEventListener('keydown', function(e) {
+  const s = TSS.state;
+  if (e.key === 'Tab') { e.preventDefault(); TSS.restart(); return; }
+  if (e.key === 'Escape') { e.preventDefault(); TSS.togglePause(); return; }
+  if (e.ctrlKey && e.key === 'Enter' && s.mode === 'zen') { e.preventDefault(); finishSession(); return; }
+  if (s.finished || s.paused) { e.preventDefault(); return; }
+
+  if (e.key === 'Backspace') {
+    e.preventDefault();
+    if (s.typed.length > 0) {
+      const lastIdx = s.typed.length - 1;
+      s.typed = s.typed.slice(0, -1);
+      s.charStates[lastIdx] = null;
+      drawText();
+    }
+    return;
+  }
+  if (e.key.length !== 1) return; // ignore non-character keys
+  e.preventDefault();
+  handleChar(e.key);
+});
+
+function handleChar(key) {
+  const s = TSS.state;
+  if (!s.running) startSession();
+  const idx = s.typed.length;
+  if (idx >= s.text.length) return;
+  const expected = s.text[idx];
+  s.totalKeystrokes++;
+  if (key === expected) {
+    s.charStates[idx] = 'correct';
+    s.correctKeystrokes++;
+    s.currentStreak++;
+    s.bestStreak = Math.max(s.bestStreak, s.currentStreak);
+    playSound(true);
+  } else {
+    s.charStates[idx] = 'incorrect';
+    s.mistakes++;
+    s.currentStreak = 0;
+    const key2 = expected;
+    s.errorLog[key2] = (s.errorLog[key2] || 0) + 1;
+    playSound(false);
+  }
+  s.typed += key;
+  drawText();
+  updateProgress();
+  computeLiveStats();
+
+  const wordsTarget = s.mode === 'words' ? s.wordCount : null;
+  if (s.typed.length >= s.text.length) {
+    if (s.mode === 'time') { s.text += ' ' + generatePassage(s.category==='general'?'general':s.category, 30).text; drawText(); }
+    else { finishSession(); }
+  }
+}
+
+function playSound(correct) {
+  if (!TSS.settings.sound) return;
+  try {
+    const ctx = TSS.audioCtx || (TSS.audioCtx = new (window.AudioContext||window.webkitAudioContext)());
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.frequency.value = correct ? 620 : 180;
+    g.gain.value = 0.035;
+    o.connect(g); g.connect(ctx.destination);
+    o.start(); o.stop(ctx.currentTime + 0.045);
+  } catch(e) {}
+}
+
+function startSession() {
+  const s = TSS.state;
+  s.running = true;
+  s.startTime = Date.now();
+  s.timerHandle = setInterval(tick, 200);
+}
+
+function tick() {
+  const s = TSS.state;
+  if (s.paused || !s.running || s.finished) return;
+  s.liveElapsed = (Date.now() - s.startTime - s.elapsedBeforePause) / 1000;
+  computeLiveStats();
+  updateProgress();
+  if (s.mode === 'time' && s.liveElapsed >= s.timeDur) finishSession();
+}
+
+function computeLiveStats() {
+  const s = TSS.state;
+  const minutes = Math.max(s.liveElapsed, 0.01) / 60;
+  const grossWords = s.typed.length / 5;
+  const netCorrect = s.correctKeystrokes / 5;
+  s.liveRawWpm = Math.min(300, Math.round(grossWords / minutes));
+  s.liveWpm = Math.min(300, Math.round(netCorrect / minutes));
+  s.liveAccuracy = s.totalKeystrokes ? Math.round((s.correctKeystrokes / s.totalKeystrokes) * 100) : 100;
+  if (Math.floor(s.liveElapsed) !== s.lastSampleSec) {
+    s.lastSampleSec = Math.floor(s.liveElapsed);
+    s.wpmSamples.push({ t: s.lastSampleSec, wpm: s.liveWpm, acc: s.liveAccuracy });
+  }
+  renderStatsRow();
+}
+
+/* ---------- Finish / results ---------- */
+function finishSession() {
+  const s = TSS.state;
+  if (s.finished) return;
+  s.finished = true;
+  s.running = false;
+  clearInterval(s.timerHandle);
+  const elapsed = Math.max(s.liveElapsed, 0.5);
+  computeLiveStats();
+
+  const chars = s.text.length;
+  let correctChars=0, incorrectChars=0;
+  for (let i=0;i<s.typed.length;i++){ if (s.charStates[i]==='correct') correctChars++; else if (s.charStates[i]==='incorrect') incorrectChars++; }
+  const missed = Math.max(0, s.text.length - s.typed.length);
+  const extra = Math.max(0, s.typed.length - s.text.length);
+
+  const consistency = computeConsistency(s.wpmSamples);
+  const session = {
+    date: new Date().toISOString(),
+    mode: s.mode,
+    category: s.category,
+    wpm: s.liveWpm,
+    rawWpm: s.liveRawWpm,
+    accuracy: s.liveAccuracy,
+    consistency,
+    duration: Math.round(elapsed),
+    mistakes: s.mistakes,
+    correctChars, incorrectChars, missed, extra,
+    completion: Math.round((s.typed.length / Math.max(1,s.text.length)) * 100),
+    bestStreak: s.bestStreak,
+    errorLog: {...s.errorLog},
+    samples: s.wpmSamples.slice(),
+  };
+  const history = loadHistory();
+  const isNewBest = !history.length || session.wpm > Math.max(...history.map(h=>h.wpm));
+  history.push(session);
+  saveHistory(history);
+  updateStreakTag();
+  renderResults(session, isNewBest, history);
+  document.getElementById('tssResults').classList.add('show');
+  document.getElementById('tssResults').scrollIntoView({behavior:'smooth', block:'start'});
+  renderHistoryTable(history);
+
+  if (s.mode === 'adaptive') {
+    if (session.accuracy >= 97 && session.wpm >= 35) s.adaptiveLevel = Math.min(10, s.adaptiveLevel+1);
+    else if (session.accuracy < 90) s.adaptiveLevel = Math.max(1, s.adaptiveLevel-1);
+  }
+}
+
+function computeConsistency(samples) {
+  if (samples.length < 2) return 100;
+  const wpms = samples.map(s=>s.wpm).filter(w=>w>=0);
+  const mean = wpms.reduce((a,b)=>a+b,0)/wpms.length;
+  const variance = wpms.reduce((a,b)=>a+(b-mean)**2,0)/wpms.length;
+  const sd = Math.sqrt(variance);
+  const cv = mean>0 ? sd/mean : 0;
+  return Math.max(0, Math.round(100 - cv*100));
+}
+
+function percentileEstimate(wpm) {
+  // rough distribution model of typing speeds
+  if (wpm >= 100) return 99;
+  if (wpm >= 80) return 95;
+  if (wpm >= 70) return 88;
+  if (wpm >= 60) return 75;
+  if (wpm >= 50) return 60;
+  if (wpm >= 40) return 45;
+  if (wpm >= 30) return 28;
+  return 12;
+}
+
+function renderResults(session, isNewBest, history) {
+  const el = document.getElementById('tssResults');
+  const bestWpm = Math.max(...history.map(h=>h.wpm));
+  const badges = computeBadges(session, history);
+  const topErrors = Object.entries(session.errorLog).sort((a,b)=>b[1]-a[1]).slice(0,8);
+
+  el.innerHTML = `
+    <div class="tss-results-hero">
+      <div class="tss-hero-card">
+        <div class="tss-hero-wpm">${session.wpm}</div>
+        <div class="tss-hero-wpm-label">Words per minute ${isNewBest ? ' · <span style="color:var(--correct)">NEW PERSONAL BEST</span>' : ''}</div>
+        <div class="tss-hero-sub-row">
+          <div class="tss-hero-sub-stat"><div class="v">${session.rawWpm}</div><div class="l">Raw WPM</div></div>
+          <div class="tss-hero-sub-stat"><div class="v">${session.accuracy}%</div><div class="l">Accuracy</div></div>
+          <div class="tss-hero-sub-stat"><div class="v">${session.consistency}%</div><div class="l">Consistency</div></div>
+          <div class="tss-hero-sub-stat"><div class="v">${session.completion}%</div><div class="l">Completion</div></div>
+        </div>
+      </div>
+      <div class="tss-hero-card tss-chart-card">
+        <div class="tss-stat-label" style="margin-bottom:10px;">WPM &amp; Accuracy over time</div>
+        <canvas id="tssChart" width="380" height="150"></canvas>
+      </div>
+    </div>
+
+    <div class="tss-grid-3">
+      <div class="tss-panel">
+        <h3>Character Breakdown</h3>
+        <div class="tss-char-breakdown">
+          <div><div class="n" style="color:var(--correct)">${session.correctChars}</div><div class="t">Correct</div></div>
+          <div><div class="n" style="color:var(--incorrect)">${session.incorrectChars}</div><div class="t">Incorrect</div></div>
+          <div><div class="n" style="color:var(--text-faint)">${session.extra}</div><div class="t">Extra</div></div>
+          <div><div class="n" style="color:var(--text-faint)">${session.missed}</div><div class="t">Missed</div></div>
+        </div>
+      </div>
+      <div class="tss-panel">
+        <h3>Session Info</h3>
+        <div class="tss-char-breakdown">
+          <div><div class="n">${formatTime(session.duration)}</div><div class="t">Duration</div></div>
+          <div><div class="n">${session.mistakes}</div><div class="t">Mistakes</div></div>
+          <div><div class="n">${session.bestStreak}</div><div class="t">Best Streak</div></div>
+          <div><div class="n">${percentileEstimate(session.wpm)}th</div><div class="t">Percentile</div></div>
+        </div>
+      </div>
+      <div class="tss-panel">
+        <h3>Personal Bests</h3>
+        <div class="tss-char-breakdown">
+          <div><div class="n" style="color:var(--accent)">${bestWpm}</div><div class="t">Best WPM</div></div>
+          <div><div class="n">${history.length}</div><div class="t">Sessions</div></div>
+          <div><div class="n">${Math.max(...history.map(h=>h.accuracy))}%</div><div class="t">Best Acc.</div></div>
+          <div><div class="n">${Math.max(...history.map(h=>h.consistency))}%</div><div class="t">Best Cons.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tss-grid-2">
+      <div class="tss-panel">
+        <h3>Error Heatmap — most mistyped keys</h3>
+        <div class="tss-heatmap">
+          ${topErrors.length ? topErrors.map(([k,v])=>`<div class="tss-heat-key" style="background:rgba(236,95,107,${Math.min(0.85,0.15+v*0.12)})" title="${v} mistakes">${k===' '?'␣':escapeHtml(k)}</div>`).join('') : '<div class="tss-empty-note">No mistakes recorded — clean run!</div>'}
+        </div>
+      </div>
+      <div class="tss-panel">
+        <h3>Achievements</h3>
+        <div class="tss-badges">${badges.map(b=>`<div class="tss-badge ${b.isNew?'new':''}">${b.icon} ${b.label}</div>`).join('')}</div>
+      </div>
+    </div>
+
+    <div class="tss-panel" style="margin-bottom:20px;">
+      <h3>Performance Summary</h3>
+      <div class="tss-summary-text">${buildSummaryText(session, history)}</div>
+      <ul class="tss-suggestion-list">${buildSuggestions(session).map(s=>`<li>${s}</li>`).join('')}</ul>
+    </div>
+
+    <div class="tss-actions-final">
+      <button onclick="TSS.restart()">Try Again</button>
+      <button class="secondary" onclick="TSS.newPassage()">New Passage</button>
+    </div>
+  `;
+  drawChart(session.samples);
+}
+
+function computeBadges(session, history) {
+  const badges = [];
+  if (session.accuracy === 100) badges.push({icon:'🎯', label:'Flawless run', isNew:true});
+  if (session.wpm >= 80) badges.push({icon:'⚡', label:'Speed demon (80+ WPM)', isNew:true});
+  else if (session.wpm >= 60) badges.push({icon:'🚀', label:'Fast typer (60+ WPM)', isNew:true});
+  if (session.bestStreak >= 50) badges.push({icon:'🔥', label:`${session.bestStreak}-char streak`, isNew:true});
+  if (session.consistency >= 90) badges.push({icon:'📏', label:'Rock-solid rhythm', isNew:true});
+  if (history.length === 1) badges.push({icon:'🌱', label:'First session', isNew:true});
+  if (history.length >= 10) badges.push({icon:'🏆', label:'10+ sessions logged', isNew:false});
+  if (!badges.length) badges.push({icon:'✅', label:'Session complete', isNew:false});
+  return badges;
+}
+
+function buildSummaryText(session, history) {
+  const prevAvg = history.length > 1 ? Math.round(history.slice(0,-1).reduce((a,h)=>a+h.wpm,0)/(history.length-1)) : session.wpm;
+  const trend = session.wpm > prevAvg ? 'above' : session.wpm < prevAvg ? 'below' : 'in line with';
+  let strength = session.accuracy >= 96 ? 'strong accuracy' : session.consistency >= 85 ? 'steady rhythm' : 'solid effort';
+  let weakness = session.accuracy < 90 ? 'accuracy under pressure' : session.consistency < 70 ? 'pacing consistency' : 'raw speed ceiling';
+  return `You typed at <b>${session.wpm} WPM</b> with <b>${session.accuracy}% accuracy</b>, which is ${trend} your recent average of ${prevAvg} WPM. Your main strength this session was <b>${strength}</b>, while the clearest area to work on is <b>${weakness}</b>.`;
+}
+
+function buildSuggestions(session) {
+  const tips = [];
+  if (session.accuracy < 95) tips.push('Slow down slightly on unfamiliar words — accuracy drives net WPM more than raw speed.');
+  if (session.consistency < 80) tips.push('Try Zen Mode to build a steadier rhythm without the pressure of a timer.');
+  const topErr = Object.entries(session.errorLog).sort((a,b)=>b[1]-a[1])[0];
+  if (topErr) tips.push(`The <b>"${topErr[0]===' '?'space':escapeHtml(topErr[0])}"</b> key caused the most mistakes — target it with focused drills.`);
+  if (session.wpm < 40) tips.push('Practice in short, frequent sessions (Word Count mode at 25 words) to build muscle memory faster than long sessions.');
+  if (!tips.length) tips.push('Great balance of speed and accuracy — try a longer Time Mode session or a harder Programming snippet next.');
+  return tips;
+}
+
+function drawChart(samples) {
+  const canvas = document.getElementById('tssChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0,0,w,h);
+  const style = getComputedStyle(document.body);
+  const lineColor = style.getPropertyValue('--accent').trim() || '#ffb454';
+  const accColor = style.getPropertyValue('--correct').trim() || '#4cce91';
+  const gridColor = style.getPropertyValue('--line').trim() || '#232b3a';
+  if (!samples.length) { ctx.fillStyle = style.getPropertyValue('--text-faint'); ctx.font='12px Inter'; ctx.fillText('Not enough data', 10, h/2); return; }
+  const maxWpm = Math.max(10, ...samples.map(s=>s.wpm)) * 1.15;
+  const padL = 30, padB = 18, padT = 8, padR = 8;
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+
+  // grid
+  ctx.strokeStyle = gridColor; ctx.lineWidth = 1;
+  for (let i=0;i<=3;i++) {
+    const y = padT + plotH * (i/3);
+    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(w-padR,y); ctx.stroke();
+  }
+  // wpm line
+  ctx.strokeStyle = lineColor; ctx.lineWidth = 2; ctx.beginPath();
+  samples.forEach((s,i) => {
+    const x = padL + plotW * (i/(Math.max(1,samples.length-1)));
+    const y = padT + plotH * (1 - s.wpm/maxWpm);
+    if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  // accuracy line (scaled to 0-100)
+  ctx.strokeStyle = accColor; ctx.lineWidth = 1.5; ctx.setLineDash([3,3]); ctx.beginPath();
+  samples.forEach((s,i) => {
+    const x = padL + plotW * (i/(Math.max(1,samples.length-1)));
+    const y = padT + plotH * (1 - s.acc/100);
+    if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.stroke(); ctx.setLineDash([]);
+  // labels
+  ctx.fillStyle = style.getPropertyValue('--text-faint'); ctx.font = '9px JetBrains Mono';
+  ctx.fillText(Math.round(maxWpm)+'', 2, padT+4);
+  ctx.fillText('0', 10, h-padB+4);
+}
+
+/* ---------- History storage ---------- */
+const HKEY = 'tss_history_v1';
+function loadHistory() { try { return JSON.parse(localStorage.getItem(HKEY)) || []; } catch(e){ return []; } }
+function saveHistory(h) { try { localStorage.setItem(HKEY, JSON.stringify(h.slice(-100))); } catch(e){} }
+
+function renderHistoryTable(history) {
+  const wrap = document.getElementById('tssHistoryWrap');
+  if (!history.length) { wrap.innerHTML = '<div class="tss-empty-note">Complete a session to start building your history.</div>'; return; }
+  const rows = history.slice(-15).reverse().map(h => `
+    <tr>
+      <td>${new Date(h.date).toLocaleDateString()} ${new Date(h.date).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</td>
+      <td>${h.mode}</td>
+      <td class="wpm">${h.wpm}</td>
+      <td>${h.accuracy}%</td>
+      <td>${h.consistency}%</td>
+      <td>${formatTime(h.duration)}</td>
+    </tr>`).join('');
+  wrap.innerHTML = `<table class="tss-history-table">
+    <thead><tr><th>When</th><th>Mode</th><th>WPM</th><th>Accuracy</th><th>Consistency</th><th>Duration</th></tr></thead>
+    <tbody>${rows}</tbody></table>`;
+}
+
+function updateStreakTag() {
+  const history = loadHistory();
+  const days = new Set(history.map(h => new Date(h.date).toDateString()));
+  let streak = 0;
+  let d = new Date();
+  while (days.has(d.toDateString())) { streak++; d.setDate(d.getDate()-1); }
+  document.getElementById('tssStreakTag').textContent = `🔥 ${streak} day streak`;
+}
+
+/* ---------- Public controls ---------- */
+TSS.selectMode = function(id) {
+  TSS.state.mode = id;
+  TSS.state.focusMode = id === 'focus';
+  TSS.state.zenMode = id === 'zen';
+  initModeBar();
+  renderSubBar();
+  document.getElementById('tssStage').classList.toggle('focused', id==='focus');
+  TSS.newPassage();
+};
+TSS.setTimeDur = function(d) { TSS.state.timeDur = d; renderSubBar(); TSS.newPassage(); };
+TSS.setWordCount = function(d) { TSS.state.wordCount = d; renderSubBar(); TSS.newPassage(); };
+TSS.setProgLang = function(l) { TSS.state.progLang = l; renderSubBar(); TSS.newPassage(); };
+TSS.setCategory = function(c) { TSS.state.category = c; renderSubBar(); TSS.newPassage(); };
+TSS.applyCustomText = function() {
+  const t = document.getElementById('tssCustomText').value.trim();
+  if (!t) return;
+  TSS.state.customText = t;
+  renderPassage(t, 'CUSTOM');
+};
+TSS.restart = function() { TSS.newPassage(); };
+
+TSS.togglePause = function() {
+  const s = TSS.state;
+  if (s.finished || !s.running) return;
+  s.paused = !s.paused;
+  const overlay = document.getElementById('tssOverlay');
+  if (s.paused) {
+    s.pauseStart = Date.now();
+    overlay.style.display = 'flex';
+    overlay.innerHTML = `<div>Paused</div><span class="sub">Press Esc to resume</span>`;
+    document.getElementById('tssPauseBtn').textContent = '▶';
+  } else {
+    s.elapsedBeforePause += Date.now() - s.pauseStart;
+    overlay.style.display = 'none';
+    document.getElementById('tssPauseBtn').textContent = '⏸';
+    focusInput();
+  }
+};
+
+TSS.openSettings = function() { document.getElementById('tssSettings').classList.add('open'); document.getElementById('tssScrim').classList.add('show'); };
+TSS.closeSettings = function() { document.getElementById('tssSettings').classList.remove('open'); document.getElementById('tssScrim').classList.remove('show'); };
+TSS.setTheme = function(t) {
+  document.body.setAttribute('data-theme', t);
+  document.querySelectorAll('.tss-swatch').forEach(el => el.classList.toggle('active', el.dataset.theme===t));
+  localStorage.setItem('tss_theme', t);
+};
+TSS.setFontSize = function(v) { document.documentElement.style.setProperty('--type-size', v+'px'); };
+TSS.applyBlur = function() { document.getElementById('tssTextDisplay').classList.toggle('blurred', TSS.settings.blur); };
+TSS.clearHistory = function() { if(confirm('Clear all session history? This cannot be undone.')) { localStorage.removeItem(HKEY); renderHistoryTable([]); updateStreakTag(); } };
+
+/* ---------- Bootstrap ---------- */
+(function boot() {
+  const savedTheme = localStorage.getItem('tss_theme') || 'dark';
+  TSS.setTheme(savedTheme);
+  initModeBar();
+  renderSubBar();
+  renderHistoryTable(loadHistory());
+  updateStreakTag();
+  TSS.newPassage();
+  window.addEventListener('blur', () => { if (TSS.state.running && !TSS.state.finished && !TSS.state.paused) TSS.togglePause(); });
+})();
+</script>
+</body>
+</html>
