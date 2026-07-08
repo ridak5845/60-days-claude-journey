@@ -18,7 +18,7 @@ The application offers multiple typing modes, live WPM tracking, accuracy measur
 
 ## 2. Generated HTML File
 
-![Generated HTML](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-38/typing-speed-studio.html)
+[Generated HTML](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-38/typing-speed-studio.html)
 
 
 ## 3. Analytics Dashboard
