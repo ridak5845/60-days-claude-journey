@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Learning Studio — Python OOP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e15;
+    --surface:#12161f;
+    --surface2:#171c27;
+    --line:#232a37;
+    --line-soft:#1b212c;
+    --text:#eceef3;
+    --text-dim:#9aa5b5;
+    --text-faint:#5f6b7d;
+    --red:#ec5f5f;
+    --amber:#e3a544;
+    --green:#4cce91;
+    --blue:#6ea8fe;
+    --purple:#b39ddb;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+    --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .ils-root{max-width:980px;margin:0 auto;padding:0 0 80px;}
+  a{color:var(--blue);}
+  code, pre{font-family:var(--mono);}
+  ::selection{background:rgba(110,168,254,0.25);}
+
+  /* ===== Top progress bar ===== */
+  .ils-topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,14,21,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:12px 24px;
+  }
+  .ils-topbar-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+  .ils-brand{font-family:var(--display);font-weight:700;font-size:14px;white-space:nowrap;}
+  .ils-brand span{color:var(--blue);}
+  .ils-progress-track{flex:1;height:6px;background:var(--line);border-radius:4px;overflow:hidden;}
+  .ils-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .4s ease;border-radius:4px;}
+  .ils-progress-pct{font-family:var(--mono);font-size:11px;color:var(--text-faint);white-space:nowrap;min-width:34px;text-align:right;}
+  .ils-xp{font-family:var(--mono);font-size:11px;color:var(--amber);white-space:nowrap;display:flex;align-items:center;gap:4px;}
+
+  /* ===== Hero / intro ===== */
+  .ils-hero{padding:56px 24px 32px;}
+  .ils-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+  .ils-h1{font-family:var(--display);font-size:38px;font-weight:700;letter-spacing:-.01em;margin:0 0 14px;}
+  .ils-hero-desc{color:var(--text-dim);font-size:15px;max-width:640px;margin:0 0 32px;}
+
+  .ils-info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px;}
+  .ils-info-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;}
+  .ils-info-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);margin-bottom:8px;}
+  .ils-info-value{font-family:var(--display);font-size:16px;font-weight:600;}
+  .ils-info-sub{font-size:12px;color:var(--text-dim);margin-top:4px;}
+
+  .ils-objectives{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-bottom:20px;}
+  .ils-objectives h3{font-family:var(--display);font-size:14px;margin:0 0 14px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-faint);}
+  .ils-objectives ul{margin:0;padding-left:0;list-style:none;}
+  .ils-objectives li{display:flex;gap:10px;font-size:13.5px;color:var(--text);margin-bottom:10px;align-items:flex-start;}
+  .ils-objectives li:last-child{margin-bottom:0;}
+  .ils-check{color:var(--green);flex-shrink:0;font-family:var(--mono);}
+
+  .ils-reward-box{
+    background:linear-gradient(135deg, rgba(227,165,68,0.08), rgba(179,157,219,0.06));
+    border:1px solid rgba(227,165,68,0.25);
+    border-radius:12px;padding:20px 24px;margin-bottom:36px;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .ils-reward-icon{font-size:26px;}
+  .ils-reward-text{font-size:13px;color:var(--text-dim);}
+  .ils-reward-text b{color:var(--amber);font-family:var(--mono);}
+
+  .ils-start-btn{
+    font-family:var(--display);font-weight:600;font-size:14.5px;
+    background:var(--blue);color:#0a0e15;border:none;border-radius:10px;
+    padding:14px 28px;cursor:pointer;transition:transform .15s ease, opacity .15s ease;
+  }
+  .ils-start-btn:hover{opacity:.9;transform:translateY(-1px);}
+
+  /* ===== Module nav dots ===== */
+  .ils-modnav{display:flex;gap:10px;padding:0 24px 30px;flex-wrap:wrap;}
+  .ils-modnav-item{
+    display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;
+    background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:8px 14px 8px 10px;
+    color:var(--text-faint);cursor:pointer;transition:.15s ease;
+  }
+  .ils-modnav-item.active{border-color:var(--blue);color:var(--text);}
+  .ils-modnav-item.done{border-color:var(--green);color:var(--green);}
+  .ils-modnav-item.locked{opacity:.45;cursor:not-allowed;}
+  .ils-modnav-dot{width:7px;height:7px;border-radius:50%;background:var(--text-faint);}
+  .ils-modnav-item.active .ils-modnav-dot{background:var(--blue);}
+  .ils-modnav-item.done .ils-modnav-dot{background:var(--green);}
+
+  /* ===== Module container ===== */
+  .ils-module{display:none;padding:0 24px;}
+  .ils-module.active{display:block;}
+  .ils-module-head{padding:8px 0 28px;border-bottom:1px solid var(--line);margin-bottom:32px;}
+  .ils-module-kicker{font-family:var(--mono);font-size:11px;color:var(--purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+  .ils-module-title{font-family:var(--display);font-size:27px;font-weight:700;margin:0 0 10px;}
+  .ils-module-desc{color:var(--text-dim);font-size:14px;max-width:680px;}
+
+  .ils-section{margin-bottom:38px;}
+  .ils-section-title{
+    font-family:var(--display);font-size:13px;font-weight:600;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--blue);margin:0 0 16px;display:flex;align-items:center;gap:8px;
+  }
+  .ils-section-title::before{content:'';width:16px;height:1px;background:var(--blue);}
+
+  .ils-text{font-size:14.5px;color:var(--text);max-width:720px;margin-bottom:14px;}
+  .ils-text:last-child{margin-bottom:0;}
+
+  /* code blocks */
+  .ils-code{
+    background:#0d1119;border:1px solid var(--line);border-radius:10px;
+    padding:16px 18px;font-family:var(--mono);font-size:12.5px;color:#d8e0ea;
+    overflow-x:auto;margin:14px 0;line-height:1.65;white-space:pre;
+  }
+  .ils-code .c-kw{color:var(--purple);}
+  .ils-code .c-str{color:var(--green);}
+  .ils-code .c-com{color:var(--text-faint);font-style:italic;}
+  .ils-code .c-fn{color:var(--blue);}
+  .ils-code .c-num{color:var(--amber);}
+
+  /* analogy box */
+  .ils-analogy{
+    background:rgba(179,157,219,0.06);border:1px solid rgba(179,157,219,0.25);
+    border-radius:10px;padding:16px 18px;margin:14px 0;font-size:13.5px;color:var(--text);
+  }
+  .ils-analogy-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--purple);margin-bottom:8px;}
+
+  /* misconception box */
+  .ils-misconception{
+    background:rgba(236,95,95,0.06);border:1px solid rgba(236,95,95,0.25);
+    border-radius:10px;padding:16px 18px;margin:14px 0;font-size:13.5px;color:var(--text);
+  }
+  .ils-misconception-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--red);margin-bottom:8px;}
+
+  /* comparison table */
+  table.ils-table{width:100%;border-collapse:collapse;margin:14px 0;}
+  table.ils-table th{
+    text-align:left;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--text-faint);padding:0 12px 10px 0;border-bottom:1px solid var(--line);font-weight:500;
+  }
+  table.ils-table td{padding:12px 12px 12px 0;border-bottom:1px solid var(--line-soft);font-size:13px;vertical-align:top;}
+  table.ils-table tr:last-child td{border-bottom:none;}
+
+  /* diagram box */
+  .ils-diagram{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;margin:16px 0;overflow-x:auto;}
+  .ils-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto;}
+
+  /* key takeaways */
+  .ils-takeaways{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 22px;}
+  .ils-takeaways ul{margin:0;padding-left:0;list-style:none;}
+  .ils-takeaways li{display:flex;gap:10px;font-size:13.5px;margin-bottom:9px;}
+  .ils-takeaways li:last-child{margin-bottom:0;}
+  .ils-takeaways .ils-dot{width:6px;height:6px;border-radius:50%;background:var(--green);margin-top:6px;flex-shrink:0;}
+
+  /* exercise box */
+  .ils-exercise{background:var(--surface2);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:8px;padding:18px 20px;margin:14px 0;}
+  .ils-exercise-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--amber);margin-bottom:10px;}
+  .ils-exercise textarea{
+    width:100%;min-height:100px;background:#0d1119;border:1px solid var(--line);border-radius:8px;
+    color:var(--text);font-family:var(--mono);font-size:12.5px;padding:12px;resize:vertical;margin-top:10px;
+  }
+  .ils-btn-sm{
+    font-family:var(--mono);font-size:11.5px;background:transparent;border:1px solid var(--line);
+    color:var(--text-dim);border-radius:6px;padding:7px 14px;cursor:pointer;margin-top:10px;transition:.15s;
+  }
+  .ils-btn-sm:hover{border-color:var(--blue);color:var(--blue);}
+  .ils-exercise-reveal{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--line-soft);font-size:13px;color:var(--text-dim);}
+  .ils-exercise-reveal.show{display:block;}
+
+  /* interactive toggle demo */
+  .ils-interactive{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:14px 0;}
+  .ils-interactive-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+  .ils-pill-btn{
+    font-family:var(--mono);font-size:11.5px;background:var(--surface2);border:1px solid var(--line);
+    color:var(--text-dim);border-radius:20px;padding:7px 16px;cursor:pointer;transition:.15s;
+  }
+  .ils-pill-btn.active{border-color:var(--blue);color:var(--blue);background:rgba(110,168,254,0.08);}
+  .ils-interactive-output{font-family:var(--mono);font-size:12.5px;background:#0d1119;border:1px solid var(--line);border-radius:8px;padding:14px;color:var(--green);min-height:20px;}
+
+  /* quiz */
+  .ils-quiz{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 26px 22px;margin-top:10px;}
+  .ils-quiz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+  .ils-quiz-title{font-family:var(--display);font-size:15px;font-weight:600;}
+  .ils-quiz-progress{font-family:var(--mono);font-size:11px;color:var(--text-faint);}
+  .ils-q{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--line-soft);}
+  .ils-q:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .ils-q-text{font-size:14px;color:var(--text);margin-bottom:12px;font-weight:500;}
+  .ils-q-options{display:flex;flex-direction:column;gap:8px;}
+  .ils-q-option{
+    display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid var(--line);
+    border-radius:8px;font-size:13px;cursor:pointer;transition:.15s;background:var(--surface2);
+  }
+  .ils-q-option:hover{border-color:var(--blue);}
+  .ils-q-option.selected{border-color:var(--blue);background:rgba(110,168,254,0.08);}
+  .ils-q-option.correct{border-color:var(--green);background:rgba(76,206,145,0.1);}
+  .ils-q-option.incorrect{border-color:var(--red);background:rgba(236,95,95,0.1);}
+  .ils-q-option.disabled{cursor:default;}
+  .ils-opt-letter{
+    font-family:var(--mono);font-size:11px;width:20px;height:20px;border-radius:5px;background:var(--line);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text-dim);
+  }
+  .ils-q-explain{
+    display:none;margin-top:10px;padding:12px 14px;border-radius:8px;font-size:12.5px;
+    background:var(--surface2);border:1px solid var(--line-soft);color:var(--text-dim);
+  }
+  .ils-q-explain.show{display:block;}
+  .ils-quiz-submit{
+    font-family:var(--display);font-weight:600;font-size:13.5px;background:var(--blue);color:#0a0e15;
+    border:none;border-radius:8px;padding:11px 22px;cursor:pointer;margin-top:6px;
+  }
+  .ils-quiz-submit:disabled{opacity:.4;cursor:not-allowed;}
+  .ils-quiz-result{display:none;text-align:center;padding:20px 0 4px;}
+  .ils-quiz-result.show{display:block;}
+  .ils-quiz-score{font-family:var(--display);font-size:34px;font-weight:700;margin-bottom:6px;}
+  .ils-quiz-score.pass{color:var(--green);}
+  .ils-quiz-score.fail{color:var(--amber);}
+  .ils-quiz-msg{font-size:13px;color:var(--text-dim);margin-bottom:18px;}
+  .ils-quiz-actions{display:flex;gap:10px;justify-content:center;}
+
+  /* module footer nav */
+  .ils-module-footer{display:flex;justify-content:space-between;align-items:center;padding:36px 0 60px;}
+  .ils-nav-btn{
+    font-family:var(--display);font-weight:600;font-size:13px;background:var(--surface);
+    border:1px solid var(--line);color:var(--text);border-radius:8px;padding:11px 20px;cursor:pointer;
+  }
+  .ils-nav-btn.primary{background:var(--blue);color:#0a0e15;border:none;}
+  .ils-nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+
+  /* final section */
+  .ils-final{display:none;padding:0 24px;}
+  .ils-final.active{display:block;}
+  .ils-final-head{text-align:center;padding:40px 0 36px;}
+  .ils-final-head .ils-eyebrow{justify-content:center;display:flex;}
+  .ils-final-head h2{font-family:var(--display);font-size:30px;margin:14px 0 10px;}
+  .ils-final-head p{color:var(--text-dim);font-size:14px;max-width:520px;margin:0 auto;}
+
+  .ils-cheat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+  .ils-cheat-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+  .ils-cheat-card h4{font-family:var(--display);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--blue);margin:0 0 10px;}
+  .ils-cheat-card .ils-code{margin:0;font-size:11.5px;}
+
+  .ils-resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+  .ils-resource-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;}
+  .ils-resource-card h4{font-family:var(--display);font-size:13px;margin:0 0 12px;color:var(--text);display:flex;align-items:center;gap:8px;}
+  .ils-resource-card ul{margin:0;padding-left:16px;font-size:12.5px;color:var(--text-dim);}
+  .ils-resource-card li{margin-bottom:7px;}
+  .ils-resource-card li:last-child{margin-bottom:0;}
+
+  .ils-tag-cloud{display:flex;flex-wrap:wrap;gap:8px;}
+  .ils-tag-chip{font-family:var(--mono);font-size:11.5px;background:var(--surface2);border:1px solid var(--line);color:var(--text-dim);padding:6px 12px;border-radius:20px;}
+
+  .ils-prompt-list{display:flex;flex-direction:column;gap:10px;}
+  .ils-prompt-item{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-family:var(--mono);font-size:12px;color:var(--text-dim);display:flex;justify-content:space-between;align-items:center;gap:12px;}
+  .ils-prompt-copy{background:none;border:1px solid var(--line);color:var(--text-faint);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--mono);font-size:10.5px;flex-shrink:0;}
+  .ils-prompt-copy:hover{border-color:var(--blue);color:var(--blue);}
+
+  .ils-challenge-box{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:10px;padding:22px 24px;margin-bottom:24px;}
+
+  .ils-print-btn{
+    font-family:var(--mono);font-size:11.5px;background:var(--surface);border:1px solid var(--line);
+    color:var(--text-dim);border-radius:8px;padding:10px 18px;cursor:pointer;
+  }
+  .ils-print-btn:hover{border-color:var(--blue);color:var(--blue);}
+
+  .ils-footer{text-align:center;padding:30px 24px;color:var(--text-faint);font-size:10.5px;font-family:var(--mono);letter-spacing:.03em;border-top:1px solid var(--line);margin-top:20px;}
+
+  @media print{
+    .ils-topbar,.ils-modnav,.ils-hero .ils-start-btn,.ils-quiz,.ils-module-footer,.ils-interactive-controls{display:none !important;}
+    body{background:#fff;color:#000;}
+  }
+
+  @media (max-width:700px){
+    .ils-h1{font-size:28px;}
+    .ils-hero{padding:40px 18px 24px;}
+    .ils-modnav,.ils-module,.ils-final{padding-left:18px;padding-right:18px;}
+  }
+</style>
+</head>
+<body>
+<div class="ils-root">
+
+  <!-- TOP BAR -->
+  <div class="ils-topbar">
+    <div class="ils-topbar-inner">
+      <div class="ils-brand">Learning<span>Studio</span></div>
+      <div class="ils-progress-track"><div class="ils-progress-fill" id="ilsProgressFill"></div></div>
+      <div class="ils-progress-pct" id="ilsProgressPct">0%</div>
+      <div class="ils-xp">⚡ <span id="ilsXp">0</span> XP</div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="ils-hero" id="ilsHero">
+    <div class="ils-eyebrow">Python · Object-Oriented Programming</div>
+    <h1 class="ils-h1">Object-Oriented Programming in Python</h1>
+    <p class="ils-hero-desc">A complete, hands-on tutorial that takes you from your first class to designing multi-class systems with inheritance, polymorphism, and composition — the way experienced Python developers actually think about objects.</p>
+
+    <div class="ils-info-grid">
+      <div class="ils-info-card">
+        <div class="ils-info-label">Estimated Time</div>
+        <div class="ils-info-value">75–95 min</div>
+        <div class="ils-info-sub">4 modules · self-paced</div>
+      </div>
+      <div class="ils-info-card">
+        <div class="ils-info-label">Prerequisites</div>
+        <div class="ils-info-value">Core Python</div>
+        <div class="ils-info-sub">Variables, functions, loops, basic data types</div>
+      </div>
+      <div class="ils-info-card">
+        <div class="ils-info-label">Difficulty Curve</div>
+        <div class="ils-info-value">Beginner → Advanced</div>
+        <div class="ils-info-sub">Foundations to design mastery</div>
+      </div>
+      <div class="ils-info-card">
+        <div class="ils-info-label">Format</div>
+        <div class="ils-info-value">Interactive</div>
+        <div class="ils-info-sub">Diagrams, quizzes, exercises</div>
+      </div>
+    </div>
+
+    <div class="ils-objectives">
+      <h3>Learning Objectives</h3>
+      <ul>
+        <li><span class="ils-check">✓</span>Explain what classes and objects are, and why Python treats "everything as an object."</li>
+        <li><span class="ils-check">✓</span>Build classes with constructors, instance/class attributes, and methods.</li>
+        <li><span class="ils-check">✓</span>Apply the four OOP pillars — encapsulation, inheritance, polymorphism, abstraction — with real Python idioms.</li>
+        <li><span class="ils-check">✓</span>Use dunder methods, properties, class/static methods, and composition to write idiomatic Python classes.</li>
+        <li><span class="ils-check">✓</span>Navigate multiple inheritance and MRO, and recognize when to use inheritance vs. composition.</li>
+        <li><span class="ils-check">✓</span>Design a small multi-class system from scratch as a final challenge.</li>
+      </ul>
+    </div>
+
+    <div class="ils-reward-box">
+      <div class="ils-reward-icon">🏆</div>
+      <div class="ils-reward-text">Earn <b>XP</b> for every module you finish and every quiz question you answer correctly. Score 3/4 or higher on a quiz to unlock the next module. Finish all four to unlock the <b>Final Challenge</b> and a printable <b>Cheat Sheet</b>.</div>
+    </div>
+
+    <button class="ils-start-btn" onclick="ilsStart()">Start Module 1 →</button>
+  </div>
+
+  <!-- MODULE NAV -->
+  <div class="ils-modnav" id="ilsModNav"></div>
+
+  <!-- ================= MODULE 1 ================= -->
+  <div class="ils-module" id="ilsModule-0">
+    <div class="ils-module-head">
+      <div class="ils-module-kicker">Module 1 · Foundations</div>
+      <h2 class="ils-module-title">Classes, Objects & Attributes</h2>
+      <p class="ils-module-desc">The vocabulary and mental model every OOP concept is built on: what a class actually is, how objects come to life, and how they hold their own data.</p>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Explanation</h3>
+      <p class="ils-text">In Python, <b>everything is an object</b> — numbers, strings, functions, even classes themselves. A <b>class</b> is a blueprint that describes what data (attributes) and behavior (methods) its objects will have. An <b>object</b> (or <b>instance</b>) is a concrete thing built from that blueprint, living in memory with its own copy of the data.</p>
+      <p class="ils-text">You define a class with the <code>class</code> keyword. Inside it, the special method <code>__init__</code> runs automatically every time a new object is created — it's the constructor, responsible for setting up that object's starting state. The first parameter of every instance method, by convention named <code>self</code>, refers to the specific object the method was called on.</p>
+      <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Dog</span>:
+    <span class="c-com"># class attribute — shared by all instances</span>
+    species = <span class="c-str">"Canis familiaris"</span>
+
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name, age):
+        <span class="c-com"># instance attributes — unique per object</span>
+        self.name = name
+        self.age = age
+
+    <span class="c-kw">def</span> <span class="c-fn">bark</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">f"{self.name} says woof!"</span>
+
+rex = Dog(<span class="c-str">"Rex"</span>, <span class="c-num">3</span>)
+bella = Dog(<span class="c-str">"Bella"</span>, <span class="c-num">5</span>)
+
+<span class="c-fn">print</span>(rex.bark())      <span class="c-com"># Rex says woof!</span>
+<span class="c-fn">print</span>(bella.age)      <span class="c-com"># 5</span>
+<span class="c-fn">print</span>(rex.species)    <span class="c-com"># Canis familiaris (shared)</span>
+      </div>
+      <p class="ils-text">Notice: <code>rex</code> and <code>bella</code> are two separate objects. Each has its own <code>name</code> and <code>age</code>, but both share the same <code>species</code> class attribute — because it belongs to the class, not to any one instance.</p>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Analogy</h3>
+      <div class="ils-analogy">
+        <div class="ils-analogy-tag">Think of it like...</div>
+        A class is an architectural blueprint for a house — it specifies "every house has walls, a door, and a roof" but is not itself a house you can live in. Each object is an actual house built from that blueprint. You can paint one house blue and another red (instance attributes) without changing the blueprint, but if the blueprint says "3 bedrooms," every house built from it starts with that layout.
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Diagram: Class vs. Instances</h3>
+      <div class="ils-diagram">
+        <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+          <rect x="270" y="15" width="160" height="70" rx="10" fill="#171c27" stroke="#6ea8fe" stroke-width="1.5"/>
+          <text x="350" y="40" text-anchor="middle" fill="#6ea8fe" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">class Dog</text>
+          <text x="350" y="58" text-anchor="middle" fill="#9aa5b5" font-family="JetBrains Mono, monospace" font-size="10">species = "Canis..."</text>
+          <text x="350" y="72" text-anchor="middle" fill="#9aa5b5" font-family="JetBrains Mono, monospace" font-size="10">__init__, bark()</text>
+
+          <line x1="330" y1="85" x2="150" y2="150" stroke="#5f6b7d" stroke-width="1.2"/>
+          <line x1="370" y1="85" x2="550" y2="150" stroke="#5f6b7d" stroke-width="1.2"/>
+
+          <rect x="60" y="150" width="180" height="80" rx="10" fill="#12161f" stroke="#232a37" stroke-width="1.5"/>
+          <text x="150" y="176" text-anchor="middle" fill="#eceef3" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">rex</text>
+          <text x="150" y="196" text-anchor="middle" fill="#4cce91" font-family="JetBrains Mono, monospace" font-size="10">name = "Rex"</text>
+          <text x="150" y="212" text-anchor="middle" fill="#4cce91" font-family="JetBrains Mono, monospace" font-size="10">age = 3</text>
+
+          <rect x="460" y="150" width="180" height="80" rx="10" fill="#12161f" stroke="#232a37" stroke-width="1.5"/>
+          <text x="550" y="176" text-anchor="middle" fill="#eceef3" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">bella</text>
+          <text x="550" y="196" text-anchor="middle" fill="#4cce91" font-family="JetBrains Mono, monospace" font-size="10">name = "Bella"</text>
+          <text x="550" y="212" text-anchor="middle" fill="#4cce91" font-family="JetBrains Mono, monospace" font-size="10">age = 5</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Comparison: Instance vs. Class Attributes</h3>
+      <table class="ils-table">
+        <thead><tr><th>Aspect</th><th>Instance Attribute</th><th>Class Attribute</th></tr></thead>
+        <tbody>
+          <tr><td>Defined where</td><td>Inside <code>__init__</code> (usually) as <code>self.x = ...</code></td><td>Directly inside the class body</td></tr>
+          <tr><td>Storage</td><td>One copy per object</td><td>One copy shared by all objects</td></tr>
+          <tr><td>Typical use</td><td>Data unique to each object (name, age)</td><td>Constants, defaults, counters shared across the class</td></tr>
+          <tr><td>Mutating it</td><td>Only affects that one object</td><td>Mutating a mutable class attribute affects every instance</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Interactive: Watch Objects Get Created</h3>
+      <div class="ils-interactive">
+        <div class="ils-interactive-controls">
+          <button class="ils-pill-btn active" data-m1step="1" onclick="ilsM1Step(1,this)">Step 1: Define class</button>
+          <button class="ils-pill-btn" data-m1step="2" onclick="ilsM1Step(2,this)">Step 2: Create rex</button>
+          <button class="ils-pill-btn" data-m1step="3" onclick="ilsM1Step(3,this)">Step 3: Create bella</button>
+          <button class="ils-pill-btn" data-m1step="4" onclick="ilsM1Step(4,this)">Step 4: Call bark()</button>
+        </div>
+        <div class="ils-interactive-output" id="ilsM1Output">class Dog defined. No objects exist yet — the blueprint alone uses no per-instance memory.</div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Practical Exercise</h3>
+      <div class="ils-exercise">
+        <div class="ils-exercise-tag">Try it yourself</div>
+        <p class="ils-text" style="margin-bottom:0;">Write a <code>Book</code> class with instance attributes <code>title</code> and <code>author</code>, and a method <code>describe()</code> that returns <code>"Title by Author"</code>. Sketch it below, then reveal a model answer.</p>
+        <textarea placeholder="class Book:&#10;    def __init__(self, ...):&#10;        ...&#10;"></textarea>
+        <button class="ils-btn-sm" onclick="this.nextElementSibling.classList.toggle('show')">Reveal model answer</button>
+        <div class="ils-exercise-reveal">
+          <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Book</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, title, author):
+        self.title = title
+        self.author = author
+
+    <span class="c-kw">def</span> <span class="c-fn">describe</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">f"{self.title} by {self.author}"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Common Misconceptions</h3>
+      <div class="ils-misconception">
+        <div class="ils-misconception-tag">Misconception</div>
+        "<code>self</code> is a Python keyword." It isn't — it's just a naming convention. Python passes the instance as the first argument to every instance method automatically; you could call it anything, but every Python developer expects <code>self</code>, so deviating from it makes code harder to read.
+      </div>
+      <div class="ils-misconception">
+        <div class="ils-misconception-tag">Misconception</div>
+        "Class attributes and instance attributes with the same name are the same variable." They're not. Assigning <code>self.age = 5</code> inside a method creates (or overwrites) an <em>instance</em> attribute that shadows a class attribute of the same name — the class attribute underneath is untouched.
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Key Takeaways</h3>
+      <div class="ils-takeaways">
+        <ul>
+          <li><span class="ils-dot"></span>A class is a blueprint; an object (instance) is a concrete thing built from it.</li>
+          <li><span class="ils-dot"></span><code>__init__</code> runs automatically on creation and sets up initial state via <code>self</code>.</li>
+          <li><span class="ils-dot"></span>Instance attributes belong to one object; class attributes are shared by all objects of that class.</li>
+          <li><span class="ils-dot"></span>Methods are just functions defined inside a class that automatically receive the calling object as <code>self</code>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- QUIZ 1 -->
+    <div class="ils-quiz" id="ilsQuiz-0"></div>
+
+    <div class="ils-module-footer">
+      <button class="ils-nav-btn" disabled>← Previous</button>
+      <button class="ils-nav-btn primary" id="ilsNext-0" disabled onclick="ilsGoToModule(1)">Next Module →</button>
+    </div>
+  </div>
+
+  <!-- ================= MODULE 2 ================= -->
+  <div class="ils-module" id="ilsModule-1">
+    <div class="ils-module-head">
+      <div class="ils-module-kicker">Module 2 · Core Pillars</div>
+      <h2 class="ils-module-title">Encapsulation, Inheritance, Polymorphism, Abstraction</h2>
+      <p class="ils-module-desc">The four ideas that make OOP more than "functions bundled with data" — and the concrete Python syntax for each.</p>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Explanation</h3>
+      <p class="ils-text"><b>Encapsulation</b> means bundling data with the methods that operate on it, and controlling access to that data. Python has no true "private" enforcement, but uses naming conventions: a single underscore (<code>_balance</code>) signals "internal, don't touch directly," and a double underscore (<code>__balance</code>) triggers name-mangling to discourage accidental access from subclasses.</p>
+      <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">BankAccount</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, balance):
+        self._balance = balance   <span class="c-com"># "protected" by convention</span>
+
+    <span class="c-kw">def</span> <span class="c-fn">deposit</span>(self, amount):
+        <span class="c-kw">if</span> amount &gt; <span class="c-num">0</span>:
+            self._balance += amount
+
+    <span class="c-kw">def</span> <span class="c-fn">get_balance</span>(self):
+        <span class="c-kw">return</span> self._balance
+      </div>
+      <p class="ils-text"><b>Inheritance</b> lets a class (subclass) reuse and extend the behavior of another class (superclass), avoiding duplication.</p>
+      <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Animal</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name):
+        self.name = name
+    <span class="c-kw">def</span> <span class="c-fn">speak</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">"..."</span>
+
+<span class="c-kw">class</span> <span class="c-fn">Cat</span>(Animal):          <span class="c-com"># Cat inherits from Animal</span>
+    <span class="c-kw">def</span> <span class="c-fn">speak</span>(self):        <span class="c-com"># overrides parent's speak()</span>
+        <span class="c-kw">return</span> <span class="c-str">f"{self.name} says Meow"</span>
+      </div>
+      <p class="ils-text"><b>Polymorphism</b> means objects of different classes can be used through the same interface — calling <code>.speak()</code> works the same way regardless of the exact subclass, and each responds in its own way.</p>
+      <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Dog</span>(Animal):
+    <span class="c-kw">def</span> <span class="c-fn">speak</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">f"{self.name} says Woof"</span>
+
+<span class="c-kw">for</span> pet <span class="c-kw">in</span> [Cat(<span class="c-str">"Tom"</span>), Dog(<span class="c-str">"Rex"</span>)]:
+    <span class="c-fn">print</span>(pet.speak())   <span class="c-com"># each animal responds differently</span>
+      </div>
+      <p class="ils-text"><b>Abstraction</b> hides internal complexity behind a simple interface. Python formalizes this with <code>abc.ABC</code> and <code>@abstractmethod</code>, forcing subclasses to implement certain methods before they can be instantiated.</p>
+      <div class="ils-code">
+<span class="c-kw">from</span> abc <span class="c-kw">import</span> ABC, abstractmethod
+
+<span class="c-kw">class</span> <span class="c-fn">Shape</span>(ABC):
+    <span class="c-fn">@abstractmethod</span>
+    <span class="c-kw">def</span> <span class="c-fn">area</span>(self): ...   <span class="c-com"># no implementation — subclasses must provide one</span>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Analogy</h3>
+      <div class="ils-analogy">
+        <div class="ils-analogy-tag">Think of it like...</div>
+        A TV remote is <b>encapsulation</b> — you press "volume up" without knowing the internal circuitry. A "vehicle" blueprint that "car" and "motorcycle" both build on is <b>inheritance</b>. Every vehicle having a <code>drive()</code> method that behaves differently per vehicle type is <b>polymorphism</b>. And a "Payment Method" interface that just says "must have a <code>pay()</code> method" without saying how, is <b>abstraction</b> — it defines the contract, not the implementation.
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Diagram: Inheritance & Polymorphism</h3>
+      <div class="ils-diagram">
+        <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+          <rect x="270" y="15" width="160" height="55" rx="10" fill="#171c27" stroke="#b39ddb" stroke-width="1.5"/>
+          <text x="350" y="38" text-anchor="middle" fill="#b39ddb" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">Animal</text>
+          <text x="350" y="55" text-anchor="middle" fill="#9aa5b5" font-family="JetBrains Mono, monospace" font-size="9">speak() → "..."</text>
+
+          <line x1="330" y1="70" x2="150" y2="130" stroke="#5f6b7d" stroke-width="1.2"/>
+          <line x1="370" y1="70" x2="550" y2="130" stroke="#5f6b7d" stroke-width="1.2"/>
+          <polygon points="330,70 320,55 340,55" fill="#5f6b7d"/>
+
+          <rect x="60" y="130" width="180" height="55" rx="10" fill="#12161f" stroke="#232a37" stroke-width="1.5"/>
+          <text x="150" y="153" text-anchor="middle" fill="#eceef3" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">Cat(Animal)</text>
+          <text x="150" y="170" text-anchor="middle" fill="#4cce91" font-family="JetBrains Mono, monospace" font-size="9">speak() → "Meow"</text>
+
+          <rect x="460" y="130" width="180" height="55" rx="10" fill="#12161f" stroke="#232a37" stroke-width="1.5"/>
+          <text x="550" y="153" text-anchor="middle" fill="#eceef3" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">Dog(Animal)</text>
+          <text x="550" y="170" text-anchor="middle" fill="#4cce91" font-family="JetBrains Mono, monospace" font-size="9">speak() → "Woof"</text>
+
+          <text x="350" y="225" text-anchor="middle" fill="#6ea8fe" font-family="JetBrains Mono, monospace" font-size="11">pet.speak() → same call, different results (polymorphism)</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Comparison: The Four Pillars at a Glance</h3>
+      <table class="ils-table">
+        <thead><tr><th>Pillar</th><th>Goal</th><th>Python Mechanism</th></tr></thead>
+        <tbody>
+          <tr><td>Encapsulation</td><td>Protect and organize internal state</td><td><code>_single</code> / <code>__double</code> underscore conventions, properties</td></tr>
+          <tr><td>Inheritance</td><td>Reuse and extend behavior</td><td><code>class Sub(Base):</code></td></tr>
+          <tr><td>Polymorphism</td><td>One interface, many implementations</td><td>Method overriding, duck typing</td></tr>
+          <tr><td>Abstraction</td><td>Hide complexity, define a contract</td><td><code>abc.ABC</code>, <code>@abstractmethod</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Interactive: Polymorphism in Action</h3>
+      <div class="ils-interactive">
+        <div class="ils-interactive-controls">
+          <button class="ils-pill-btn active" data-m2pet="cat" onclick="ilsM2Pet('cat',this)">pet = Cat("Tom")</button>
+          <button class="ils-pill-btn" data-m2pet="dog" onclick="ilsM2Pet('dog',this)">pet = Dog("Rex")</button>
+          <button class="ils-pill-btn" data-m2pet="cow" onclick="ilsM2Pet('cow',this)">pet = Cow("Bessie")</button>
+        </div>
+        <div class="ils-interactive-output" id="ilsM2Output">pet.speak() → "Tom says Meow"</div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Practical Exercise</h3>
+      <div class="ils-exercise">
+        <div class="ils-exercise-tag">Try it yourself</div>
+        <p class="ils-text" style="margin-bottom:0;">Create a <code>Shape</code> abstract base class with an abstract <code>area()</code> method, then <code>Circle</code> and <code>Square</code> subclasses that implement it.</p>
+        <textarea placeholder="from abc import ABC, abstractmethod&#10;&#10;class Shape(ABC):&#10;    ..."></textarea>
+        <button class="ils-btn-sm" onclick="this.nextElementSibling.classList.toggle('show')">Reveal model answer</button>
+        <div class="ils-exercise-reveal">
+          <div class="ils-code">
+<span class="c-kw">from</span> abc <span class="c-kw">import</span> ABC, abstractmethod
+
+<span class="c-kw">class</span> <span class="c-fn">Shape</span>(ABC):
+    <span class="c-fn">@abstractmethod</span>
+    <span class="c-kw">def</span> <span class="c-fn">area</span>(self): ...
+
+<span class="c-kw">class</span> <span class="c-fn">Circle</span>(Shape):
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, r): self.r = r
+    <span class="c-kw">def</span> <span class="c-fn">area</span>(self): <span class="c-kw">return</span> <span class="c-num">3.14159</span> * self.r ** <span class="c-num">2</span>
+
+<span class="c-kw">class</span> <span class="c-fn">Square</span>(Shape):
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, s): self.s = s
+    <span class="c-kw">def</span> <span class="c-fn">area</span>(self): <span class="c-kw">return</span> self.s ** <span class="c-num">2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Common Misconceptions</h3>
+      <div class="ils-misconception">
+        <div class="ils-misconception-tag">Misconception</div>
+        "Double underscore attributes (<code>__balance</code>) are truly private, like in Java." They aren't — Python performs <em>name mangling</em> (renaming to <code>_ClassName__balance</code>), which makes accidental access harder but not impossible. Python's privacy is a convention, enforced by discipline, not the interpreter.
+      </div>
+      <div class="ils-misconception">
+        <div class="ils-misconception-tag">Misconception</div>
+        "Polymorphism requires inheritance." In Python it often doesn't — <em>duck typing</em> means any object with a matching method works, regardless of its class hierarchy: "if it walks like a duck and quacks like a duck..."
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Key Takeaways</h3>
+      <div class="ils-takeaways">
+        <ul>
+          <li><span class="ils-dot"></span>Encapsulation in Python is convention-based (<code>_</code>, <code>__</code>), not strictly enforced.</li>
+          <li><span class="ils-dot"></span>Inheritance lets subclasses reuse and override parent behavior.</li>
+          <li><span class="ils-dot"></span>Polymorphism means the same method call can behave differently depending on the object's actual type.</li>
+          <li><span class="ils-dot"></span>Abstraction defines a required contract via <code>ABC</code> + <code>@abstractmethod</code>, deferring implementation to subclasses.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ils-quiz" id="ilsQuiz-1"></div>
+
+    <div class="ils-module-footer">
+      <button class="ils-nav-btn" onclick="ilsGoToModule(0)">← Previous</button>
+      <button class="ils-nav-btn primary" id="ilsNext-1" disabled onclick="ilsGoToModule(2)">Next Module →</button>
+    </div>
+  </div>
+
+  <!-- ================= MODULE 3 ================= -->
+  <div class="ils-module" id="ilsModule-2">
+    <div class="ils-module-head">
+      <div class="ils-module-kicker">Module 3 · Practical Application</div>
+      <h2 class="ils-module-title">Properties, Dunder Methods & Composition</h2>
+      <p class="ils-module-desc">The idioms that separate "code that uses classes" from Pythonic, professional object design.</p>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Explanation</h3>
+      <p class="ils-text"><b>Class methods</b> (<code>@classmethod</code>) receive the class itself (<code>cls</code>) rather than an instance — commonly used for alternative constructors. <b>Static methods</b> (<code>@staticmethod</code>) receive neither <code>self</code> nor <code>cls</code> — they're utility functions that logically belong inside the class namespace.</p>
+      <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Pizza</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, toppings):
+        self.toppings = toppings
+
+    <span class="c-fn">@classmethod</span>
+    <span class="c-kw">def</span> <span class="c-fn">margherita</span>(cls):           <span class="c-com"># alternative constructor</span>
+        <span class="c-kw">return</span> cls([<span class="c-str">"tomato"</span>, <span class="c-str">"basil"</span>])
+
+    <span class="c-fn">@staticmethod</span>
+    <span class="c-kw">def</span> <span class="c-fn">is_valid_topping</span>(name):    <span class="c-com"># no self/cls needed</span>
+        <span class="c-kw">return</span> name.islower()
+      </div>
+      <p class="ils-text"><b>Properties</b> (<code>@property</code>) let a method be accessed like an attribute — useful for computed values or validated setters without breaking the simple <code>obj.attr</code> syntax.</p>
+      <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Circle</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, radius):
+        self._radius = radius
+
+    <span class="c-fn">@property</span>
+    <span class="c-kw">def</span> <span class="c-fn">area</span>(self):
+        <span class="c-kw">return</span> <span class="c-num">3.14159</span> * self._radius ** <span class="c-num">2</span>
+
+c = Circle(<span class="c-num">4</span>)
+<span class="c-fn">print</span>(c.area)   <span class="c-com"># called like an attribute, no parentheses</span>
+      </div>
+      <p class="ils-text"><b>Dunder methods</b> ("double underscore") let your objects integrate with Python's built-in syntax — <code>+</code>, <code>len()</code>, <code>print()</code>, equality checks, and more.</p>
+      <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Vector</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, x, y):
+        self.x, self.y = x, y
+    <span class="c-kw">def</span> <span class="c-fn">__add__</span>(self, other):
+        <span class="c-kw">return</span> Vector(self.x + other.x, self.y + other.y)
+    <span class="c-kw">def</span> <span class="c-fn">__repr__</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">f"Vector({self.x}, {self.y})"</span>
+
+<span class="c-fn">print</span>(Vector(<span class="c-num">1</span>,<span class="c-num">2</span>) + Vector(<span class="c-num">3</span>,<span class="c-num">4</span>))  <span class="c-com"># Vector(4, 6)</span>
+      </div>
+      <p class="ils-text"><b>Composition</b> builds complex objects out of simpler ones ("has-a") instead of inheriting from them ("is-a"). A <code>Car</code> <em>has an</em> <code>Engine</code> — it doesn't make sense for <code>Car</code> to inherit from <code>Engine</code>.</p>
+      <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Engine</span>:
+    <span class="c-kw">def</span> <span class="c-fn">start</span>(self): <span class="c-kw">return</span> <span class="c-str">"Vroom"</span>
+
+<span class="c-kw">class</span> <span class="c-fn">Car</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self):
+        self.engine = Engine()      <span class="c-com"># Car HAS-A Engine</span>
+    <span class="c-kw">def</span> <span class="c-fn">start</span>(self):
+        <span class="c-kw">return</span> self.engine.start()
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Analogy</h3>
+      <div class="ils-analogy">
+        <div class="ils-analogy-tag">Think of it like...</div>
+        A <code>@classmethod</code> alternative constructor is like ordering "the usual" at a café — a shortcut recipe for building the same drink a different way. A <code>@property</code> is a vending machine slot labeled "Price" that actually computes the price live rather than storing a fixed number. And composition vs. inheritance is "a car has an engine" vs. "a car is a kind of engine" — the second sentence is obviously wrong, which is exactly the smell that tells you composition is the right choice.
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Diagram: Composition ("has-a")</h3>
+      <div class="ils-diagram">
+        <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="80" y="60" width="200" height="80" rx="10" fill="#171c27" stroke="#6ea8fe" stroke-width="1.5"/>
+          <text x="180" y="90" text-anchor="middle" fill="#6ea8fe" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">Car</text>
+          <text x="180" y="110" text-anchor="middle" fill="#9aa5b5" font-family="JetBrains Mono, monospace" font-size="10">self.engine = Engine()</text>
+
+          <line x1="280" y1="100" x2="420" y2="100" stroke="#5f6b7d" stroke-width="1.2"/>
+          <text x="350" y="90" text-anchor="middle" fill="#5f6b7d" font-family="JetBrains Mono, monospace" font-size="10">has-a</text>
+          <polygon points="420,100 408,94 408,106" fill="#5f6b7d"/>
+
+          <rect x="420" y="60" width="200" height="80" rx="10" fill="#12161f" stroke="#232a37" stroke-width="1.5"/>
+          <text x="520" y="90" text-anchor="middle" fill="#eceef3" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">Engine</text>
+          <text x="520" y="110" text-anchor="middle" fill="#4cce91" font-family="JetBrains Mono, monospace" font-size="10">start() → "Vroom"</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Comparison: instance vs. classmethod vs. staticmethod</h3>
+      <table class="ils-table">
+        <thead><tr><th>Type</th><th>First Param</th><th>Typical Use</th></tr></thead>
+        <tbody>
+          <tr><td>Instance method</td><td><code>self</code></td><td>Operates on one object's data</td></tr>
+          <tr><td>@classmethod</td><td><code>cls</code></td><td>Alternative constructors, class-wide logic</td></tr>
+          <tr><td>@staticmethod</td><td>none</td><td>Utility function grouped with the class conceptually</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Interactive: Dunder Method Explorer</h3>
+      <div class="ils-interactive">
+        <div class="ils-interactive-controls">
+          <button class="ils-pill-btn active" data-m3d="add" onclick="ilsM3Dunder('add',this)">v1 + v2</button>
+          <button class="ils-pill-btn" data-m3d="repr" onclick="ilsM3Dunder('repr',this)">print(v1)</button>
+          <button class="ils-pill-btn" data-m3d="eq" onclick="ilsM3Dunder('eq',this)">v1 == v2</button>
+          <button class="ils-pill-btn" data-m3d="len" onclick="ilsM3Dunder('len',this)">len(inventory)</button>
+        </div>
+        <div class="ils-interactive-output" id="ilsM3Output">__add__ is called → Vector(4, 6)</div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Practical Exercise</h3>
+      <div class="ils-exercise">
+        <div class="ils-exercise-tag">Try it yourself</div>
+        <p class="ils-text" style="margin-bottom:0;">Give <code>Circle</code> a <code>@property</code> called <code>radius</code> with a setter that raises <code>ValueError</code> if the value is negative.</p>
+        <textarea placeholder="class Circle:&#10;    def __init__(self, radius):&#10;        self.radius = radius  # goes through setter&#10;&#10;    @property&#10;    def radius(self):&#10;        ..."></textarea>
+        <button class="ils-btn-sm" onclick="this.nextElementSibling.classList.toggle('show')">Reveal model answer</button>
+        <div class="ils-exercise-reveal">
+          <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Circle</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, radius):
+        self.radius = radius   <span class="c-com"># goes through the setter below</span>
+
+    <span class="c-fn">@property</span>
+    <span class="c-kw">def</span> <span class="c-fn">radius</span>(self):
+        <span class="c-kw">return</span> self._radius
+
+    <span class="c-fn">@radius.setter</span>
+    <span class="c-kw">def</span> <span class="c-fn">radius</span>(self, value):
+        <span class="c-kw">if</span> value &lt; <span class="c-num">0</span>:
+            <span class="c-kw">raise</span> ValueError(<span class="c-str">"radius can't be negative"</span>)
+        self._radius = value
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Common Misconceptions</h3>
+      <div class="ils-misconception">
+        <div class="ils-misconception-tag">Misconception</div>
+        "<code>@staticmethod</code> and <code>@classmethod</code> are interchangeable." They're not — a staticmethod can't access the class or instance at all, while a classmethod always has <code>cls</code> and can create new instances or read class attributes.
+      </div>
+      <div class="ils-misconception">
+        <div class="ils-misconception-tag">Misconception</div>
+        "Inheritance is always better than composition because it's 'more OOP'." Overusing inheritance creates rigid, deeply nested hierarchies that are hard to change. The rule of thumb "favor composition over inheritance" exists because "has-a" relationships are usually more flexible than "is-a" ones.
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Key Takeaways</h3>
+      <div class="ils-takeaways">
+        <ul>
+          <li><span class="ils-dot"></span><code>@classmethod</code> gets <code>cls</code> and is often used for alternative constructors.</li>
+          <li><span class="ils-dot"></span><code>@staticmethod</code> gets neither <code>self</code> nor <code>cls</code> — it's a plain function living in the class.</li>
+          <li><span class="ils-dot"></span><code>@property</code> lets computed or validated values be accessed like plain attributes.</li>
+          <li><span class="ils-dot"></span>Dunder methods hook your objects into Python's built-in operators and functions.</li>
+          <li><span class="ils-dot"></span>Composition ("has-a") is often more flexible than inheritance ("is-a") for combining behavior.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ils-quiz" id="ilsQuiz-2"></div>
+
+    <div class="ils-module-footer">
+      <button class="ils-nav-btn" onclick="ilsGoToModule(1)">← Previous</button>
+      <button class="ils-nav-btn primary" id="ilsNext-2" disabled onclick="ilsGoToModule(3)">Next Module →</button>
+    </div>
+  </div>
+
+  <!-- ================= MODULE 4 ================= -->
+  <div class="ils-module" id="ilsModule-3">
+    <div class="ils-module-head">
+      <div class="ils-module-kicker">Module 4 · Mastery</div>
+      <h2 class="ils-module-title">Multiple Inheritance, MRO & Design Judgment</h2>
+      <p class="ils-module-desc">The advanced mechanics — and the design judgment — that separate someone who knows OOP syntax from someone who designs good class hierarchies.</p>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Explanation</h3>
+      <p class="ils-text">Python supports <b>multiple inheritance</b> — a class can inherit from more than one parent. When two parents define the same method, Python needs a deterministic rule for which one wins: the <b>Method Resolution Order (MRO)</b>, computed with the C3 linearization algorithm. You can inspect it directly with <code>ClassName.__mro__</code> or <code>ClassName.mro()</code>.</p>
+      <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Flyer</span>:
+    <span class="c-kw">def</span> <span class="c-fn">move</span>(self): <span class="c-kw">return</span> <span class="c-str">"Flies"</span>
+
+<span class="c-kw">class</span> <span class="c-fn">Swimmer</span>:
+    <span class="c-kw">def</span> <span class="c-fn">move</span>(self): <span class="c-kw">return</span> <span class="c-str">"Swims"</span>
+
+<span class="c-kw">class</span> <span class="c-fn">Duck</span>(Flyer, Swimmer):   <span class="c-com"># multiple inheritance</span>
+    <span class="c-kw">pass</span>
+
+<span class="c-fn">print</span>(Duck().move())      <span class="c-com"># "Flies" — Flyer is checked first (left-to-right)</span>
+<span class="c-fn">print</span>(Duck.__mro__)
+<span class="c-com"># (Duck, Flyer, Swimmer, object)</span>
+      </div>
+      <p class="ils-text"><code>super()</code> uses the MRO to call the next method in line — critical in multiple inheritance so every parent's <code>__init__</code> gets a chance to run, instead of hardcoding a specific parent class name.</p>
+      <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Base</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self):
+        <span class="c-fn">print</span>(<span class="c-str">"Base init"</span>)
+
+<span class="c-kw">class</span> <span class="c-fn">Child</span>(Base):
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self):
+        <span class="c-fn">super</span>().__init__()   <span class="c-com"># delegates up the MRO chain</span>
+        <span class="c-fn">print</span>(<span class="c-str">"Child init"</span>)
+      </div>
+      <p class="ils-text">Deep or wide multiple-inheritance hierarchies are a common source of bugs and confusion. <b>Mixins</b> — small classes meant only to add one piece of reusable behavior, never instantiated on their own — are the disciplined way to use multiple inheritance without the mess. Common design patterns built on OOP fundamentals include the <b>Factory</b> pattern (a classmethod or function that returns different subclass instances) and the <b>Strategy</b> pattern (swap in different behavior objects via composition).</p>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Analogy</h3>
+      <div class="ils-analogy">
+        <div class="ils-analogy-tag">Think of it like...</div>
+        MRO is like a company's escalation chain: when you have a question your immediate manager can't answer, there's a defined, predictable order of who gets asked next — never ambiguous, always the same path. Mixins are like adding a single specialized skill badge to an employee (e.g., "certified forklift operator") — useful attached to a role, but meaningless as a standalone job title on its own.
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Diagram: Diamond Inheritance & MRO</h3>
+      <div class="ils-diagram">
+        <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+          <rect x="270" y="15" width="160" height="50" rx="10" fill="#171c27" stroke="#b39ddb" stroke-width="1.5"/>
+          <text x="350" y="45" text-anchor="middle" fill="#b39ddb" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">object</text>
+
+          <line x1="330" y1="65" x2="180" y2="115" stroke="#5f6b7d" stroke-width="1.2"/>
+          <line x1="370" y1="65" x2="520" y2="115" stroke="#5f6b7d" stroke-width="1.2"/>
+
+          <rect x="90" y="115" width="180" height="50" rx="10" fill="#12161f" stroke="#232a37" stroke-width="1.5"/>
+          <text x="180" y="145" text-anchor="middle" fill="#eceef3" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">Flyer</text>
+
+          <rect x="430" y="115" width="180" height="50" rx="10" fill="#12161f" stroke="#232a37" stroke-width="1.5"/>
+          <text x="520" y="145" text-anchor="middle" fill="#eceef3" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">Swimmer</text>
+
+          <line x1="200" y1="165" x2="320" y2="200" stroke="#5f6b7d" stroke-width="1.2"/>
+          <line x1="500" y1="165" x2="380" y2="200" stroke="#5f6b7d" stroke-width="1.2"/>
+
+          <rect x="260" y="200" width="180" height="50" rx="10" fill="#12161f" stroke="#6ea8fe" stroke-width="1.5"/>
+          <text x="350" y="230" text-anchor="middle" fill="#6ea8fe" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">Duck(Flyer, Swimmer)</text>
+        </svg>
+      </div>
+      <p class="ils-text" style="margin-top:10px;">MRO for <code>Duck</code>: <code>Duck → Flyer → Swimmer → object</code> — left-to-right, depth-first, but de-duplicated so <code>object</code> only appears once at the end.</p>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Comparison: Inheritance vs. Composition vs. Mixins</h3>
+      <table class="ils-table">
+        <thead><tr><th>Approach</th><th>Relationship</th><th>Best for</th></tr></thead>
+        <tbody>
+          <tr><td>Inheritance</td><td>"is-a"</td><td>A true specialization of one concept (Dog is an Animal)</td></tr>
+          <tr><td>Composition</td><td>"has-a"</td><td>Assembling behavior from independent, swappable parts</td></tr>
+          <tr><td>Mixins</td><td>"can-do"</td><td>Bolting on one reusable capability (e.g., JSONSerializableMixin) across unrelated classes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Interactive: Trace the MRO</h3>
+      <div class="ils-interactive">
+        <div class="ils-interactive-controls">
+          <button class="ils-pill-btn active" data-m4mro="duck" onclick="ilsM4Mro('duck',this)">class Duck(Flyer, Swimmer)</button>
+          <button class="ils-pill-btn" data-m4mro="swap" onclick="ilsM4Mro('swap',this)">class Duck(Swimmer, Flyer)</button>
+        </div>
+        <div class="ils-interactive-output" id="ilsM4Output">Duck.__mro__ → (Duck, Flyer, Swimmer, object) · Duck().move() → "Flies"</div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Practical Exercise</h3>
+      <div class="ils-exercise">
+        <div class="ils-exercise-tag">Try it yourself</div>
+        <p class="ils-text" style="margin-bottom:0;">Design a small <code>Notifier</code> system: a <code>Notifier</code> base class with an abstract <code>send(message)</code>, plus <code>EmailNotifier</code> and <code>SMSNotifier</code> subclasses (Strategy pattern). Sketch the class signatures.</p>
+        <textarea placeholder="class Notifier(ABC):&#10;    @abstractmethod&#10;    def send(self, message): ..."></textarea>
+        <button class="ils-btn-sm" onclick="this.nextElementSibling.classList.toggle('show')">Reveal model answer</button>
+        <div class="ils-exercise-reveal">
+          <div class="ils-code">
+<span class="c-kw">class</span> <span class="c-fn">Notifier</span>(ABC):
+    <span class="c-fn">@abstractmethod</span>
+    <span class="c-kw">def</span> <span class="c-fn">send</span>(self, message): ...
+
+<span class="c-kw">class</span> <span class="c-fn">EmailNotifier</span>(Notifier):
+    <span class="c-kw">def</span> <span class="c-fn">send</span>(self, message):
+        <span class="c-kw">return</span> <span class="c-str">f"Emailing: {message}"</span>
+
+<span class="c-kw">class</span> <span class="c-fn">SMSNotifier</span>(Notifier):
+    <span class="c-kw">def</span> <span class="c-fn">send</span>(self, message):
+        <span class="c-kw">return</span> <span class="c-str">f"Texting: {message}"</span>
+
+<span class="c-com"># usage swaps strategy at runtime:</span>
+<span class="c-kw">def</span> <span class="c-fn">alert</span>(notifier: Notifier, msg):
+    <span class="c-kw">return</span> notifier.send(msg)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Common Misconceptions</h3>
+      <div class="ils-misconception">
+        <div class="ils-misconception-tag">Misconception</div>
+        "<code>super().__init__()</code> always calls the immediate parent class." It actually calls the <em>next class in the MRO</em> — in multiple inheritance, that may not be the class you expect, which is exactly why relying on MRO-aware <code>super()</code> calls (instead of naming a parent explicitly) matters.
+      </div>
+      <div class="ils-misconception">
+        <div class="ils-misconception-tag">Misconception</div>
+        "More inheritance levels = better design." Deep hierarchies are usually a sign of over-engineering. Experienced developers reach for composition and mixins first, and use deep inheritance chains sparingly.
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Key Takeaways</h3>
+      <div class="ils-takeaways">
+        <ul>
+          <li><span class="ils-dot"></span>MRO defines a deterministic order for resolving methods in multiple inheritance; inspect it with <code>__mro__</code>.</li>
+          <li><span class="ils-dot"></span><code>super()</code> follows the MRO, not a hardcoded parent — essential for cooperative multiple inheritance.</li>
+          <li><span class="ils-dot"></span>Mixins add one reusable capability and are never meant to stand alone.</li>
+          <li><span class="ils-dot"></span>Favor composition and shallow hierarchies; reach for deep inheritance only when a genuine "is-a" relationship exists.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ils-quiz" id="ilsQuiz-3"></div>
+
+    <div class="ils-module-footer">
+      <button class="ils-nav-btn" onclick="ilsGoToModule(2)">← Previous</button>
+      <button class="ils-nav-btn primary" id="ilsNext-3" disabled onclick="ilsGoToFinal()">Final Challenge →</button>
+    </div>
+  </div>
+
+  <!-- ================= FINAL SECTION ================= -->
+  <div class="ils-final" id="ilsFinal">
+    <div class="ils-final-head">
+      <div class="ils-eyebrow">You made it</div>
+      <h2>Course Complete</h2>
+      <p>You've covered classes, the four pillars, Pythonic idioms, and multi-class design. Here's your final challenge, a cheat sheet, and where to go next.</p>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Final Practical Challenge</h3>
+      <div class="ils-challenge-box">
+        <p class="ils-text"><b>Build a small Library Management system.</b> Design classes that satisfy all of the following:</p>
+        <ul style="margin:0 0 14px;padding-left:18px;font-size:13.5px;color:var(--text-dim);">
+          <li style="margin-bottom:6px;">A <code>Media</code> abstract base class with an abstract <code>info()</code> method (abstraction).</li>
+          <li style="margin-bottom:6px;"><code>Book</code> and <code>DVD</code> subclasses that inherit from <code>Media</code> and override <code>info()</code> differently (inheritance + polymorphism).</li>
+          <li style="margin-bottom:6px;">A <code>_copies_available</code> attribute protected by convention, exposed via a <code>@property</code>, with <code>checkout()</code>/<code>return_item()</code> methods that validate before mutating it (encapsulation).</li>
+          <li style="margin-bottom:6px;">A <code>Library</code> class that <em>has a</em> list of <code>Media</code> objects — not inherits from them (composition).</li>
+          <li>A <code>@classmethod</code> on <code>Book</code> called <code>from_isbn_lookup(cls, isbn)</code> as an alternative constructor.</li>
+        </ul>
+        <textarea placeholder="class Media(ABC):&#10;    ..." style="width:100%;min-height:140px;background:#0d1119;border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:12.5px;padding:12px;"></textarea>
+        <button class="ils-btn-sm" onclick="this.nextElementSibling.classList.toggle('show')" style="margin-top:10px;">Reveal a reference solution outline</button>
+        <div class="ils-exercise-reveal">
+          <div class="ils-code">
+<span class="c-kw">from</span> abc <span class="c-kw">import</span> ABC, abstractmethod
+
+<span class="c-kw">class</span> <span class="c-fn">Media</span>(ABC):
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, title, copies):
+        self.title = title
+        self._copies_available = copies
+
+    <span class="c-fn">@property</span>
+    <span class="c-kw">def</span> <span class="c-fn">copies_available</span>(self):
+        <span class="c-kw">return</span> self._copies_available
+
+    <span class="c-kw">def</span> <span class="c-fn">checkout</span>(self):
+        <span class="c-kw">if</span> self._copies_available &lt;= <span class="c-num">0</span>:
+            <span class="c-kw">raise</span> ValueError(<span class="c-str">"No copies available"</span>)
+        self._copies_available -= <span class="c-num">1</span>
+
+    <span class="c-kw">def</span> <span class="c-fn">return_item</span>(self):
+        self._copies_available += <span class="c-num">1</span>
+
+    <span class="c-fn">@abstractmethod</span>
+    <span class="c-kw">def</span> <span class="c-fn">info</span>(self): ...
+
+<span class="c-kw">class</span> <span class="c-fn">Book</span>(Media):
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, title, copies, author):
+        <span class="c-fn">super</span>().__init__(title, copies)
+        self.author = author
+
+    <span class="c-kw">def</span> <span class="c-fn">info</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">f"{self.title} by {self.author}"</span>
+
+    <span class="c-fn">@classmethod</span>
+    <span class="c-kw">def</span> <span class="c-fn">from_isbn_lookup</span>(cls, isbn):
+        <span class="c-com"># pretend lookup</span>
+        <span class="c-kw">return</span> cls(<span class="c-str">f"Book #{isbn}"</span>, <span class="c-num">1</span>, <span class="c-str">"Unknown"</span>)
+
+<span class="c-kw">class</span> <span class="c-fn">DVD</span>(Media):
+    <span class="c-kw">def</span> <span class="c-fn">info</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">f"{self.title} (DVD)"</span>
+
+<span class="c-kw">class</span> <span class="c-fn">Library</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self):
+        self.catalog = []   <span class="c-com"># Library HAS-A list of Media</span>
+
+    <span class="c-kw">def</span> <span class="c-fn">add</span>(self, item):
+        self.catalog.append(item)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Cheat Sheet</h3>
+      <div class="ils-cheat-grid">
+        <div class="ils-cheat-card">
+          <h4>Class Basics</h4>
+          <div class="ils-code">class Foo:
+    x = 1                # class attr
+    def __init__(self, y):
+        self.y = y        # instance attr</div>
+        </div>
+        <div class="ils-cheat-card">
+          <h4>Inheritance</h4>
+          <div class="ils-code">class Sub(Base):
+    def __init__(self):
+        super().__init__()</div>
+        </div>
+        <div class="ils-cheat-card">
+          <h4>Property</h4>
+          <div class="ils-code">@property
+def x(self): return self._x
+
+@x.setter
+def x(self, v): self._x = v</div>
+        </div>
+        <div class="ils-cheat-card">
+          <h4>Class / Static Methods</h4>
+          <div class="ils-code">@classmethod
+def make(cls): return cls()
+
+@staticmethod
+def util(): return True</div>
+        </div>
+        <div class="ils-cheat-card">
+          <h4>Common Dunders</h4>
+          <div class="ils-code">__init__  __repr__  __str__
+__eq__    __len__   __add__
+__iter__  __contains__</div>
+        </div>
+        <div class="ils-cheat-card">
+          <h4>Abstract Base Class</h4>
+          <div class="ils-code">from abc import ABC, abstractmethod
+class X(ABC):
+    @abstractmethod
+    def do(self): ...</div>
+        </div>
+        <div class="ils-cheat-card">
+          <h4>Composition</h4>
+          <div class="ils-code">class Car:
+    def __init__(self):
+        self.engine = Engine()</div>
+        </div>
+        <div class="ils-cheat-card">
+          <h4>Inspect MRO</h4>
+          <div class="ils-code">ClassName.__mro__
+ClassName.mro()</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Summary Notes</h3>
+      <div class="ils-takeaways">
+        <ul>
+          <li><span class="ils-dot"></span>Classes are blueprints; objects are instances with their own state.</li>
+          <li><span class="ils-dot"></span>The four pillars — encapsulation, inheritance, polymorphism, abstraction — each solve a different design problem.</li>
+          <li><span class="ils-dot"></span>Properties, dunders, class/static methods make classes feel native to Python's syntax.</li>
+          <li><span class="ils-dot"></span>Composition ("has-a") is often safer and more flexible than deep inheritance ("is-a").</li>
+          <li><span class="ils-dot"></span>MRO makes multiple inheritance predictable — <code>super()</code> always follows it, not a hardcoded parent.</li>
+        </ul>
+      </div>
+      <div style="margin-top:16px;"><button class="ils-print-btn" onclick="window.print()">🖨 Print / Save Notes as PDF</button></div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Continue Learning</h3>
+      <div class="ils-resource-grid">
+        <div class="ils-resource-card">
+          <h4>📚 Books</h4>
+          <ul>
+            <li>"Fluent Python" — Luciano Ramalho</li>
+            <li>"Python Object-Oriented Programming" — Steven F. Lott &amp; Dusty Phillips</li>
+            <li>"Architecture Patterns with Python" — Percival &amp; Gregory</li>
+          </ul>
+        </div>
+        <div class="ils-resource-card">
+          <h4>📖 Documentation</h4>
+          <ul>
+            <li>docs.python.org — "Classes" tutorial chapter</li>
+            <li>docs.python.org — <code>abc</code> module reference</li>
+            <li>docs.python.org — Data model (dunder methods) reference</li>
+          </ul>
+        </div>
+        <div class="ils-resource-card">
+          <h4>📄 Research / Deep Dives</h4>
+          <ul>
+            <li>"A Monotonic Superclass Linearization for Dylan" — the C3 algorithm behind Python's MRO</li>
+            <li>Python Enhancement Proposals (PEPs) on dataclasses and typing for modern class design</li>
+          </ul>
+        </div>
+        <div class="ils-resource-card">
+          <h4>👥 Communities</h4>
+          <ul>
+            <li>r/learnpython, r/Python</li>
+            <li>Python Discord</li>
+            <li>Stack Overflow — [python] + [oop] tags</li>
+          </ul>
+        </div>
+        <div class="ils-resource-card">
+          <h4>🏋️ Practice Platforms</h4>
+          <ul>
+            <li>Exercism — Python track (mentored exercises)</li>
+            <li>LeetCode / HackerRank — OOP design problems</li>
+            <li>Codewars — kata filtered by "OOP"</li>
+          </ul>
+        </div>
+        <div class="ils-resource-card">
+          <h4>🔍 Search Keywords</h4>
+          <div class="ils-tag-cloud">
+            <span class="ils-tag-chip">python dunder methods</span>
+            <span class="ils-tag-chip">python MRO explained</span>
+            <span class="ils-tag-chip">composition over inheritance</span>
+            <span class="ils-tag-chip">python dataclasses</span>
+            <span class="ils-tag-chip">python mixins</span>
+            <span class="ils-tag-chip">SOLID principles python</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ils-section">
+      <h3 class="ils-section-title">Additional AI Prompts for Further Learning</h3>
+      <div class="ils-prompt-list">
+        <div class="ils-prompt-item"><span>"Review my Python class design for SOLID principle violations and suggest fixes."</span></div>
+        <div class="ils-prompt-item"><span>"Explain Python dataclasses vs. regular classes with a converted example."</span></div>
+        <div class="ils-prompt-item"><span>"Walk me through implementing the Observer design pattern in Python with a real example."</span></div>
+        <div class="ils-prompt-item"><span>"Compare Python's duck typing with formal interfaces (Protocol) in the typing module."</span></div>
+        <div class="ils-prompt-item"><span>"Give me 5 OOP design exercises of increasing difficulty with hidden solutions."</span></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:30px 0 10px;">
+      <button class="ils-start-btn" onclick="ilsRestart()">↺ Restart Tutorial</button>
+    </div>
+  </div>
+
+  <div class="ils-footer">Interactive Learning Studio · Python OOP · generated for self-paced study</div>
+</div>
+
+<script>
+/* ================= STATE ================= */
+const ilsState = {
+  xp: 0,
+  currentModule: -1, // -1 = hero
+  moduleDone: [false,false,false,false],
+  quizPassed: [false,false,false,false],
+  totalSteps: 5 // 4 modules + final
+};
+
+const ilsModuleNames = ['Foundations','Core Pillars','Practical App','Mastery'];
+
+/* ================= QUIZ DATA ================= */
+const ilsQuizData = [
+  { // Module 1
+    title: 'Module 1 Quiz — Classes, Objects & Attributes',
+    questions: [
+      {
+        q: 'What does the __init__ method do in a Python class?',
+        options: [
+          'Deletes an object from memory',
+          'Runs automatically when a new object is created, to set up its initial state',
+          'Defines a class attribute shared by all instances',
+          'Converts an object to a string'
+        ],
+        correct: 1,
+        explain: '__init__ is the constructor — Python calls it automatically right after creating a new object, and it typically assigns instance attributes via self.'
+      },
+      {
+        q: 'Given the Dog class example, what happens if you change rex.species = "Wolf"?',
+        options: [
+          'It changes species for all Dog instances',
+          'It raises an error because species is a class attribute',
+          'It creates a new instance attribute species on rex only, shadowing the class attribute',
+          'Nothing happens; Python ignores it'
+        ],
+        correct: 2,
+        explain: 'Assigning to rex.species creates a new instance attribute specific to rex, which shadows (hides) the class attribute — it does not modify the class attribute itself.'
+      },
+      {
+        q: 'What is "self" in an instance method?',
+        options: [
+          'A reserved Python keyword',
+          'A reference to the specific object the method was called on, passed automatically',
+          'The name of the class',
+          'A built-in function for creating objects'
+        ],
+        correct: 1,
+        explain: 'self is just a strongly-followed naming convention, not a keyword — Python automatically passes the calling instance as the first argument to instance methods.'
+      },
+      {
+        q: 'Which best describes the relationship between a class and an object?',
+        options: [
+          'They are the same thing with different names',
+          'A class is a blueprint; an object is a concrete instance built from that blueprint',
+          'An object is a blueprint; a class is built from objects',
+          'A class can only ever produce one object'
+        ],
+        correct: 1,
+        explain: 'A class defines structure and behavior; each object is an independent instance created from it, with its own instance attributes.'
+      }
+    ]
+  },
+  { // Module 2
+    title: 'Module 2 Quiz — The Four Pillars',
+    questions: [
+      {
+        q: 'How does Python typically signal that an attribute is "internal" (encapsulated)?',
+        options: [
+          'Using the private keyword',
+          'A leading underscore, e.g. _balance, by convention',
+          'Declaring it inside a separate file',
+          'Python enforces true privacy automatically for all attributes'
+        ],
+        correct: 1,
+        explain: 'Python has no enforced private keyword. A single leading underscore is a convention meaning "internal use," and a double underscore triggers name mangling.'
+      },
+      {
+        q: 'In the Cat/Dog/Animal example, calling pet.speak() in a loop over different pet types demonstrates:',
+        options: [
+          'Encapsulation',
+          'Abstraction',
+          'Polymorphism',
+          'Composition'
+        ],
+        correct: 2,
+        explain: 'Polymorphism means the same method call (speak()) behaves differently depending on the actual object type — Cat says Meow, Dog says Woof.'
+      },
+      {
+        q: 'What does @abstractmethod combined with ABC accomplish?',
+        options: [
+          'It makes a method run faster',
+          'It forces any concrete subclass to implement that method before it can be instantiated',
+          'It hides the method from subclasses entirely',
+          'It automatically generates the method body'
+        ],
+        correct: 1,
+        explain: 'abc.ABC + @abstractmethod defines a contract: subclasses must override the abstract method, or they cannot be instantiated — this is Python\u2019s tool for abstraction.'
+      },
+      {
+        q: 'True or false: In Python, polymorphism always requires a shared base class via inheritance.',
+        options: [
+          'True — without inheritance, polymorphism is impossible',
+          'False — duck typing allows polymorphism between unrelated classes that share a method name',
+          'True, but only for abstract classes',
+          'False — polymorphism only works with built-in types'
+        ],
+        correct: 1,
+        explain: 'Python favors duck typing: any object with a matching method can be used polymorphically, regardless of whether it shares a common ancestor class.'
+      }
+    ]
+  },
+  { // Module 3
+    title: 'Module 3 Quiz — Properties, Dunders & Composition',
+    questions: [
+      {
+        q: 'What is the key difference between @classmethod and @staticmethod?',
+        options: [
+          'There is no real difference',
+          '@classmethod receives cls automatically; @staticmethod receives neither self nor cls',
+          '@staticmethod can modify instance attributes; @classmethod cannot',
+          '@classmethod is only used for testing'
+        ],
+        correct: 1,
+        explain: '@classmethod automatically receives the class (cls), commonly used for alternative constructors. @staticmethod receives nothing special — it is a plain function namespaced inside the class.'
+      },
+      {
+        q: 'Why use @property instead of a plain method like get_area()?',
+        options: [
+          'Properties run faster than methods',
+          'It lets a computed or validated value be accessed with simple attribute syntax (obj.area), not obj.area()',
+          'Properties are required for all class attributes',
+          'It prevents the value from ever changing'
+        ],
+        correct: 1,
+        explain: '@property lets you keep the clean obj.attr syntax while still running code (computation, validation) behind the scenes when it is accessed.'
+      },
+      {
+        q: 'Which dunder method would you implement to support v1 + v2 for two Vector objects?',
+        options: [
+          '__sum__',
+          '__plus__',
+          '__add__',
+          '__combine__'
+        ],
+        correct: 2,
+        explain: '__add__ is the dunder method Python calls when the + operator is used between two objects of that class.'
+      },
+      {
+        q: 'A Car class stores self.engine = Engine() rather than inheriting from Engine. This is an example of:',
+        options: [
+          'Inheritance',
+          'Polymorphism',
+          'Composition ("has-a")',
+          'Abstraction'
+        ],
+        correct: 2,
+        explain: 'Composition models a "has-a" relationship — Car has an Engine as a component, rather than being a kind of Engine via inheritance.'
+      }
+    ]
+  },
+  { // Module 4
+    title: 'Module 4 Quiz — Multiple Inheritance & MRO',
+    questions: [
+      {
+        q: 'What does MRO (Method Resolution Order) determine?',
+        options: [
+          'The order methods are defined within a single class',
+          'The deterministic order Python searches parent classes to resolve a method or attribute in multiple inheritance',
+          'The order objects are destroyed by garbage collection',
+          'The order in which quizzes must be completed'
+        ],
+        correct: 1,
+        explain: 'MRO defines a predictable, linear order (via C3 linearization) that Python follows to decide which class\u2019s method or attribute is used when multiple parents could provide it.'
+      },
+      {
+        q: 'For class Duck(Flyer, Swimmer), which line correctly reflects Python\u2019s default MRO behavior?',
+        options: [
+          'Swimmer is always checked before Flyer, alphabetically',
+          'Flyer is checked before Swimmer, because it is listed first (left-to-right)',
+          'Python picks randomly between Flyer and Swimmer',
+          'Both are checked simultaneously and merged'
+        ],
+        correct: 1,
+        explain: 'Python\u2019s MRO generally follows a left-to-right, depth-first order among listed base classes, so Flyer (listed first) is checked before Swimmer.'
+      },
+      {
+        q: 'Why is super().__init__() generally preferred over calling Base.__init__(self) directly?',
+        options: [
+          'super() is faster to type',
+          'super() follows the MRO, making cooperative multiple inheritance work correctly rather than hardcoding one specific parent',
+          'Base.__init__(self) is deprecated in Python',
+          'There is no practical difference between the two'
+        ],
+        correct: 1,
+        explain: 'super() delegates to the next class in the MRO chain, which correctly supports multiple inheritance scenarios. Hardcoding Base.__init__(self) breaks that cooperative chain.'
+      },
+      {
+        q: 'What is a mixin class primarily meant for?',
+        options: [
+          'To be instantiated directly as a standalone, general-purpose object',
+          'To add one specific, reusable piece of behavior to other classes via multiple inheritance, and is not meant to stand alone',
+          'To replace the need for a base class entirely',
+          'To store an application\u2019s configuration settings'
+        ],
+        correct: 1,
+        explain: 'Mixins are small classes designed to be combined with other classes to add a single capability — they are not meant to be instantiated or used independently.'
+      }
+    ]
+  }
+];
+
+/* ================= INIT ================= */
+function ilsBuildModNav(){
+  const nav = document.getElementById('ilsModNav');
+  nav.innerHTML = '';
+  ilsModuleNames.forEach((name,i)=>{
+    const item = document.createElement('div');
+    item.className = 'ils-modnav-item' + (i===0?'':' locked');
+    item.id = 'ilsNavItem-'+i;
+    item.innerHTML = '<span class="ils-modnav-dot"></span>Module '+(i+1)+': '+name;
+    item.onclick = ()=>{ if(i===0 || ilsState.quizPassed[i-1] || ilsState.moduleDone[i]) ilsGoToModule(i); };
+    nav.appendChild(item);
+  });
+}
+ilsBuildModNav();
+ilsQuizData.forEach((qd,i)=> ilsRenderQuiz(i,qd));
+
+function ilsStart(){ ilsGoToModule(0); }
+
+function ilsGoToModule(idx){
+  document.getElementById('ilsHero').style.display = 'none';
+  document.getElementById('ilsFinal').classList.remove('active');
+  document.querySelectorAll('.ils-module').forEach(m=>m.classList.remove('active'));
+  document.getElementById('ilsModule-'+idx).classList.add('active');
+  ilsState.currentModule = idx;
+  document.querySelectorAll('.ils-modnav-item').forEach((el,i)=>{
+    el.classList.remove('active');
+    if(i===idx) el.classList.add('active');
+    if(ilsState.moduleDone[i]) el.classList.add('done');
+    if(i>0 && !ilsState.quizPassed[i-1] && !ilsState.moduleDone[i]) el.classList.add('locked'); else el.classList.remove('locked');
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+  ilsUpdateProgress();
+}
+
+function ilsGoToFinal(){
+  document.querySelectorAll('.ils-module').forEach(m=>m.classList.remove('active'));
+  document.getElementById('ilsHero').style.display = 'none';
+  document.getElementById('ilsFinal').classList.add('active');
+  document.querySelectorAll('.ils-modnav-item').forEach(el=>el.classList.remove('active'));
+  window.scrollTo({top:0, behavior:'smooth'});
+  ilsUpdateProgress();
+}
+
+function ilsRestart(){
+  ilsState.xp = 0;
+  ilsState.moduleDone = [false,false,false,false];
+  ilsState.quizPassed = [false,false,false,false];
+  ilsQuizData.forEach((qd,i)=> ilsRenderQuiz(i,qd));
+  document.getElementById('ilsFinal').classList.remove('active');
+  document.querySelectorAll('.ils-module').forEach(m=>m.classList.remove('active'));
+  document.getElementById('ilsHero').style.display = '';
+  ilsBuildModNav();
+  ilsUpdateProgress();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function ilsUpdateProgress(){
+  const doneCount = ilsState.moduleDone.filter(Boolean).length;
+  const pct = Math.round((doneCount/4)*100);
+  document.getElementById('ilsProgressFill').style.width = pct+'%';
+  document.getElementById('ilsProgressPct').textContent = pct+'%';
+  document.getElementById('ilsXp').textContent = ilsState.xp;
+}
+
+/* ================= QUIZ ENGINE ================= */
+function ilsRenderQuiz(modIdx, data){
+  const container = document.getElementById('ilsQuiz-'+modIdx);
+  let html = '<div class="ils-quiz-head"><div class="ils-quiz-title">'+data.title+'</div><div class="ils-quiz-progress">4 questions</div></div>';
+  data.questions.forEach((q,qi)=>{
+    html += '<div class="ils-q" data-qi="'+qi+'">';
+    html += '<div class="ils-q-text">'+(qi+1)+'. '+q.q+'</div>';
+    html += '<div class="ils-q-options">';
+    q.options.forEach((opt,oi)=>{
+      html += '<div class="ils-q-option" data-oi="'+oi+'" onclick="ilsSelectOption('+modIdx+','+qi+','+oi+',this)">'+
+              '<span class="ils-opt-letter">'+String.fromCharCode(65+oi)+'</span><span>'+opt+'</span></div>';
+    });
+    html += '</div>';
+    html += '<div class="ils-q-explain" id="ilsExplain-'+modIdx+'-'+qi+'"></div>';
+    html += '</div>';
+  });
+  html += '<button class="ils-quiz-submit" id="ilsSubmit-'+modIdx+'" disabled onclick="ilsSubmitQuiz('+modIdx+')">Submit Quiz</button>';
+  html += '<div class="ils-quiz-result" id="ilsResult-'+modIdx+'"></div>';
+  container.innerHTML = html;
+  container.dataset.answers = JSON.stringify(new Array(data.questions.length).fill(null));
+}
+
+function ilsSelectOption(modIdx, qi, oi, el){
+  const container = document.getElementById('ilsQuiz-'+modIdx);
+  if(container.dataset.submitted === 'true') return;
+  const answers = JSON.parse(container.dataset.answers);
+  answers[qi] = oi;
+  container.dataset.answers = JSON.stringify(answers);
+  const qBlock = container.querySelector('.ils-q[data-qi="'+qi+'"]');
+  qBlock.querySelectorAll('.ils-q-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  const allAnswered = answers.every(a=>a!==null);
+  document.getElementById('ilsSubmit-'+modIdx).disabled = !allAnswered;
+}
+
+function ilsSubmitQuiz(modIdx){
+  const data = ilsQuizData[modIdx];
+  const container = document.getElementById('ilsQuiz-'+modIdx);
+  const answers = JSON.parse(container.dataset.answers);
+  let score = 0;
+  data.questions.forEach((q,qi)=>{
+    const qBlock = container.querySelector('.ils-q[data-qi="'+qi+'"]');
+    const opts = qBlock.querySelectorAll('.ils-q-option');
+    opts.forEach(o=>o.classList.add('disabled'));
+    const chosen = answers[qi];
+    if(chosen === q.correct){ score++; ilsState.xp += 10; }
+    opts[q.correct].classList.add('correct');
+    if(chosen !== q.correct && chosen !== null) opts[chosen].classList.add('incorrect');
+    const explainEl = document.getElementById('ilsExplain-'+modIdx+'-'+qi);
+    explainEl.textContent = (chosen===q.correct ? '✓ Correct. ' : '✗ Not quite. ') + q.explain;
+    explainEl.classList.add('show');
+  });
+  container.dataset.submitted = 'true';
+  document.getElementById('ilsSubmit-'+modIdx).style.display = 'none';
+
+  const passed = score >= 3;
+  const resultEl = document.getElementById('ilsResult-'+modIdx);
+  resultEl.innerHTML =
+    '<div class="ils-quiz-score '+(passed?'pass':'fail')+'">'+score+'/4</div>'+
+    '<div class="ils-quiz-msg">'+(passed ? 'Nice work — module unlocked. +'+(score*10)+' XP earned.' : 'Score 3/4 or higher to unlock the next module. Review the explanations above and try again.')+'</div>'+
+    '<div class="ils-quiz-actions">'+
+      (passed ? '' : '<button class="ils-nav-btn" onclick="ilsRetryQuiz('+modIdx+')">Retry Quiz</button>') +
+    '</div>';
+  resultEl.classList.add('show');
+
+  if(passed){
+    ilsState.quizPassed[modIdx] = true;
+    ilsState.moduleDone[modIdx] = true;
+    ilsState.xp += 20;
+    document.getElementById('ilsNext-'+modIdx).disabled = false;
+    document.getElementById('ilsNavItem-'+modIdx).classList.add('done');
+    if(modIdx+1 < 4) document.getElementById('ilsNavItem-'+(modIdx+1)).classList.remove('locked');
+  }
+  ilsUpdateProgress();
+}
+
+function ilsRetryQuiz(modIdx){
+  ilsRenderQuiz(modIdx, ilsQuizData[modIdx]);
+}
+
+/* ================= MODULE 1 INTERACTIVE ================= */
+const ilsM1Msgs = {
+  1:'class Dog defined. No objects exist yet — the blueprint alone uses no per-instance memory.',
+  2:'rex = Dog("Rex", 3) → __init__ runs → rex.name = "Rex", rex.age = 3',
+  3:'bella = Dog("Bella", 5) → a second, independent object → bella.name = "Bella", bella.age = 5',
+  4:'rex.bark() → "Rex says woof!" (uses rex\u2019s own name via self)'
+};
+function ilsM1Step(step, el){
+  document.querySelectorAll('[data-m1step]').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ilsM1Output').textContent = ilsM1Msgs[step];
+}
+
+/* ================= MODULE 2 INTERACTIVE ================= */
+const ilsM2Msgs = {
+  cat: 'pet.speak() → "Tom says Meow"',
+  dog: 'pet.speak() → "Rex says Woof"',
+  cow: 'pet.speak() → "Bessie says Moo" (a new subclass, same interface — polymorphism holds)'
+};
+function ilsM2Pet(kind, el){
+  document.querySelectorAll('[data-m2pet]').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ilsM2Output').textContent = ilsM2Msgs[kind];
+}
+
+/* ================= MODULE 3 INTERACTIVE ================= */
+const ilsM3Msgs = {
+  add: '__add__ is called → Vector(4, 6)',
+  repr: '__repr__ is called → "Vector(1, 2)" is what print() displays',
+  eq: '__eq__ is called → without defining it, v1 == v2 checks identity, not value equality (usually False)',
+  len: '__len__ is called → len(inventory) returns whatever integer __len__ returns, e.g. number of items'
+};
+function ilsM3Dunder(kind, el){
+  document.querySelectorAll('[data-m3d]').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ilsM3Output').textContent = ilsM3Msgs[kind];
+}
+
+/* ================= MODULE 4 INTERACTIVE ================= */
+const ilsM4Msgs = {
+  duck: 'Duck.__mro__ → (Duck, Flyer, Swimmer, object) · Duck().move() → "Flies"',
+  swap: 'Duck.__mro__ → (Duck, Swimmer, Flyer, object) · Duck().move() → "Swims" (order of base classes changes the result)'
+};
+function ilsM4Mro(kind, el){
+  document.querySelectorAll('[data-m4mro]').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('ilsM4Output').textContent = ilsM4Msgs[kind];
+}
+</script>
+</body>
+</html>
