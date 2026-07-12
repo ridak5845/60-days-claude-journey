@@ -1,0 +1,940 @@
+<style>
+  :root {
+    --bg: #0a0e15;
+    --surface: #10151e;
+    --surface-2: #161d29;
+    --line: #232b38;
+    --line-soft: #1a212c;
+    --text: #edf0f4;
+    --text-dim: #98a3b3;
+    --text-faint: #5b6577;
+    --red: #ec6a6a;
+    --amber: #e8b155;
+    --green: #4fd39a;
+    --blue: #6fa8ff;
+    --purple: #b79bf0;
+    --accent: #4fd39a;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  .pfc-root {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    margin: 0;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    min-height: 100vh;
+  }
+  .pfc-root ::selection { background: var(--accent); color: #06110c; }
+
+  /* ===== Top bar ===== */
+  .pfc-topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 28px; border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; background: rgba(10,14,21,0.92); backdrop-filter: blur(8px);
+    z-index: 50; flex-wrap: wrap; gap: 14px;
+  }
+  .pfc-brand { display: flex; align-items: center; gap: 10px; }
+  .pfc-brand-mark {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display); font-weight: 700; font-size: 13px; color: #06110c;
+  }
+  .pfc-brand-text { font-family: var(--display); font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
+  .pfc-brand-sub { font-family: var(--mono); font-size: 10px; color: var(--text-faint); letter-spacing: 0.05em; }
+  .pfc-topnav { display: flex; gap: 4px; flex-wrap: wrap; }
+  .pfc-topnav button {
+    background: transparent; border: 1px solid transparent; color: var(--text-dim);
+    font-family: var(--body); font-size: 12.5px; font-weight: 500; padding: 7px 12px;
+    border-radius: 7px; cursor: pointer; transition: all .15s ease;
+  }
+  .pfc-topnav button:hover { color: var(--text); background: var(--surface-2); }
+  .pfc-topnav button.active { color: var(--bg); background: var(--accent); font-weight: 600; }
+  .pfc-actions { display: flex; gap: 8px; align-items: center; }
+  .pfc-icon-btn {
+    width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--text-dim); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 15px;
+    transition: all .15s ease;
+  }
+  .pfc-icon-btn:hover { color: var(--text); border-color: var(--text-faint); }
+
+  .pfc-main { max-width: 1120px; margin: 0 auto; padding: 28px 28px 80px; }
+  .pfc-view { display: none; animation: pfcFade .3s ease; }
+  .pfc-view.active { display: block; }
+  @keyframes pfcFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { .pfc-view, * { animation: none !important; transition: none !important; } }
+
+  .pfc-page-head { margin-bottom: 22px; }
+  .pfc-eyebrow { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
+  .pfc-page-title { font-family: var(--display); font-size: 22px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .pfc-page-sub { color: var(--text-faint); font-size: 13px; margin: 0; }
+
+  /* ===== Cards / grid ===== */
+  .pfc-grid { display: grid; gap: 16px; }
+  .pfc-grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .pfc-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .pfc-grid-2 { grid-template-columns: 1.3fr 1fr; }
+  @media (max-width: 900px) { .pfc-grid-4, .pfc-grid-3, .pfc-grid-2 { grid-template-columns: 1fr; } }
+
+  .pfc-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .pfc-card-title {
+    font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--text-faint); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;
+  }
+
+  /* ===== Health score hero ===== */
+  .pfc-hero {
+    display: grid; grid-template-columns: 200px 1fr; gap: 28px; align-items: center;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--line); border-radius: 14px; padding: 26px 26px; margin-bottom: 20px;
+  }
+  @media (max-width: 700px) { .pfc-hero { grid-template-columns: 1fr; text-align: center; } }
+  .pfc-score-ring-wrap { position: relative; width: 172px; height: 172px; margin: 0 auto; }
+  .pfc-score-ring-wrap svg { transform: rotate(-90deg); }
+  .pfc-score-ring-bg { fill: none; stroke: var(--line); stroke-width: 10; }
+  .pfc-score-ring-fg { fill: none; stroke: var(--green); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1); }
+  .pfc-score-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .pfc-score-num { font-family: var(--display); font-size: 40px; font-weight: 700; }
+  .pfc-score-label { font-family: var(--mono); font-size: 9.5px; color: var(--text-faint); letter-spacing: 0.06em; text-transform: uppercase; }
+  .pfc-hero-body h2 { font-family: var(--display); font-size: 18px; margin: 0 0 8px; }
+  .pfc-hero-body p { color: var(--text-dim); font-size: 13.5px; margin: 0 0 14px; max-width: 480px; }
+  .pfc-hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pfc-pill {
+    font-family: var(--mono); font-size: 10.5px; padding: 5px 10px; border-radius: 20px;
+    border: 1px solid var(--line); color: var(--text-dim);
+  }
+  .pfc-pill.good { color: var(--green); border-color: rgba(79,211,154,0.35); }
+  .pfc-pill.warn { color: var(--amber); border-color: rgba(232,177,85,0.35); }
+  .pfc-pill.bad { color: var(--red); border-color: rgba(236,106,106,0.35); }
+
+  /* ===== Stat cards ===== */
+  .pfc-stat-label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 8px; }
+  .pfc-stat-value { font-family: var(--mono); font-size: 24px; font-weight: 600; }
+  .pfc-stat-delta { font-size: 11.5px; margin-top: 6px; color: var(--text-faint); }
+  .pfc-stat-delta.up { color: var(--green); }
+  .pfc-stat-delta.down { color: var(--red); }
+  .pfc-bar-track { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; margin-top: 10px; }
+  .pfc-bar-fill { height: 100%; border-radius: 3px; transition: width .8s ease; }
+
+  .pfc-section { margin-bottom: 26px; }
+  .pfc-section-title {
+    font-family: var(--display); font-size: 13px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-faint); margin: 0 0 14px; display: flex; align-items: center; justify-content: space-between;
+  }
+
+  /* ===== Buttons / inputs ===== */
+  .pfc-btn {
+    font-family: var(--body); font-size: 12.5px; font-weight: 600; padding: 9px 14px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--surface-2); color: var(--text); cursor: pointer; transition: all .15s ease;
+  }
+  .pfc-btn:hover { border-color: var(--text-faint); }
+  .pfc-btn.primary { background: var(--accent); color: #06170f; border-color: var(--accent); }
+  .pfc-btn.primary:hover { filter: brightness(1.08); }
+  .pfc-btn.danger { color: var(--red); }
+  .pfc-input, .pfc-select {
+    font-family: var(--body); font-size: 13px; background: var(--bg); border: 1px solid var(--line);
+    color: var(--text); border-radius: 8px; padding: 9px 11px; width: 100%; outline: none; transition: border-color .15s ease;
+  }
+  .pfc-input:focus, .pfc-select:focus { border-color: var(--accent); }
+  .pfc-field { display: flex; flex-direction: column; gap: 6px; }
+  .pfc-field label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint); }
+  .pfc-form-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 16px; }
+  @media (max-width: 700px) { .pfc-form-row { grid-template-columns: 1fr; } }
+
+  /* ===== Table ===== */
+  table.pfc-table { width: 100%; border-collapse: collapse; }
+  table.pfc-table th {
+    text-align: left; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--text-faint); padding: 0 10px 8px 0; border-bottom: 1px solid var(--line); font-weight: 500;
+  }
+  table.pfc-table td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line-soft); font-size: 13px; vertical-align: middle; }
+  table.pfc-table tr:last-child td { border-bottom: none; }
+  .pfc-cat-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+  .pfc-del-btn { background: none; border: none; color: var(--text-faint); cursor: pointer; font-size: 14px; padding: 4px; }
+  .pfc-del-btn:hover { color: var(--red); }
+
+  /* ===== Chart canvas shells ===== */
+  .pfc-chart-wrap { position: relative; width: 100%; }
+  svg.pfc-svg-chart { width: 100%; height: auto; display: block; }
+  .pfc-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; font-size: 11.5px; color: var(--text-dim); }
+  .pfc-legend span { display: flex; align-items: center; gap: 6px; }
+
+  .pfc-empty { text-align: center; padding: 30px 10px; color: var(--text-faint); font-size: 13px; }
+  .pfc-empty-icon { font-size: 26px; margin-bottom: 8px; opacity: .6; }
+
+  /* ===== Insights / recommendations ===== */
+  .pfc-insight { display: flex; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--line-soft); }
+  .pfc-insight:last-child { border-bottom: none; }
+  .pfc-insight-icon { font-size: 16px; flex-shrink: 0; width: 22px; text-align: center; }
+  .pfc-insight-text { font-size: 13px; color: var(--text); }
+  .pfc-insight-text b { color: var(--text); }
+  .pfc-insight-meta { font-size: 11.5px; color: var(--text-faint); margin-top: 3px; }
+
+  /* ===== Goals ===== */
+  .pfc-goal-card { border-bottom: 1px solid var(--line-soft); padding: 14px 0; }
+  .pfc-goal-card:last-child { border-bottom: none; }
+  .pfc-goal-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .pfc-goal-name { font-weight: 600; font-size: 13.5px; }
+  .pfc-goal-nums { font-family: var(--mono); font-size: 12px; color: var(--text-faint); }
+
+  /* ===== Checklist ===== */
+  .pfc-checklist { display: flex; flex-direction: column; gap: 4px; }
+  .pfc-check-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line-soft); }
+  .pfc-check-row:last-child { border-bottom: none; }
+  .pfc-check-row input { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+  .pfc-check-row label { font-size: 13px; cursor: pointer; }
+  .pfc-check-row.done label { color: var(--text-faint); text-decoration: line-through; }
+
+  /* ===== Tips grid ===== */
+  .pfc-tip-card { padding: 14px 16px; background: var(--surface-2); border-radius: 10px; border: 1px solid var(--line-soft); }
+  .pfc-tip-card h4 { margin: 0 0 6px; font-family: var(--display); font-size: 13px; }
+  .pfc-tip-card p { margin: 0; font-size: 12.5px; color: var(--text-dim); }
+
+  /* ===== What-if simulator ===== */
+  .pfc-slider-row { margin-bottom: 18px; }
+  .pfc-slider-row .pfc-slider-head { display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 8px; }
+  .pfc-slider-row .pfc-slider-head span:last-child { font-family: var(--mono); color: var(--accent); font-weight: 600; }
+  input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; border-radius: 2px; background: var(--line); outline: none; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid var(--bg); }
+  input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid var(--bg); }
+
+  .pfc-sim-result { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 6px; }
+  .pfc-sim-stat { flex: 1; min-width: 130px; }
+
+  .pfc-toast {
+    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--surface-2); border: 1px solid var(--line); color: var(--text); padding: 10px 18px;
+    border-radius: 9px; font-size: 12.5px; opacity: 0; pointer-events: none; transition: all .25s ease; z-index: 200;
+  }
+  .pfc-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .pfc-footer { text-align: center; padding: 30px 24px 10px; color: var(--text-faint); font-size: 10.5px; font-family: var(--mono); letter-spacing: 0.03em; }
+
+  /* Print */
+  @media print {
+    .pfc-topbar, .pfc-icon-btn, .pfc-btn, .pfc-form-row, .pfc-del-btn { display: none !important; }
+    .pfc-view { display: block !important; }
+    .pfc-root { background: #fff; color: #111; }
+    .pfc-card, .pfc-hero { border-color: #ccc; background: #fff; }
+  }
+  [hidden] { display: none !important; }
+
+  @media (max-width: 700px) {
+    .pfc-topbar { padding: 16px 18px; }
+    .pfc-main { padding: 20px 18px 60px; }
+    .pfc-topnav { order: 3; width: 100%; overflow-x: auto; flex-wrap: nowrap; }
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="pfc-root">
+
+  <div class="pfc-topbar">
+    <div class="pfc-brand">
+      <div class="pfc-brand-mark">₹</div>
+      <div>
+        <div class="pfc-brand-text">Command Center</div>
+        <div class="pfc-brand-sub">STUDENT · MONTHLY ALLOWANCE</div>
+      </div>
+    </div>
+    <div class="pfc-topnav" id="pfcNav">
+      <button data-view="overview" class="active">Overview</button>
+      <button data-view="spending">Spending</button>
+      <button data-view="budget">Budget</button>
+      <button data-view="goals">Goals</button>
+      <button data-view="simulate">What-If</button>
+      <button data-view="learn">Learn</button>
+    </div>
+    <div class="pfc-actions">
+      <button class="pfc-icon-btn" id="pfcPrintBtn" title="Print report">⎙</button>
+      <button class="pfc-icon-btn" id="pfcResetBtn" title="Reset all data">⟲</button>
+    </div>
+  </div>
+
+  <div class="pfc-main">
+
+    <!-- ============ OVERVIEW ============ -->
+    <div class="pfc-view active" id="view-overview">
+      <div class="pfc-page-head">
+        <div class="pfc-eyebrow">This Month</div>
+        <h1 class="pfc-page-title" id="pfcMonthTitle">Overview</h1>
+        <p class="pfc-page-sub">Your allowance, spending, and savings, all in one place.</p>
+      </div>
+
+      <div class="pfc-hero">
+        <div class="pfc-score-ring-wrap">
+          <svg viewBox="0 0 172 172" width="172" height="172">
+            <circle class="pfc-score-ring-bg" cx="86" cy="86" r="74"></circle>
+            <circle class="pfc-score-ring-fg" id="pfcScoreRing" cx="86" cy="86" r="74" stroke-dasharray="465" stroke-dashoffset="465"></circle>
+          </svg>
+          <div class="pfc-score-center">
+            <div class="pfc-score-num" id="pfcScoreNum">0</div>
+            <div class="pfc-score-label">Health Score</div>
+          </div>
+        </div>
+        <div class="pfc-hero-body">
+          <h2 id="pfcHeroHeadline">Let's set up your allowance</h2>
+          <p id="pfcHeroSub">Add your monthly allowance and a few expenses to see your financial health score, budget pace, and personalized recommendations.</p>
+          <div class="pfc-hero-tags" id="pfcHeroTags"></div>
+        </div>
+      </div>
+
+      <div class="pfc-grid pfc-grid-4" style="margin-bottom:22px;">
+        <div class="pfc-card">
+          <div class="pfc-stat-label">Monthly Allowance</div>
+          <div class="pfc-stat-value" id="statAllowance">₹0</div>
+          <div class="pfc-stat-delta" id="statAllowanceNote">Set this up below</div>
+        </div>
+        <div class="pfc-card">
+          <div class="pfc-stat-label">Spent So Far</div>
+          <div class="pfc-stat-value" id="statSpent">₹0</div>
+          <div class="pfc-bar-track"><div class="pfc-bar-fill" id="statSpentBar" style="width:0%; background:var(--green);"></div></div>
+        </div>
+        <div class="pfc-card">
+          <div class="pfc-stat-label">Remaining</div>
+          <div class="pfc-stat-value" id="statRemaining">₹0</div>
+          <div class="pfc-stat-delta" id="statRemainingNote">—</div>
+        </div>
+        <div class="pfc-card">
+          <div class="pfc-stat-label">Saved This Month</div>
+          <div class="pfc-stat-value" id="statSaved">₹0</div>
+          <div class="pfc-stat-delta" id="statSavedNote">—</div>
+        </div>
+      </div>
+
+      <div class="pfc-grid pfc-grid-2">
+        <div class="pfc-card">
+          <div class="pfc-card-title">Where it's going<span></span></div>
+          <div class="pfc-chart-wrap" id="pfcDonutWrap">
+            <div class="pfc-empty"><div class="pfc-empty-icon">◔</div>No expenses logged yet. Add one in the Spending tab.</div>
+          </div>
+        </div>
+        <div class="pfc-card">
+          <div class="pfc-card-title">Recommendations</div>
+          <div id="pfcInsights"><div class="pfc-empty">Insights appear once you log some spending.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SPENDING ============ -->
+    <div class="pfc-view" id="view-spending">
+      <div class="pfc-page-head">
+        <div class="pfc-eyebrow">Track</div>
+        <h1 class="pfc-page-title">Spending</h1>
+        <p class="pfc-page-sub">Log every expense — even the small ones add up over a month.</p>
+      </div>
+
+      <div class="pfc-card" style="margin-bottom:20px;">
+        <div class="pfc-card-title">Add an expense</div>
+        <div class="pfc-form-row">
+          <div class="pfc-field"><label>What for</label><input class="pfc-input" id="expName" placeholder="e.g. Canteen lunch"></div>
+          <div class="pfc-field"><label>Amount (₹)</label><input class="pfc-input" id="expAmount" type="number" min="0" placeholder="0"></div>
+          <div class="pfc-field"><label>Category</label>
+            <select class="pfc-select" id="expCategory">
+              <option>Food</option><option>Transport</option><option>Fun & Social</option>
+              <option>Study Materials</option><option>Subscriptions</option><option>Shopping</option><option>Other</option>
+            </select>
+          </div>
+          <button class="pfc-btn primary" id="addExpenseBtn">Add</button>
+        </div>
+      </div>
+
+      <div class="pfc-card">
+        <div class="pfc-card-title">This month's expenses<span id="expCount"></span></div>
+        <div id="pfcExpenseTableWrap">
+          <div class="pfc-empty"><div class="pfc-empty-icon">🧾</div>Nothing logged yet — add your first expense above.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ BUDGET ============ -->
+    <div class="pfc-view" id="view-budget">
+      <div class="pfc-page-head">
+        <div class="pfc-eyebrow">Plan</div>
+        <h1 class="pfc-page-title">Budget</h1>
+        <p class="pfc-page-sub">Set your monthly allowance and a spending limit per category.</p>
+      </div>
+
+      <div class="pfc-grid pfc-grid-2">
+        <div class="pfc-card">
+          <div class="pfc-card-title">Monthly allowance</div>
+          <div class="pfc-field" style="margin-bottom:12px;">
+            <label>Amount received each month (₹)</label>
+            <input class="pfc-input" id="budgetAllowance" type="number" min="0" placeholder="e.g. 8000">
+          </div>
+          <div class="pfc-field" style="margin-bottom:14px;">
+            <label>Savings target (% of allowance)</label>
+            <input class="pfc-input" id="budgetSavingsPct" type="number" min="0" max="100" placeholder="e.g. 15">
+          </div>
+          <button class="pfc-btn primary" id="saveAllowanceBtn">Save allowance</button>
+        </div>
+        <div class="pfc-card">
+          <div class="pfc-card-title">Category limits (optional)</div>
+          <div id="pfcCategoryLimits"></div>
+          <button class="pfc-btn" id="saveLimitsBtn" style="margin-top:10px;">Save limits</button>
+        </div>
+      </div>
+
+      <div class="pfc-section" style="margin-top:22px;">
+        <h2 class="pfc-section-title">Budget pace this month</h2>
+        <div class="pfc-card">
+          <div id="pfcPaceChart" class="pfc-chart-wrap"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ GOALS ============ -->
+    <div class="pfc-view" id="view-goals">
+      <div class="pfc-page-head">
+        <div class="pfc-eyebrow">Save Toward</div>
+        <h1 class="pfc-page-title">Goals</h1>
+        <p class="pfc-page-sub">Give your savings a name — a laptop, a trip, an emergency cushion.</p>
+      </div>
+
+      <div class="pfc-card" style="margin-bottom:20px;">
+        <div class="pfc-card-title">New goal</div>
+        <div class="pfc-form-row">
+          <div class="pfc-field"><label>Goal name</label><input class="pfc-input" id="goalName" placeholder="e.g. New headphones"></div>
+          <div class="pfc-field"><label>Target (₹)</label><input class="pfc-input" id="goalTarget" type="number" min="0" placeholder="0"></div>
+          <div class="pfc-field"><label>Saved already (₹)</label><input class="pfc-input" id="goalSaved" type="number" min="0" placeholder="0"></div>
+          <button class="pfc-btn primary" id="addGoalBtn">Add goal</button>
+        </div>
+      </div>
+
+      <div class="pfc-card">
+        <div class="pfc-card-title">Your goals</div>
+        <div id="pfcGoalsList"><div class="pfc-empty"><div class="pfc-empty-icon">🎯</div>No goals yet — add one above to start tracking progress.</div></div>
+      </div>
+    </div>
+
+    <!-- ============ WHAT-IF ============ -->
+    <div class="pfc-view" id="view-simulate">
+      <div class="pfc-page-head">
+        <div class="pfc-eyebrow">Simulate</div>
+        <h1 class="pfc-page-title">What-If Planner</h1>
+        <p class="pfc-page-sub">Nudge the sliders to see how small changes change your month — and your year.</p>
+      </div>
+
+      <div class="pfc-grid pfc-grid-2">
+        <div class="pfc-card">
+          <div class="pfc-card-title">Adjust</div>
+          <div class="pfc-slider-row">
+            <div class="pfc-slider-head"><span>Cut daily food spend by</span><span id="simFoodVal">₹0</span></div>
+            <input type="range" id="simFood" min="0" max="150" value="0" step="10">
+          </div>
+          <div class="pfc-slider-row">
+            <div class="pfc-slider-head"><span>Cut monthly subscriptions by</span><span id="simSubVal">₹0</span></div>
+            <input type="range" id="simSub" min="0" max="1000" value="0" step="50">
+          </div>
+          <div class="pfc-slider-row">
+            <div class="pfc-slider-head"><span>Extra savings rate</span><span id="simRateVal">0%</span></div>
+            <input type="range" id="simRate" min="0" max="30" value="0" step="1">
+          </div>
+        </div>
+        <div class="pfc-card">
+          <div class="pfc-card-title">Projected impact</div>
+          <div class="pfc-sim-result">
+            <div class="pfc-sim-stat">
+              <div class="pfc-stat-label">Extra saved / month</div>
+              <div class="pfc-stat-value" id="simMonthly">₹0</div>
+            </div>
+            <div class="pfc-sim-stat">
+              <div class="pfc-stat-label">Over a year</div>
+              <div class="pfc-stat-value" id="simYearly">₹0</div>
+            </div>
+          </div>
+          <p style="color:var(--text-dim); font-size:12.5px; margin-top:16px;" id="simNote">Move the sliders to see what small habit changes could add up to.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ LEARN ============ -->
+    <div class="pfc-view" id="view-learn">
+      <div class="pfc-page-head">
+        <div class="pfc-eyebrow">Level Up</div>
+        <h1 class="pfc-page-title">Learn & Plan</h1>
+        <p class="pfc-page-sub">Tips, a monthly checklist, and prompts to keep building financial literacy.</p>
+      </div>
+
+      <div class="pfc-section">
+        <h2 class="pfc-section-title">Monthly checklist</h2>
+        <div class="pfc-card">
+          <div class="pfc-checklist" id="pfcChecklist"></div>
+        </div>
+      </div>
+
+      <div class="pfc-section">
+        <h2 class="pfc-section-title">Money tips for student allowances</h2>
+        <div class="pfc-grid pfc-grid-3">
+          <div class="pfc-tip-card"><h4>The 50/30/20 split</h4><p>Roughly 50% needs (food, transport), 30% wants (fun, shopping), 20% savings. Adjust to fit a fixed allowance.</p></div>
+          <div class="pfc-tip-card"><h4>Pay yourself first</h4><p>Move your savings amount aside the day allowance lands — before it has a chance to get spent.</p></div>
+          <div class="pfc-tip-card"><h4>Track small spends</h4><p>₹50 a day on snacks is ₹1,500 a month. Small daily spends are usually the biggest leak.</p></div>
+          <div class="pfc-tip-card"><h4>Separate needs from wants</h4><p>Before buying, ask: would I still buy this if it wasn't on sale or in front of me right now?</p></div>
+          <div class="pfc-tip-card"><h4>Build a tiny buffer</h4><p>Even ₹500 set aside covers a surprise cost without derailing the whole month's budget.</p></div>
+          <div class="pfc-tip-card"><h4>Review, don't restrict</h4><p>A weekly 5-minute review beats a rigid budget you'll abandon by week two.</p></div>
+        </div>
+      </div>
+
+      <div class="pfc-section">
+        <h2 class="pfc-section-title">Prompts to think through with Claude</h2>
+        <div class="pfc-card">
+          <div class="pfc-insight"><div class="pfc-insight-icon">💬</div><div><div class="pfc-insight-text">"Here's my spending by category this month — where am I overspending relative to a typical student budget?"</div></div></div>
+          <div class="pfc-insight"><div class="pfc-insight-icon">💬</div><div><div class="pfc-insight-text">"Help me plan a weekly spending cap so I don't run out before my next allowance."</div></div></div>
+          <div class="pfc-insight"><div class="pfc-insight-icon">💬</div><div><div class="pfc-insight-text">"I want to save ₹X in 3 months for [goal] — break that into a weekly savings plan."</div></div></div>
+          <div class="pfc-insight"><div class="pfc-insight-icon">💬</div><div><div class="pfc-insight-text">"Explain the difference between saving and investing, in plain terms, for someone my age."</div></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pfc-footer">Personal Financial Command Center · your data stays on this device</div>
+  <div class="pfc-toast" id="pfcToast"></div>
+</div>
+
+<script>
+(function(){
+  var STORE_KEY = 'pfc_student_data_v1';
+  var COLORS = {'Food':'#4fd39a','Transport':'#6fa8ff','Fun & Social':'#e8b155','Study Materials':'#b79bf0','Subscriptions':'#ec6a6a','Shopping':'#f0a8d0','Other':'#5b6577'};
+
+  var defaultChecklist = [
+    {id:'c1', text:'Log every expense from this week', done:false},
+    {id:'c2', text:'Compare spending vs your budget limits', done:false},
+    {id:'c3', text:'Move savings amount aside for the month', done:false},
+    {id:'c4', text:'Check progress on your goals', done:false},
+    {id:'c5', text:'Review one recommendation and act on it', done:false}
+  ];
+
+  var state = loadState();
+
+  function loadState(){
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (!parsed.checklist) parsed.checklist = JSON.parse(JSON.stringify(defaultChecklist));
+        if (!parsed.limits) parsed.limits = {};
+        if (!parsed.goals) parsed.goals = [];
+        if (!parsed.expenses) parsed.expenses = [];
+        if (typeof parsed.allowance !== 'number') parsed.allowance = 0;
+        if (typeof parsed.savingsPct !== 'number') parsed.savingsPct = 15;
+        return parsed;
+      }
+    } catch(e) {}
+    return { allowance: 0, savingsPct: 15, expenses: [], limits: {}, goals: [], checklist: JSON.parse(JSON.stringify(defaultChecklist)) };
+  }
+  function saveState(){
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function fmt(n){
+    n = Math.round(n || 0);
+    return '₹' + n.toLocaleString('en-IN');
+  }
+
+  function toast(msg){
+    var t = document.getElementById('pfcToast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 1800);
+  }
+
+  // ===== Nav =====
+  var navBtns = document.querySelectorAll('#pfcNav button');
+  navBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      navBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.pfc-view').forEach(function(v){ v.classList.remove('active'); });
+      document.getElementById('view-' + btn.dataset.view).classList.add('active');
+      if (btn.dataset.view === 'budget') renderBudgetView();
+    });
+  });
+
+  document.getElementById('pfcPrintBtn').addEventListener('click', function(){ window.print(); });
+  document.getElementById('pfcResetBtn').addEventListener('click', function(){
+    if (confirm('Reset all data? This clears allowance, expenses, goals, and limits on this device.')) {
+      state = { allowance: 0, savingsPct: 15, expenses: [], limits: {}, goals: [], checklist: JSON.parse(JSON.stringify(defaultChecklist)) };
+      saveState();
+      renderAll();
+      toast('All data reset');
+    }
+  });
+
+  // ===== Expenses =====
+  document.getElementById('addExpenseBtn').addEventListener('click', function(){
+    var name = document.getElementById('expName').value.trim();
+    var amount = parseFloat(document.getElementById('expAmount').value);
+    var cat = document.getElementById('expCategory').value;
+    if (!name || !amount || amount <= 0) { toast('Enter a description and amount'); return; }
+    state.expenses.unshift({ id: 'e' + Date.now(), name: name, amount: amount, category: cat, date: new Date().toISOString() });
+    saveState();
+    document.getElementById('expName').value = '';
+    document.getElementById('expAmount').value = '';
+    renderAll();
+    toast('Expense added');
+  });
+
+  function renderExpenseTable(){
+    var wrap = document.getElementById('pfcExpenseTableWrap');
+    var count = document.getElementById('expCount');
+    if (!state.expenses.length) {
+      wrap.innerHTML = '<div class="pfc-empty"><div class="pfc-empty-icon">🧾</div>Nothing logged yet — add your first expense above.</div>';
+      count.textContent = '';
+      return;
+    }
+    count.textContent = state.expenses.length + ' entries';
+    var rows = state.expenses.map(function(e){
+      var d = new Date(e.date);
+      var dateStr = d.toLocaleDateString('en-IN', {day:'numeric', month:'short'});
+      var color = COLORS[e.category] || COLORS.Other;
+      return '<tr>' +
+        '<td><span class="pfc-cat-dot" style="background:' + color + '"></span>' + escapeHtml(e.name) + '</td>' +
+        '<td style="color:var(--text-faint); font-size:12px;">' + escapeHtml(e.category) + '</td>' +
+        '<td style="color:var(--text-faint); font-size:12px; white-space:nowrap;">' + dateStr + '</td>' +
+        '<td style="font-family:var(--mono); text-align:right;">' + fmt(e.amount) + '</td>' +
+        '<td style="text-align:right;"><button class="pfc-del-btn" data-id="' + e.id + '" title="Delete">✕</button></td>' +
+        '</tr>';
+    }).join('');
+    wrap.innerHTML = '<table class="pfc-table"><thead><tr><th>What</th><th>Category</th><th>Date</th><th style="text-align:right;">Amount</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';
+    wrap.querySelectorAll('.pfc-del-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        state.expenses = state.expenses.filter(function(e){ return e.id !== btn.dataset.id; });
+        saveState(); renderAll(); toast('Expense removed');
+      });
+    });
+  }
+
+  function escapeHtml(s){
+    var d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+  }
+
+  // ===== Budget =====
+  document.getElementById('saveAllowanceBtn').addEventListener('click', function(){
+    var a = parseFloat(document.getElementById('budgetAllowance').value);
+    var p = parseFloat(document.getElementById('budgetSavingsPct').value);
+    if (a >= 0 && !isNaN(a)) state.allowance = a;
+    if (p >= 0 && !isNaN(p)) state.savingsPct = p;
+    saveState(); renderAll(); toast('Allowance saved');
+  });
+
+  var CATS = ['Food','Transport','Fun & Social','Study Materials','Subscriptions','Shopping','Other'];
+  function renderBudgetView(){
+    document.getElementById('budgetAllowance').value = state.allowance || '';
+    document.getElementById('budgetSavingsPct').value = state.savingsPct || '';
+    var wrap = document.getElementById('pfcCategoryLimits');
+    wrap.innerHTML = CATS.map(function(c){
+      return '<div class="pfc-field" style="margin-bottom:10px;"><label>' + c + ' (₹ / month)</label>' +
+        '<input class="pfc-input pfc-limit-input" data-cat="' + c + '" type="number" min="0" placeholder="No limit set" value="' + (state.limits[c] || '') + '"></div>';
+    }).join('');
+    renderPaceChart();
+  }
+  document.getElementById('saveLimitsBtn').addEventListener('click', function(){
+    document.querySelectorAll('.pfc-limit-input').forEach(function(inp){
+      var v = parseFloat(inp.value);
+      if (v >= 0 && !isNaN(v)) state.limits[inp.dataset.cat] = v; else delete state.limits[inp.dataset.cat];
+    });
+    saveState(); renderAll(); toast('Limits saved');
+  });
+
+  function renderPaceChart(){
+    var el = document.getElementById('pfcPaceChart');
+    var byCat = groupByCategory();
+    var cats = Object.keys(state.limits).length ? Object.keys(state.limits) : CATS;
+    var rows = cats.map(function(c){
+      var spent = byCat[c] || 0;
+      var limit = state.limits[c];
+      var pct = limit ? Math.min(100, (spent/limit)*100) : (spent > 0 ? 100 : 0);
+      var color = spent === 0 ? 'var(--line)' : (limit && spent > limit ? 'var(--red)' : (limit && pct > 80 ? 'var(--amber)' : 'var(--green)'));
+      var label = limit ? (fmt(spent) + ' / ' + fmt(limit)) : (spent ? fmt(spent) + ' · no limit set' : 'No spending yet');
+      return '<div style="margin-bottom:14px;">' +
+        '<div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:6px;"><span>' + c + '</span><span style="color:var(--text-faint); font-family:var(--mono);">' + label + '</span></div>' +
+        '<div class="pfc-bar-track"><div class="pfc-bar-fill" style="width:' + pct + '%; background:' + color + ';"></div></div>' +
+        '</div>';
+    }).join('');
+    el.innerHTML = rows;
+  }
+
+  function groupByCategory(){
+    var m = {};
+    state.expenses.forEach(function(e){ m[e.category] = (m[e.category] || 0) + e.amount; });
+    return m;
+  }
+
+  // ===== Goals =====
+  document.getElementById('addGoalBtn').addEventListener('click', function(){
+    var name = document.getElementById('goalName').value.trim();
+    var target = parseFloat(document.getElementById('goalTarget').value);
+    var saved = parseFloat(document.getElementById('goalSaved').value) || 0;
+    if (!name || !target || target <= 0) { toast('Enter a goal name and target'); return; }
+    state.goals.unshift({ id: 'g' + Date.now(), name: name, target: target, saved: saved });
+    saveState();
+    document.getElementById('goalName').value = '';
+    document.getElementById('goalTarget').value = '';
+    document.getElementById('goalSaved').value = '';
+    renderGoals();
+    toast('Goal added');
+  });
+
+  function renderGoals(){
+    var wrap = document.getElementById('pfcGoalsList');
+    if (!state.goals.length) {
+      wrap.innerHTML = '<div class="pfc-empty"><div class="pfc-empty-icon">🎯</div>No goals yet — add one above to start tracking progress.</div>';
+      return;
+    }
+    wrap.innerHTML = state.goals.map(function(g){
+      var pct = Math.min(100, (g.saved / g.target) * 100);
+      return '<div class="pfc-goal-card">' +
+        '<div class="pfc-goal-top"><span class="pfc-goal-name">' + escapeHtml(g.name) + '</span><span class="pfc-goal-nums">' + fmt(g.saved) + ' / ' + fmt(g.target) + '</span></div>' +
+        '<div class="pfc-bar-track"><div class="pfc-bar-fill" style="width:' + pct + '%; background:var(--blue);"></div></div>' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">' +
+        '<span style="font-size:11.5px; color:var(--text-faint);">' + Math.round(pct) + '% there</span>' +
+        '<button class="pfc-del-btn" data-id="' + g.id + '" title="Delete goal">✕</button></div>' +
+        '</div>';
+    }).join('');
+    wrap.querySelectorAll('.pfc-del-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        state.goals = state.goals.filter(function(g){ return g.id !== btn.dataset.id; });
+        saveState(); renderGoals(); toast('Goal removed');
+      });
+    });
+  }
+
+  // ===== Checklist =====
+  function renderChecklist(){
+    var wrap = document.getElementById('pfcChecklist');
+    wrap.innerHTML = state.checklist.map(function(c){
+      return '<div class="pfc-check-row' + (c.done ? ' done' : '') + '">' +
+        '<input type="checkbox" id="chk_' + c.id + '" ' + (c.done ? 'checked' : '') + '>' +
+        '<label for="chk_' + c.id + '">' + escapeHtml(c.text) + '</label></div>';
+    }).join('');
+    state.checklist.forEach(function(c){
+      document.getElementById('chk_' + c.id).addEventListener('change', function(e){
+        c.done = e.target.checked; saveState(); renderChecklist();
+      });
+    });
+  }
+
+  // ===== Donut chart (SVG, no libs) =====
+  function renderDonut(){
+    var wrap = document.getElementById('pfcDonutWrap');
+    var byCat = groupByCategory();
+    var total = Object.values(byCat).reduce(function(a,b){ return a+b; }, 0);
+    if (!total) {
+      wrap.innerHTML = '<div class="pfc-empty"><div class="pfc-empty-icon">◔</div>No expenses logged yet. Add one in the Spending tab.</div>';
+      return;
+    }
+    var entries = Object.keys(byCat).map(function(k){ return {cat:k, val:byCat[k]}; }).sort(function(a,b){ return b.val - a.val; });
+    var r = 60, cx = 80, cy = 80, circumference = 2 * Math.PI * r;
+    var offset = 0;
+    var segs = entries.map(function(e){
+      var frac = e.val / total;
+      var len = frac * circumference;
+      var seg = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + (COLORS[e.cat]||COLORS.Other) + '" stroke-width="22" ' +
+        'stroke-dasharray="' + len + ' ' + (circumference-len) + '" stroke-dashoffset="' + (-offset) + '" transform="rotate(-90 ' + cx + ' ' + cy + ')"></circle>';
+      offset += len;
+      return seg;
+    }).join('');
+    var legend = entries.map(function(e){
+      var pct = Math.round((e.val/total)*100);
+      return '<span><span class="pfc-cat-dot" style="background:' + (COLORS[e.cat]||COLORS.Other) + '"></span>' + e.cat + ' · ' + pct + '%</span>';
+    }).join('');
+    wrap.innerHTML = '<div style="display:flex; gap:20px; align-items:center; flex-wrap:wrap;">' +
+      '<svg class="pfc-svg-chart" viewBox="0 0 160 160" style="width:160px; height:160px; flex-shrink:0;">' + segs +
+      '<text x="80" y="76" text-anchor="middle" font-family="JetBrains Mono" font-size="18" fill="#edf0f4" font-weight="600">' + fmt(total) + '</text>' +
+      '<text x="80" y="94" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#5b6577">TOTAL SPENT</text>' +
+      '</svg><div style="flex:1; min-width:140px;"><div class="pfc-legend" style="flex-direction:column; gap:8px; margin-top:0;">' + legend + '</div></div></div>';
+  }
+
+  // ===== Insights =====
+  function computeInsights(){
+    var insights = [];
+    var byCat = groupByCategory();
+    var totalSpent = Object.values(byCat).reduce(function(a,b){ return a+b; }, 0);
+    var allowance = state.allowance;
+
+    if (!allowance) {
+      insights.push({icon:'📝', text:'Add your <b>monthly allowance</b> in the Budget tab to unlock your health score and pace tracking.'});
+    }
+    if (allowance && totalSpent > allowance) {
+      insights.push({icon:'🚨', text:'You have spent <b>' + fmt(totalSpent - allowance) + ' more</b> than your allowance this month. Consider pausing non-essential spending.'});
+    }
+    Object.keys(state.limits).forEach(function(cat){
+      var spent = byCat[cat] || 0;
+      var limit = state.limits[cat];
+      if (spent > limit) {
+        insights.push({icon:'⚠️', text:'<b>' + cat + '</b> is over its ' + fmt(limit) + ' limit by ' + fmt(spent-limit) + '.'});
+      } else if (limit && spent > limit * 0.8) {
+        insights.push({icon:'👀', text:'<b>' + cat + '</b> is at ' + Math.round((spent/limit)*100) + '% of its monthly limit.'});
+      }
+    });
+    // top category insight
+    var top = Object.keys(byCat).sort(function(a,b){ return byCat[b]-byCat[a]; })[0];
+    if (top && totalSpent > 0) {
+      var topPct = Math.round((byCat[top]/totalSpent)*100);
+      if (topPct >= 35) {
+        insights.push({icon:'💡', text:'<b>' + top + '</b> makes up ' + topPct + '% of your spending — your biggest lever if you want to save more.'});
+      }
+    }
+    if (allowance) {
+      var savingsTarget = allowance * (state.savingsPct/100);
+      var remaining = allowance - totalSpent;
+      if (remaining >= savingsTarget && totalSpent > 0) {
+        insights.push({icon:'✅', text:'You are on track to hit your ' + state.savingsPct + '% savings target this month.'});
+      } else if (totalSpent > 0) {
+        insights.push({icon:'📉', text:'At this pace you may fall short of your ' + state.savingsPct + '% savings target by about ' + fmt(Math.max(0, savingsTarget-remaining)) + '.'});
+      }
+    }
+    if (!insights.length) {
+      insights.push({icon:'👋', text:'Log a few expenses to start getting personalized recommendations here.'});
+    }
+    return insights.slice(0, 5);
+  }
+
+  function renderInsights(){
+    var wrap = document.getElementById('pfcInsights');
+    var insights = computeInsights();
+    wrap.innerHTML = insights.map(function(i){
+      return '<div class="pfc-insight"><div class="pfc-insight-icon">' + i.icon + '</div><div class="pfc-insight-text">' + i.text + '</div></div>';
+    }).join('');
+  }
+
+  // ===== Health score =====
+  function computeScore(){
+    if (!state.allowance) return { score: 0, tags: [] };
+    var byCat = groupByCategory();
+    var totalSpent = Object.values(byCat).reduce(function(a,b){ return a+b; }, 0);
+    var score = 100;
+    var tags = [];
+
+    var spendRatio = totalSpent / state.allowance;
+    if (spendRatio > 1) { score -= 40; tags.push({t:'Overspent this month', c:'bad'}); }
+    else if (spendRatio > 0.9) { score -= 15; tags.push({t:'Cutting it close', c:'warn'}); }
+    else { tags.push({t:'Within allowance', c:'good'}); }
+
+    var savingsTarget = state.allowance * (state.savingsPct/100);
+    var remaining = state.allowance - totalSpent;
+    if (remaining >= savingsTarget) { tags.push({t:'On track to save ' + state.savingsPct + '%', c:'good'}); }
+    else { score -= 15; tags.push({t:'Behind savings target', c:'warn'}); }
+
+    var overLimitCount = 0;
+    Object.keys(state.limits).forEach(function(cat){
+      if ((byCat[cat]||0) > state.limits[cat]) overLimitCount++;
+    });
+    if (overLimitCount > 0) { score -= overLimitCount * 8; tags.push({t: overLimitCount + ' categor' + (overLimitCount>1?'ies':'y') + ' over limit', c:'bad'}); }
+
+    if (state.expenses.length >= 5) { tags.push({t:'Tracking consistently', c:'good'}); }
+
+    if (state.goals.length > 0) {
+      var allGoalPct = state.goals.map(function(g){ return g.saved/g.target; });
+      var avg = allGoalPct.reduce(function(a,b){return a+b;},0)/allGoalPct.length;
+      if (avg > 0.5) { score += 5; }
+    }
+
+    score = Math.max(5, Math.min(100, Math.round(score)));
+    return { score: score, tags: tags.slice(0,4) };
+  }
+
+  function renderHero(){
+    var byCat = groupByCategory();
+    var totalSpent = Object.values(byCat).reduce(function(a,b){ return a+b; }, 0);
+    var res = computeScore();
+    var ring = document.getElementById('pfcScoreRing');
+    var circumference = 465;
+    var offset = circumference - (res.score/100)*circumference;
+    ring.style.strokeDashoffset = offset;
+    var ringColor = res.score >= 70 ? 'var(--green)' : (res.score >= 45 ? 'var(--amber)' : 'var(--red)');
+    ring.style.stroke = ringColor;
+    document.getElementById('pfcScoreNum').textContent = res.score;
+
+    var headline = document.getElementById('pfcHeroHeadline');
+    var sub = document.getElementById('pfcHeroSub');
+    if (!state.allowance) {
+      headline.textContent = "Let's set up your allowance";
+      sub.textContent = 'Add your monthly allowance and a few expenses to see your financial health score, budget pace, and personalized recommendations.';
+    } else if (res.score >= 70) {
+      headline.textContent = "You're managing this month well";
+      sub.textContent = 'Spending is under control and savings are on pace. Keep logging expenses to stay on track.';
+    } else if (res.score >= 45) {
+      headline.textContent = 'A few things need attention';
+      sub.textContent = 'You are close to your limits in a couple of areas. Check the recommendations panel for specifics.';
+    } else {
+      headline.textContent = 'This month needs a course correction';
+      sub.textContent = 'Spending is ahead of your allowance or savings target. See recommendations for where to pull back.';
+    }
+
+    var tagsWrap = document.getElementById('pfcHeroTags');
+    tagsWrap.innerHTML = res.tags.map(function(t){ return '<span class="pfc-pill ' + t.c + '">' + t.t + '</span>'; }).join('');
+
+    // stat cards
+    document.getElementById('statAllowance').textContent = fmt(state.allowance);
+    document.getElementById('statAllowanceNote').textContent = state.allowance ? ('Savings target: ' + state.savingsPct + '%') : 'Set this up in Budget tab';
+    document.getElementById('statSpent').textContent = fmt(totalSpent);
+    var spentPct = state.allowance ? Math.min(100, (totalSpent/state.allowance)*100) : 0;
+    var bar = document.getElementById('statSpentBar');
+    bar.style.width = spentPct + '%';
+    bar.style.background = spentPct > 100 ? 'var(--red)' : (spentPct > 85 ? 'var(--amber)' : 'var(--green)');
+
+    var remaining = state.allowance - totalSpent;
+    document.getElementById('statRemaining').textContent = fmt(remaining);
+    document.getElementById('statRemainingNote').textContent = state.allowance ? (remaining >= 0 ? 'Left for the month' : 'Over allowance') : '—';
+
+    var saved = Math.max(0, remaining);
+    document.getElementById('statSaved').textContent = fmt(saved);
+    var savingsTarget = state.allowance * (state.savingsPct/100);
+    document.getElementById('statSavedNote').textContent = state.allowance ? (saved >= savingsTarget ? 'On track ✓' : 'Target: ' + fmt(savingsTarget)) : '—';
+  }
+
+  // ===== What-if simulator =====
+  var simFood = document.getElementById('simFood');
+  var simSub = document.getElementById('simSub');
+  var simRate = document.getElementById('simRate');
+  [simFood, simSub, simRate].forEach(function(s){ s.addEventListener('input', renderSim); });
+
+  function renderSim(){
+    var foodCut = parseFloat(simFood.value); // per day
+    var subCut = parseFloat(simSub.value); // per month
+    var ratePct = parseFloat(simRate.value);
+    document.getElementById('simFoodVal').textContent = fmt(foodCut) + '/day';
+    document.getElementById('simSubVal').textContent = fmt(subCut) + '/mo';
+    document.getElementById('simRateVal').textContent = ratePct + '%';
+
+    var monthlyFoodSavings = foodCut * 30;
+    var extraFromRate = state.allowance ? state.allowance * (ratePct/100) : 0;
+    var monthlyTotal = monthlyFoodSavings + subCut + extraFromRate;
+    document.getElementById('simMonthly').textContent = fmt(monthlyTotal);
+    document.getElementById('simYearly').textContent = fmt(monthlyTotal * 12);
+
+    var note = document.getElementById('simNote');
+    if (monthlyTotal === 0) {
+      note.textContent = 'Move the sliders to see what small habit changes could add up to.';
+    } else {
+      note.textContent = 'That\'s roughly ' + fmt(monthlyTotal) + ' extra every month — enough to fund a goal worth ' + fmt(monthlyTotal*6) + ' in about 6 months.';
+    }
+  }
+
+  function renderAll(){
+    renderHero();
+    renderExpenseTable();
+    renderDonut();
+    renderInsights();
+    renderGoals();
+    renderChecklist();
+    renderSim();
+    if (document.getElementById('view-budget').classList.contains('active')) renderBudgetView();
+  }
+
+  renderAll();
+})();
+</script>
