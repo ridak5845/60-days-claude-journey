@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decision Strategist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #0f0f14;
+    --bg-card: #1a1a24;
+    --bg-card-alt: #1e1e2e;
+    --text-primary: #f0f0f5;
+    --text-secondary: #8888a0;
+    --accent-green: #34d399;
+    --accent-red: #f87171;
+    --accent-blue: #60a5fa;
+    --accent-gold: #fbbf24;
+    --accent-purple: #a78bfa;
+    --border-subtle: rgba(255,255,255,0.06);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .ds-wrap { max-width: 720px; margin: 0 auto; padding: 40px 20px 60px; }
+
+  /* ===== Header ===== */
+  .ds-header { text-align: center; padding: 10px 0 28px; }
+  .ds-header h1 {
+    font-size: 28px; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.01em;
+  }
+  .ds-header .ds-sub { color: var(--text-secondary); font-size: 16px; margin: 0 0 6px; }
+  .ds-header .ds-date { color: var(--text-secondary); font-size: 12px; }
+  .ds-gradient-line {
+    height: 2px; width: 100%; margin-top: 20px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-gold));
+  }
+
+  /* ===== Cards ===== */
+  .ds-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 28px;
+    border-left: 4px solid transparent;
+    transition: transform 0.2s ease;
+  }
+  .ds-card:hover { transform: translateY(-2px); }
+  .ds-card.blue { border-left-color: var(--accent-blue); }
+  .ds-card.green { border-left-color: var(--accent-green); }
+  .ds-card.purple { border-left-color: var(--accent-purple); }
+  .ds-card.red { border-left-color: var(--accent-red); }
+  .ds-card.gold {
+    border-left-color: var(--accent-gold);
+    background: var(--bg-card-alt);
+    padding: 34px 28px;
+    box-shadow: 0 0 20px rgba(251,191,36,0.15), 0 4px 24px rgba(0,0,0,0.3);
+  }
+
+  .ds-section-title {
+    font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    margin: 0 0 16px;
+  }
+  .ds-section-title.blue { color: var(--accent-blue); }
+  .ds-section-title.green { color: var(--accent-green); }
+  .ds-section-title.purple { color: var(--accent-purple); }
+  .ds-section-title.red { color: var(--accent-red); }
+  .ds-section-title.gold { color: var(--accent-gold); }
+
+  .ds-label {
+    font-size: 12px; font-weight: 500; text-transform: uppercase; color: var(--text-secondary);
+    letter-spacing: 0.04em; margin-bottom: 4px;
+  }
+
+  /* ===== Intake ===== */
+  #intake-screen { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
+  .ds-intro { text-align: center; }
+  .ds-intro h1 { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
+  .ds-intro p { color: var(--text-secondary); font-size: 15px; max-width: 480px; margin: 0 auto 28px; }
+  .ds-btn {
+    background: var(--accent-gold); color: #1a1305; border: none; font-weight: 700;
+    font-size: 15px; padding: 13px 26px; border-radius: 10px; cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .ds-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(251,191,36,0.25); }
+  .ds-btn.secondary {
+    background: transparent; color: var(--text-primary); border: 1px solid var(--border-subtle);
+  }
+  .ds-progress { color: var(--text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+  .ds-q-card textarea, .ds-q-card input {
+    width: 100%; background: #12121a; color: var(--text-primary); border: 1px solid var(--border-subtle);
+    border-radius: 10px; padding: 12px 14px; font-family: inherit; font-size: 14.5px; margin-bottom: 14px;
+    resize: vertical;
+  }
+  .ds-q-card textarea:focus, .ds-q-card input:focus { outline: none; border-color: var(--accent-blue); }
+  .ds-q-card h3 { font-size: 18px; margin: 0 0 16px; font-weight: 700; }
+  .ds-optrow { display: flex; gap: 10px; }
+  .ds-optrow input { flex: 1; }
+  .ds-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+  .ds-ack { color: var(--accent-green); font-size: 13px; margin-bottom: 10px; min-height: 18px; }
+
+  /* ===== Section 1 ===== */
+  .ds-real-decision p { margin: 0 0 6px; font-size: 15px; }
+
+  /* ===== Section 2: option cards ===== */
+  .ds-opt-grid { display: flex; flex-direction: column; gap: 18px; }
+  .ds-opt-card {
+    background: var(--bg-card-alt); border-radius: 12px; padding: 18px 20px; border: 1px solid var(--border-subtle);
+  }
+  .ds-opt-card h4 { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
+  .ds-opt-card .ds-row { margin-bottom: 10px; }
+  .ds-opt-card .ds-row:last-child { margin-bottom: 0; }
+  .ds-tag-mini { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .ds-tag-mini.for { color: var(--accent-green); }
+  .ds-tag-mini.hidden { color: var(--accent-blue); }
+  .ds-tag-mini.weak { color: var(--accent-red); }
+  .ds-tag-mini.value { color: var(--accent-purple); }
+
+  /* ===== Section 3 ===== */
+  .ds-list { margin: 0; padding-left: 18px; }
+  .ds-list li { margin-bottom: 8px; }
+  .ds-bias-pill {
+    display: inline-block; background: rgba(167,139,250,0.12); color: var(--accent-purple);
+    font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin: 2px 6px 2px 0;
+  }
+
+  /* ===== Section 4: matrix ===== */
+  .ds-matrix-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .ds-matrix-label { width: 38%; font-size: 12.5px; color: var(--text-secondary); flex-shrink: 0; }
+  .ds-matrix-bars { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+  .ds-bar-track { height: 26px; background: rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; position: relative; }
+  .ds-bar-fill {
+    height: 100%; border-radius: 8px; display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 8px; color: #fff; font-weight: 700; font-size: 11.5px;
+    width: 0%; animation: ds-grow 0.8s ease-out forwards;
+  }
+  @keyframes ds-grow { from { width: 0%; } }
+  .ds-bar-fill.a { background: linear-gradient(90deg, #60a5fa, #3b82f6); }
+  .ds-bar-fill.b { background: linear-gradient(90deg, #34d399, #10b981); }
+  .ds-bar-fill.c { background: linear-gradient(90deg, #a78bfa, #8b5cf6); }
+  .ds-matrix-legend { display: flex; gap: 18px; margin-bottom: 18px; font-size: 12.5px; }
+  .ds-legend-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+  .ds-total-row {
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle);
+    display: flex; justify-content: space-between; font-size: 15px; font-weight: 700;
+  }
+  .ds-total-row .ds-winner { color: var(--accent-gold); }
+
+  /* ===== Section 5 ===== */
+  .ds-premortem-card { background: var(--bg-card-alt); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+  .ds-premortem-card:last-child { margin-bottom: 0; }
+  .ds-premortem-card h4 { margin: 0 0 10px; font-size: 15px; font-weight: 700; }
+
+  /* ===== Section 6 ===== */
+  .ds-day-row { display: flex; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border-subtle); font-size: 14px; }
+  .ds-day-row:last-child { border-bottom: none; }
+  .ds-day-num { color: var(--accent-green); font-weight: 700; width: 74px; flex-shrink: 0; font-size: 12.5px; text-transform: uppercase; }
+
+  /* ===== Section 7 verdict ===== */
+  .ds-verdict-name { font-size: 30px; font-weight: 800; color: var(--accent-gold); margin: 0 0 10px; }
+  .ds-verdict-why { margin: 0 0 12px; }
+  .ds-hard-truth { font-style: italic; color: var(--text-secondary); margin: 0; }
+
+  /* ===== Section 8 ===== */
+  .ds-share-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .ds-mini-card {
+    flex: 1 1 200px; background: var(--bg-card-alt); border-radius: 12px; padding: 16px;
+    border: 1px solid var(--border-subtle); display: flex; flex-direction: column; justify-content: space-between; min-height: 160px;
+  }
+  .ds-mini-card h5 { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); }
+  .ds-mini-watermark { font-size: 10px; color: var(--text-secondary); margin-top: 12px; opacity: 0.7; }
+
+  .ds-footer { text-align: center; color: var(--text-secondary); font-size: 12px; margin-top: 40px; }
+
+  @media (max-width: 600px) {
+    .ds-card { padding: 20px 16px; border-radius: 12px; }
+    .ds-header h1 { font-size: 24px; }
+    .ds-matrix-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .ds-matrix-label { width: 100%; }
+    .ds-share-row { flex-direction: column; }
+    body { font-size: 14px; }
+  }
+
+  .ds-hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="ds-wrap">
+
+  <!-- ===================== INTAKE SCREEN ===================== -->
+  <div id="intake-screen">
+
+    <div class="ds-intro" id="intro-block">
+      <h1>Decision Strategist</h1>
+      <p>An impartial interview to help you think clearly about a tough decision — not to tell you what you want to hear. Four questions, then a full decision report.</p>
+      <button class="ds-btn" onclick="dsStart()">Start the interview</button>
+    </div>
+
+    <div id="interview-block" class="ds-hidden">
+      <div class="ds-progress" id="ds-progress-label">Question 1 of 4</div>
+      <div class="ds-ack" id="ds-ack"></div>
+
+      <!-- Q1 -->
+      <div class="ds-q-card ds-card blue" id="q1-card">
+        <h3>What's the decision you're stuck on?</h3>
+        <textarea id="q1-context" rows="3" placeholder="Tell me the situation and why it's hard right now..."></textarea>
+        <div class="ds-optrow">
+          <input id="q1-optA" placeholder="Option A (short name)">
+          <input id="q1-optB" placeholder="Option B (short name)">
+        </div>
+        <input id="q1-optC" placeholder="Option C (optional)" style="margin-bottom:16px;">
+        <div class="ds-nav"><span></span><button class="ds-btn" onclick="dsNext(1)">Next</button></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="ds-q-card ds-card blue ds-hidden" id="q2-card">
+        <h3>What's your goal — and what's the timeline?</h3>
+        <textarea id="q2-answer" rows="3" placeholder="What are you optimizing for, and by when do you need to decide?"></textarea>
+        <div class="ds-nav"><span></span><button class="ds-btn" onclick="dsNext(2)">Next</button></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="ds-q-card ds-card blue ds-hidden" id="q3-card">
+        <h3>What does your gut say — and what's stopping you?</h3>
+        <textarea id="q3-answer" rows="3" placeholder="Which way are you leaning, and what's holding you back from just going with it?"></textarea>
+        <div class="ds-nav"><span></span><button class="ds-btn" onclick="dsNext(3)">Next</button></div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="ds-q-card ds-card blue ds-hidden" id="q4-card">
+        <h3>What are you most scared of getting wrong?</h3>
+        <textarea id="q4-answer" rows="3" placeholder="Name the fear. And — can this decision be undone if it goes badly?"></textarea>
+        <div class="ds-nav"><span></span><button class="ds-btn" onclick="dsBuildReport()">Build my Decision Report</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== REPORT ===================== -->
+  <div id="report-screen" class="ds-hidden"></div>
+
+</div>
+
+<script>
+let dsState = { step: 0, optA: '', optB: '', optC: '', q1: '', q2: '', q3: '', q4: '' };
+
+function dsStart() {
+  document.getElementById('intro-block').classList.add('ds-hidden');
+  document.getElementById('interview-block').classList.remove('ds-hidden');
+}
+
+function dsAck(msg) {
+  document.getElementById('ds-ack').textContent = msg;
+}
+
+function dsNext(step) {
+  if (step === 1) {
+    dsState.q1 = document.getElementById('q1-context').value.trim();
+    dsState.optA = document.getElementById('q1-optA').value.trim() || 'Option A';
+    dsState.optB = document.getElementById('q1-optB').value.trim() || 'Option B';
+    dsState.optC = document.getElementById('q1-optC').value.trim();
+    if (!dsState.q1) { alert('Tell me a bit about the decision first.'); return; }
+    document.getElementById('q1-card').classList.add('ds-hidden');
+    document.getElementById('q2-card').classList.remove('ds-hidden');
+    dsAck('Got it.');
+    document.getElementById('ds-progress-label').textContent = 'Question 2 of 4';
+  } else if (step === 2) {
+    dsState.q2 = document.getElementById('q2-answer').value.trim();
+    document.getElementById('q2-card').classList.add('ds-hidden');
+    document.getElementById('q3-card').classList.remove('ds-hidden');
+    dsAck('Noted.');
+    document.getElementById('ds-progress-label').textContent = 'Question 3 of 4';
+  } else if (step === 3) {
+    dsState.q3 = document.getElementById('q3-answer').value.trim();
+    document.getElementById('q3-card').classList.add('ds-hidden');
+    document.getElementById('q4-card').classList.remove('ds-hidden');
+    dsAck('Understood.');
+    document.getElementById('ds-progress-label').textContent = 'Question 4 of 4';
+  }
+}
+
+function dsEsc(s) {
+  const d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+function dsBuildReport() {
+  dsState.q4 = document.getElementById('q4-answer').value.trim();
+  document.getElementById('ds-ack').textContent = 'Got everything I need. Building your Decision Report now.';
+
+  setTimeout(() => {
+    document.getElementById('intake-screen').classList.add('ds-hidden');
+    renderReport();
+    document.getElementById('report-screen').classList.remove('ds-hidden');
+    window.scrollTo(0, 0);
+  }, 600);
+}
+
+function renderReport() {
+  const s = dsState;
+  const optionNames = [s.optA, s.optB].concat(s.optC ? [s.optC] : []);
+  const stressWords = /stress|scared|afraid|anxious|overwhelm|pressure/i.test(s.q4);
+  const reversibleWords = /undo|reverse|try again|come back|quit and|switch back|not permanent/i.test(s.q4);
+  const gutLeansA = new RegExp(s.optA, 'i').test(s.q3);
+  const gutLeansB = new RegExp(s.optB, 'i').test(s.q3);
+
+  // Simple heuristic scoring across 7 dimensions, out of 10 each
+  function scoreFor(isGutPick, isSafer) {
+    return {
+      upside: isGutPick ? 8 : 6,
+      financial: isSafer ? 8 : 5,
+      growth: isGutPick ? 8 : 6,
+      stress: isSafer ? 7 : (stressWords ? 4 : 6),
+      reversibility: reversibleWords ? 7 : 5,
+      alignment: isGutPick ? 8 : 6,
+      regret: isGutPick ? 7 : 6
+    };
+  }
+  const scoreA = scoreFor(gutLeansA, !gutLeansA);
+  const scoreB = scoreFor(gutLeansB, !gutLeansB);
+  const totalA = Object.values(scoreA).reduce((a,b)=>a+b,0);
+  const totalB = Object.values(scoreB).reduce((a,b)=>a+b,0);
+  const winner = totalA >= totalB ? s.optA : s.optB;
+  const winnerTotal = Math.max(totalA, totalB);
+  const winnerScores = totalA >= totalB ? scoreA : scoreB;
+  const loserName = totalA >= totalB ? s.optB : s.optA;
+
+  const dims = [
+    ['Life / Career Upside', 'upside'],
+    ['Financial Safety', 'financial'],
+    ['Growth & Learning', 'growth'],
+    ['Stress Level (10 = low)', 'stress'],
+    ['Reversibility (10 = easy)', 'reversibility'],
+    ['Long-term Alignment', 'alignment'],
+    ['Regret Risk (10 = low)', 'regret']
+  ];
+
+  let matrixRows = '';
+  dims.forEach(([label, key], i) => {
+    const delay = (i * 0.1).toFixed(1);
+    matrixRows += `
+      <div class="ds-matrix-row">
+        <div class="ds-matrix-label">${dsEsc(label)}</div>
+        <div class="ds-matrix-bars">
+          <div class="ds-bar-track"><div class="ds-bar-fill a" style="animation-delay:${delay}s; width:${scoreA[key]*10}%;">${scoreA[key]}</div></div>
+          <div class="ds-bar-track"><div class="ds-bar-fill b" style="animation-delay:${(i*0.1+0.05).toFixed(2)}s; width:${scoreB[key]*10}%;">${scoreB[key]}</div></div>
+        </div>
+      </div>`;
+  });
+
+  const html = `
+    <div class="ds-header">
+      <h1>DECISION REPORT</h1>
+      <p class="ds-sub">${dsEsc(s.optA)} vs. ${dsEsc(s.optB)}${s.optC ? ' vs. ' + dsEsc(s.optC) : ''}</p>
+      <p class="ds-date">${new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })}</p>
+      <div class="ds-gradient-line"></div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div class="ds-card blue">
+      <h2 class="ds-section-title blue">The Real Decision</h2>
+      <div class="ds-real-decision">
+        <p>${dsEsc(s.q1)}</p>
+        <p>The trade-off underneath it: ${dsEsc(s.optA)} vs. ${dsEsc(s.optB)} — and it's hard because ${stressWords ? 'the fear you named makes it feel higher-stakes than the facts alone suggest.' : 'both options genuinely compete for the same goal, so there is no clean, risk-free path.'}</p>
+      </div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="ds-card green">
+      <h2 class="ds-section-title green">The Case for Each Option</h2>
+      <div class="ds-opt-grid">
+        <div class="ds-opt-card">
+          <h4>${dsEsc(s.optA)}</h4>
+          <div class="ds-row"><span class="ds-tag-mini for">For</span><p style="margin:4px 0 0;">Aligns most directly with what you said you're optimizing for: "${dsEsc(s.q2.slice(0,120))}${s.q2.length>120?'…':''}"</p></div>
+          <div class="ds-row"><span class="ds-tag-mini hidden">Hidden upside</span><p style="margin:4px 0 0;">Choosing it now closes the loop on the uncertainty you're carrying — clarity has its own value, separate from the outcome.</p></div>
+          <div class="ds-row"><span class="ds-tag-mini weak">Weakness</span><p style="margin:4px 0 0;">${reversibleWords ? 'Even though it can be undone, undoing it still costs time and momentum you will not get back.' : 'If it does not work out, reversing course may be slow or costly.'}</p></div>
+          <div class="ds-row"><span class="ds-tag-mini value">Best if you value</span><p style="margin:4px 0 0;">Momentum and decisiveness over certainty.</p></div>
+        </div>
+        <div class="ds-opt-card">
+          <h4>${dsEsc(s.optB)}</h4>
+          <div class="ds-row"><span class="ds-tag-mini for">For</span><p style="margin:4px 0 0;">Protects you against the exact fear you named: "${dsEsc(s.q4.slice(0,120))}${s.q4.length>120?'…':''}"</p></div>
+          <div class="ds-row"><span class="ds-tag-mini hidden">Hidden upside</span><p style="margin:4px 0 0;">Keeps more options open later — you're not just choosing this path, you're preserving the ability to choose again.</p></div>
+          <div class="ds-row"><span class="ds-tag-mini weak">Weakness</span><p style="margin:4px 0 0;">Optionality has a cost: staying flexible often means staying still, and stillness has its own price.</p></div>
+          <div class="ds-row"><span class="ds-tag-mini value">Best if you value</span><p style="margin:4px 0 0;">Safety and reversibility over speed.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="ds-card purple">
+      <h2 class="ds-section-title purple">Assumption Buster</h2>
+      <div class="ds-label">3 assumptions you may be making</div>
+      <ul class="ds-list">
+        <li>That this decision has to be permanent — most decisions like this have more give than they feel like in the moment.</li>
+        <li>That the "right" choice will feel obviously right beforehand. It usually only feels obvious in hindsight.</li>
+        <li>That doing nothing is neutral. Staying with the status quo is itself a choice, with its own consequences.</li>
+      </ul>
+      <div class="ds-label" style="margin-top:14px;">Biases likely at play</div>
+      <div>
+        <span class="ds-bias-pill">${stressWords ? 'Loss aversion' : 'Status quo bias'}</span>
+        <span class="ds-bias-pill">${reversibleWords ? 'Sunk cost' : 'Confirmation bias'}</span>
+      </div>
+      <div class="ds-label" style="margin-top:14px;">One thing you're definitely ignoring</div>
+      <p style="margin:4px 0 0;">You haven't mentioned what happens if you simply delay this decision past your stated timeline — that cost is real and rarely zero.</p>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="ds-card blue">
+      <h2 class="ds-section-title blue">Decision Matrix</h2>
+      <div class="ds-matrix-legend">
+        <span><span class="ds-legend-dot" style="background:#3b82f6;"></span>${dsEsc(s.optA)}</span>
+        <span><span class="ds-legend-dot" style="background:#10b981;"></span>${dsEsc(s.optB)}</span>
+      </div>
+      ${matrixRows}
+      <div class="ds-total-row">
+        <span>${dsEsc(s.optA)}: ${totalA} / 70</span>
+        <span class="${totalA>=totalB?'ds-winner':''}">${dsEsc(s.optB)}: ${totalB} / 70</span>
+      </div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="ds-card red">
+      <h2 class="ds-section-title red">Premortem</h2>
+      <div class="ds-premortem-card">
+        <h4>If ${dsEsc(s.optA)} fails 12 months from now...</h4>
+        <ul class="ds-list">
+          <li>The core assumption behind it turned out to be wrong.</li>
+          <li>The cost (time, money, or stress) ran higher than expected.</li>
+          <li>${dsEsc(s.q4.slice(0,80)) || 'The exact fear you named actually happened.'}</li>
+        </ul>
+        <p style="margin:8px 0 0;"><strong>Early warning sign:</strong> Progress stalls with no clear reason within the first 6–8 weeks.</p>
+        <p style="margin:6px 0 0;"><strong>Prevention:</strong> Set a checkpoint date now to honestly review whether it's working.</p>
+      </div>
+      <div class="ds-premortem-card">
+        <h4>If ${dsEsc(s.optB)} fails 12 months from now...</h4>
+        <ul class="ds-list">
+          <li>Staying safe meant staying stuck — the underlying problem never got solved.</li>
+          <li>The window that made this option attractive closed.</li>
+          <li>Regret shows up not from what happened, but from what didn't.</li>
+        </ul>
+        <p style="margin:8px 0 0;"><strong>Early warning sign:</strong> You find yourself re-litigating this same decision again in a few months.</p>
+        <p style="margin:6px 0 0;"><strong>Prevention:</strong> Give the "safe" choice a hard expiry date, not an open-ended one.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 6 -->
+    <div class="ds-card green">
+      <h2 class="ds-section-title green">7-Day Test Plan</h2>
+      <div class="ds-day-row"><span class="ds-day-num">Day 1–2</span><span>Research the specific facts you're currently guessing at for both options.</span></div>
+      <div class="ds-day-row"><span class="ds-day-num">Day 3–4</span><span>Run one small, low-cost experiment that tests your gut pick without full commitment.</span></div>
+      <div class="ds-day-row"><span class="ds-day-num">Day 5–6</span><span>Have one honest conversation with someone affected by, or experienced in, this decision.</span></div>
+      <div class="ds-day-row"><span class="ds-day-num">Day 7</span><span>Decide using this rule: if the experiment removed your named fear, go with your gut. If it confirmed it, don't.</span></div>
+    </div>
+
+    <!-- SECTION 7 -->
+    <div class="ds-card gold">
+      <h2 class="ds-section-title gold">The Verdict</h2>
+      <p class="ds-verdict-name">${dsEsc(winner)}</p>
+      <p class="ds-verdict-why">It wins on balance (${winnerTotal}/70) — it fits your stated goal more directly and lines up with where your gut was already leaning, without ignoring the real risk in ${dsEsc(loserName)}.</p>
+      <p style="margin:0 0 12px;"><strong>What could flip it:</strong> if the 7-day test surfaces a fact that directly confirms the fear you named, this verdict should be revisited — don't treat it as final.</p>
+      <p class="ds-hard-truth">Hard truth: you likely already know which way you're leaning — this report exists to check that instinct, not replace it.</p>
+    </div>
+
+    <!-- SECTION 8 -->
+    <div class="ds-card gold">
+      <h2 class="ds-section-title gold">Shareable Cards</h2>
+      <div class="ds-share-row">
+        <div class="ds-mini-card">
+          <h5>Matrix Summary</h5>
+          <div>
+            <p style="margin:0 0 6px; font-weight:700;">${dsEsc(s.optA)}: ${totalA}/70</p>
+            <p style="margin:0; font-weight:700;">${dsEsc(s.optB)}: ${totalB}/70</p>
+          </div>
+          <div class="ds-mini-watermark">Built with Claude AI</div>
+        </div>
+        <div class="ds-mini-card">
+          <h5>Verdict</h5>
+          <div>
+            <p style="margin:0 0 6px; font-weight:800; color:var(--accent-gold); font-size:17px;">${dsEsc(winner)}</p>
+            <p style="margin:0; font-size:13px; color:var(--text-secondary);">Best fit for your stated goal and gut instinct.</p>
+          </div>
+          <div class="ds-mini-watermark">Built with Claude AI</div>
+        </div>
+        <div class="ds-mini-card">
+          <h5>LinkedIn Hook</h5>
+          <div>
+            <p style="margin:0 0 6px; font-weight:700;">I let an AI cross-examine my toughest decision.</p>
+            <p style="margin:0; font-size:13px; color:var(--text-secondary);">It scored my options, named my biases, and gave me a 7-day test before I had to decide anything.</p>
+          </div>
+          <div class="ds-mini-watermark">Built with Claude AI</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-footer">Built with Claude AI | ABTalks 60-Day Challenge</div>
+  `;
+  document.getElementById('report-screen').innerHTML = html;
+}
+</script>
+</body>
+</html>
