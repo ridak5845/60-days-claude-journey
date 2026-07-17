@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Intelligence Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e15; --surface:#12161f; --surface2:#171c26; --line:#232a36; --line-soft:#1b212b;
+    --text:#eceef1; --text-dim:#9aa3b0; --text-faint:#5d6573;
+    --red:#ec5f5f; --amber:#e3a544; --green:#4cce91; --blue:#6ea8fe; --purple:#b39ddb; --cyan:#5fd0d4;
+    --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .cis-wrap{max-width:1080px;margin:0 auto;padding:36px 24px 80px;}
+  .cis-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px;}
+  .cis-title{font-family:var(--display);font-size:30px;font-weight:700;margin:0 0 8px;letter-spacing:-0.01em;}
+  .cis-subtitle{color:var(--text-dim);font-size:14px;margin:0 0 32px;max-width:620px;}
+
+  .cis-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px;}
+  .cis-card h3{font-family:var(--display);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint);margin:0 0 16px;}
+
+  .cis-grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media(max-width:720px){.cis-grid2{grid-template-columns:1fr;}}
+
+  label.cis-field-label{display:block;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-faint);margin-bottom:8px;}
+  input[type=text],textarea{
+    width:100%;background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--text);
+    padding:10px 12px;font-family:var(--body);font-size:13.5px;resize:vertical;
+  }
+  input[type=text]:focus,textarea:focus{outline:none;border-color:var(--blue);}
+  textarea{min-height:70px;}
+
+  .cis-drop{
+    border:1.5px dashed var(--line);border-radius:12px;padding:28px;text-align:center;cursor:pointer;
+    color:var(--text-faint);font-size:13px;transition:.15s;background:var(--surface2);
+  }
+  .cis-drop:hover{border-color:var(--blue);color:var(--text-dim);}
+  .cis-drop.has-image{padding:12px;}
+  .cis-preview-img{max-width:100%;max-height:220px;border-radius:8px;display:block;margin:0 auto;}
+
+  .cis-btn{
+    font-family:var(--display);font-weight:600;font-size:13.5px;border:none;border-radius:9px;
+    padding:13px 22px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:8px;
+  }
+  .cis-btn-primary{background:var(--blue);color:#0a0e15;}
+  .cis-btn-primary:hover{filter:brightness(1.08);}
+  .cis-btn-primary:disabled{opacity:.4;cursor:not-allowed;}
+  .cis-btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text-dim);}
+  .cis-btn-ghost:hover{border-color:var(--text-faint);color:var(--text);}
+
+  /* Reviewer pipeline */
+  .cis-pipeline{display:flex;flex-direction:column;gap:0;}
+  .cis-stage{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line-soft);}
+  .cis-stage:last-child{border-bottom:none;}
+  .cis-stage-icon{
+    width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-size:16px;flex-shrink:0;background:var(--surface2);border:1px solid var(--line);
+  }
+  .cis-stage.done .cis-stage-icon{border-color:var(--green);color:var(--green);}
+  .cis-stage.active .cis-stage-icon{border-color:var(--blue);color:var(--blue);animation:cis-pulse 1.2s infinite;}
+  .cis-stage.error .cis-stage-icon{border-color:var(--red);color:var(--red);}
+  @keyframes cis-pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+  .cis-stage-name{font-family:var(--display);font-weight:600;font-size:13.5px;}
+  .cis-stage-desc{font-size:12px;color:var(--text-faint);margin-top:2px;}
+  .cis-stage-status{margin-left:auto;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-faint);align-self:center;flex-shrink:0;}
+  .cis-stage.done .cis-stage-status{color:var(--green);}
+  .cis-stage.active .cis-stage-status{color:var(--blue);}
+  .cis-stage.error .cis-stage-status{color:var(--red);}
+
+  .cis-log{
+    font-family:var(--mono);font-size:11.5px;color:var(--text-faint);background:#080b11;border:1px solid var(--line);
+    border-radius:10px;padding:14px 16px;max-height:150px;overflow-y:auto;margin-top:14px;
+  }
+  .cis-log div{margin-bottom:4px;}
+  .cis-log .t{color:var(--text-faint);}
+
+  /* Score ring */
+  .cis-score-hero{display:flex;align-items:center;gap:28px;flex-wrap:wrap;}
+  .cis-ring{position:relative;width:132px;height:132px;flex-shrink:0;}
+  .cis-ring svg{transform:rotate(-90deg);}
+  .cis-ring-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+  .cis-ring-num{font-family:var(--display);font-size:32px;font-weight:700;}
+  .cis-ring-lbl{font-family:var(--mono);font-size:9.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;}
+  .cis-verdict{flex:1;min-width:220px;}
+  .cis-verdict-tag{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:5px;display:inline-block;margin-bottom:10px;}
+  .cis-verdict-text{font-size:14.5px;color:var(--text);max-width:600px;}
+
+  .cis-cat-row{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--line-soft);}
+  .cis-cat-row:last-child{border-bottom:none;}
+  .cis-cat-name{width:170px;flex-shrink:0;font-size:13px;font-weight:500;}
+  .cis-cat-bar-track{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden;}
+  .cis-cat-bar-fill{height:100%;border-radius:3px;}
+  .cis-cat-score{font-family:var(--mono);font-size:12.5px;color:var(--text-dim);width:40px;text-align:right;flex-shrink:0;}
+
+  .cis-list{display:flex;flex-direction:column;gap:10px;}
+  .cis-list-item{display:flex;gap:10px;align-items:baseline;font-size:13.5px;}
+  .cis-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;transform:translateY(-1px);}
+
+  .cis-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px;flex-wrap:wrap;}
+  .cis-tab{
+    font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-faint);
+    padding:9px 14px;cursor:pointer;border-bottom:2px solid transparent;
+  }
+  .cis-tab.active{color:var(--text);border-bottom-color:var(--blue);}
+  .cis-tabpanel{display:none;}
+  .cis-tabpanel.active{display:block;}
+
+  .cis-alt-card{background:var(--surface2);border:1px solid var(--line);border-radius:9px;padding:14px 16px;margin-bottom:10px;}
+  .cis-alt-card .cis-alt-label{font-family:var(--mono);font-size:9.5px;color:var(--purple);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+  .cis-alt-card p{margin:0;font-size:13.5px;}
+
+  .cis-checklist{display:flex;flex-direction:column;gap:8px;}
+  .cis-check-item{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;}
+  .cis-check-box{width:16px;height:16px;border:1.5px solid var(--line);border-radius:4px;flex-shrink:0;margin-top:1px;}
+
+  .cis-disclaimer{font-size:11.5px;color:var(--text-faint);font-style:italic;margin-top:8px;}
+
+  .cis-footer{text-align:center;padding:30px 0 10px;color:var(--text-faint);font-size:10.5px;font-family:var(--mono);letter-spacing:.03em;}
+
+  .cis-spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--blue);border-radius:50%;animation:cis-spin .7s linear infinite;}
+  @keyframes cis-spin{to{transform:rotate(360deg);}}
+
+  .cis-hidden{display:none !important;}
+  .cis-fade-in{animation:cis-fadein .4s ease;}
+  @keyframes cis-fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  .cis-mini{font-size:11.5px;color:var(--text-faint);}
+  .cis-image-thumb-wrap{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;}
+  .cis-image-thumb-wrap img{max-width:260px;border-radius:10px;border:1px solid var(--line);}
+</style>
+</head>
+<body>
+<div class="cis-wrap">
+
+  <div class="cis-eyebrow">Content Intelligence Studio · AI Consultant</div>
+  <h1 class="cis-title">YouTube Thumbnail &amp; Title Analyzer</h1>
+  <p class="cis-subtitle">Upload a thumbnail and its title, and a panel of specialized AI reviewers will run a brutally honest, agency-level critique — visual design, click psychology, platform fit, copywriting, and a final editor-in-chief verdict.</p>
+
+  <!-- UPLOAD CARD -->
+  <div class="cis-card" id="uploadCard">
+    <h3>Upload for review</h3>
+    <div class="cis-grid2">
+      <div>
+        <label class="cis-field-label">Thumbnail image</label>
+        <div class="cis-drop" id="dropZone">
+          <div id="dropInner">📎 Click or drag an image here<br><span class="cis-mini">JPG / PNG, ideally 1280×720</span></div>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" class="cis-hidden">
+      </div>
+      <div>
+        <label class="cis-field-label">Video title</label>
+        <input type="text" id="titleInput" placeholder="e.g. I Built an AI That Never Sleeps">
+        <div style="height:14px;"></div>
+        <label class="cis-field-label">Description / context (optional)</label>
+        <textarea id="descInput" placeholder="Who's the audience? What's the video about? Anything you're unsure about?"></textarea>
+      </div>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <button class="cis-btn cis-btn-primary" id="runBtn" disabled>▶ Run Full Review</button>
+      <button class="cis-btn cis-btn-ghost cis-hidden" id="resetBtn">Start over</button>
+      <span class="cis-mini" id="runHint">Upload a thumbnail image to enable review.</span>
+    </div>
+  </div>
+
+  <!-- PIPELINE CARD -->
+  <div class="cis-card cis-hidden" id="pipelineCard">
+    <h3>Review pipeline</h3>
+    <div class="cis-pipeline" id="pipelineList"></div>
+    <div class="cis-log" id="logBox"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="resultsArea"></div>
+
+  <div class="cis-footer">Content Intelligence Studio · every score and insight is generated live by Claude · nothing here is hardcoded</div>
+</div>
+
+<script>
+(function(){
+
+  // ---------- State ----------
+  var state = { imageB64:null, imageMime:null, title:'', desc:'', stageOutputs:{} };
+
+  var dropZone = document.getElementById('dropZone');
+  var dropInner = document.getElementById('dropInner');
+  var fileInput = document.getElementById('fileInput');
+  var titleInput = document.getElementById('titleInput');
+  var descInput = document.getElementById('descInput');
+  var runBtn = document.getElementById('runBtn');
+  var resetBtn = document.getElementById('resetBtn');
+  var runHint = document.getElementById('runHint');
+  var pipelineCard = document.getElementById('pipelineCard');
+  var pipelineList = document.getElementById('pipelineList');
+  var logBox = document.getElementById('logBox');
+  var resultsArea = document.getElementById('resultsArea');
+
+  dropZone.addEventListener('click', function(){ fileInput.click(); });
+  dropZone.addEventListener('dragover', function(e){ e.preventDefault(); dropZone.style.borderColor='var(--blue)'; });
+  dropZone.addEventListener('dragleave', function(){ dropZone.style.borderColor='var(--line)'; });
+  dropZone.addEventListener('drop', function(e){
+    e.preventDefault(); dropZone.style.borderColor='var(--line)';
+    if(e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function(e){
+    if(e.target.files && e.target.files[0]) handleFile(e.target.files[0]);
+  });
+
+  function handleFile(file){
+    if(!file.type.startsWith('image/')) return;
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var result = e.target.result;
+      state.imageB64 = result.split(',')[1];
+      state.imageMime = file.type;
+      dropZone.classList.add('has-image');
+      dropInner.innerHTML = '<img class="cis-preview-img" src="'+result+'">';
+      checkReady();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  titleInput.addEventListener('input', checkReady);
+  function checkReady(){
+    state.title = titleInput.value.trim();
+    state.desc = descInput.value.trim();
+    if(state.imageB64){
+      runBtn.disabled = false;
+      runHint.textContent = state.title ? 'Ready to run the full review.' : 'Tip: add a title for sharper feedback (optional).';
+    } else {
+      runBtn.disabled = true;
+      runHint.textContent = 'Upload a thumbnail image to enable review.';
+    }
+  }
+
+  resetBtn.addEventListener('click', function(){ location.reload(); });
+
+  // ---------- Reviewer pipeline config ----------
+  var STAGES = [
+    {
+      id:'visual', icon:'🎨', name:'Visual Design & Composition Reviewer',
+      desc:'Composition, contrast, focal point, legibility at small size',
+      color:'var(--blue)',
+      system:"You are a senior YouTube thumbnail designer who has art-directed thumbnails for channels with millions of subscribers. You are blunt, specific, and never hedge with vague praise. You evaluate purely the VISUAL design of the thumbnail image itself: composition and focal point, color contrast and saturation, facial expression/emotion if present, text legibility at small mobile size, visual clutter, and how it would look shrunk to a 120px-wide mobile thumbnail next to competitors. Be brutally honest — this is agency-level scrutiny, not a pep talk. Respond ONLY in this exact plain-text format, no markdown, no JSON, no code fences:\nSCORE: <integer 0-100>\nSUMMARY: <2-3 sentence honest verdict on the visual design>\nSTRENGTHS:\n- <point>\n- <point>\nWEAKNESSES:\n- <point>\n- <point>\nFIXES:\n- <specific actionable fix>\n- <specific actionable fix>"
+    },
+    {
+      id:'psych', icon:'🧠', name:'Click Psychology & Curiosity Reviewer',
+      desc:'Curiosity gap, emotional pull, clickbait risk vs promise-clarity',
+      color:'var(--purple)',
+      system:"You are a behavioral psychologist specializing in attention, curiosity gaps, and click-through triggers for online video. You evaluate the THUMBNAIL + TITLE combination together for psychological pull: does it create a curiosity gap without being empty clickbait, does it signal a clear emotional stake, does the promise made match what's visually shown, is there a risk of viewer backlash from over-promising. Be brutally honest. Respond ONLY in this exact plain-text format, no markdown, no JSON:\nSCORE: <integer 0-100>\nSUMMARY: <2-3 sentence honest verdict on click psychology>\nSTRENGTHS:\n- <point>\n- <point>\nWEAKNESSES:\n- <point>\n- <point>\nFIXES:\n- <specific actionable fix>\n- <specific actionable fix>"
+    },
+    {
+      id:'platform', icon:'📺', name:'YouTube Platform Fit Reviewer',
+      desc:'Mobile rendering, competitive shelf, retention risk',
+      color:'var(--cyan)',
+      system:"You are a YouTube growth strategist who has audited thumbnails across the Trending and Search pages for a living. You evaluate how this thumbnail+title will perform specifically ON YOUTUBE: how it holds up in a crowded suggested-videos shelf next to typical competitor thumbnails, mobile vs desktop rendering, whether title and thumbnail are redundant (wasted real estate) or complementary, and any risk to session retention if the promise doesn't match the likely video content. Be brutally honest. Respond ONLY in this exact plain-text format, no markdown, no JSON:\nSCORE: <integer 0-100>\nSUMMARY: <2-3 sentence honest verdict on platform fit>\nSTRENGTHS:\n- <point>\n- <point>\nWEAKNESSES:\n- <point>\n- <point>\nFIXES:\n- <specific actionable fix>\n- <specific actionable fix>"
+    },
+    {
+      id:'copy', icon:'✍️', name:'Copywriting & Title Reviewer',
+      desc:'Title strength, alternates, hook variations',
+      color:'var(--amber)',
+      system:"You are a direct-response copywriter who specializes in high-performing YouTube titles. Evaluate the TITLE'S copywriting quality: word choice, length, specificity, whether it front-loads the hook, and its synergy with the thumbnail. Then propose alternatives. Be brutally honest. Respond ONLY in this exact plain-text format, no markdown, no JSON:\nSCORE: <integer 0-100>\nSUMMARY: <2-3 sentence honest verdict on the title's copywriting>\nSTRENGTHS:\n- <point>\nWEAKNESSES:\n- <point>\n- <point>\nALT_TITLES:\n- <alternative title 1>\n- <alternative title 2>\n- <alternative title 3>\nALT_HOOKS:\n- <alternative opening hook / on-thumbnail text idea 1>\n- <alternative opening hook / on-thumbnail text idea 2>"
+    },
+    {
+      id:'editor', icon:'🎯', name:'Editor-in-Chief — Final Verdict',
+      desc:'Synthesizes all reviews into one brutally honest final report',
+      color:'var(--red)',
+      system:"You are the Editor-in-Chief of a top content strategy agency, known for being brutally honest with clients because sugarcoating wastes their time. You have been given the outputs of four specialist reviews (visual design, click psychology, platform fit, copywriting) of a YouTube thumbnail and title. Synthesize everything into one final, decisive, no-fluff report. Do not repeat the specialists verbatim — add executive judgment. Respond ONLY in this exact plain-text format, no markdown, no JSON, no code fences:\nOVERALL_SCORE: <integer 0-100>\nVERDICT_TAG: <one of: Ship It / Needs Work / Rework Before Publishing / Do Not Publish>\nEXEC_SUMMARY: <3-4 sentence brutally honest executive summary>\nTOP_FIXES:\n- <highest impact fix 1>\n- <highest impact fix 2>\n- <highest impact fix 3>\nBEFORE_AFTER: <one sentence contrasting current version vs the improved version you'd recommend>\nPREDICTED_PERFORMANCE: <one sentence AI ESTIMATE of relative CTR/performance potential, explicitly framed as an estimate not a guarantee>\nPUBLISHING_CHECKLIST:\n- <checklist item>\n- <checklist item>\n- <checklist item>\n- <checklist item>\nFOLLOWUP_PROMPTS:\n- <a good follow-up question/prompt the creator could ask next for deeper optimization>\n- <another follow-up prompt>"
+    }
+  ];
+
+  // ---------- Render pipeline UI ----------
+  function renderPipelineList(){
+    pipelineList.innerHTML = STAGES.map(function(s){
+      return '<div class="cis-stage" id="stage-'+s.id+'">'+
+        '<div class="cis-stage-icon">'+s.icon+'</div>'+
+        '<div><div class="cis-stage-name">'+s.name+'</div><div class="cis-stage-desc">'+s.desc+'</div></div>'+
+        '<div class="cis-stage-status">Queued</div>'+
+      '</div>';
+    }).join('');
+  }
+
+  function setStageStatus(id, cls, text){
+    var el = document.getElementById('stage-'+id);
+    el.classList.remove('active','done','error');
+    if(cls) el.classList.add(cls);
+    el.querySelector('.cis-stage-status').textContent = text;
+  }
+
+  function log(msg){
+    var d = document.createElement('div');
+    var t = new Date().toLocaleTimeString();
+    d.innerHTML = '<span class="t">['+t+']</span> '+escapeHtml(msg);
+    logBox.appendChild(d);
+    logBox.scrollTop = logBox.scrollHeight;
+  }
+
+  // ---------- Escaping helper ----------
+  function escapeHtml(str){
+    if(str === undefined || str === null) return '';
+    return String(str)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#39;');
+  }
+
+  // ---------- Parsing helper ----------
+  function parseSections(text){
+    var lines = text.split('\n');
+    var sections = {};
+    var current = null;
+    for(var i=0;i<lines.length;i++){
+      var line = lines[i];
+      var m = line.match(/^([A-Z_]{3,30}):\s*(.*)$/);
+      if(m){
+        current = m[1];
+        sections[current] = m[2] ? [m[2]] : [];
+      } else if(current){
+        sections[current].push(line);
+      }
+    }
+    var out = {};
+    for(var k in sections){
+      out[k] = sections[k].join('\n').trim();
+    }
+    return out;
+  }
+  function extractList(blockText){
+    if(!blockText) return [];
+    return blockText.split('\n').map(function(l){return l.trim();})
+      .filter(function(l){return l.indexOf('-')===0;})
+      .map(function(l){return l.replace(/^-\s*/,'').trim();})
+      .filter(Boolean);
+  }
+
+  // ---------- API call ----------
+  function callClaude(system, userContent){
+    return fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        system: system,
+        messages:[{ role:'user', content: userContent }]
+      })
+    }).then(function(res){
+      if(!res.ok){
+        return res.text().then(function(t){
+          throw new Error('API error '+res.status+': '+t.slice(0,200));
+        });
+      }
+      return res.json();
+    }).then(function(data){
+      if(data.error){ throw new Error(data.error.message || 'Unknown API error'); }
+      var textBlocks = (data.content||[]).filter(function(b){return b.type==='text';}).map(function(b){return b.text;});
+      return textBlocks.join('\n');
+    }).catch(function(err){
+      if(err.message === 'Failed to fetch' || err instanceof TypeError){
+        throw new Error("Can't reach the Claude API from here. This app must be viewed inside Claude's file/artifact preview panel (not opened as a downloaded local file) for the built-in API access to work.");
+      }
+      throw err;
+    });
+  }
+
+  function callWithRetry(system, userContent, retries){
+    retries = retries===undefined?1:retries;
+    return callClaude(system, userContent).catch(function(err){
+      if(retries>0){
+        log('⚠ retrying after error: '+err.message);
+        return new Promise(function(res){ setTimeout(res, 900); }).then(function(){
+          return callWithRetry(system, userContent, retries-1);
+        });
+      }
+      throw err;
+    });
+  }
+
+  // ---------- Run pipeline ----------
+  runBtn.addEventListener('click', function(){
+    runBtn.disabled = true;
+    resetBtn.classList.remove('cis-hidden');
+    pipelineCard.classList.remove('cis-hidden');
+    resultsArea.innerHTML = '';
+    renderPipelineList();
+    logBox.innerHTML = '';
+    log('Starting review pipeline…');
+    runStage(0);
+  });
+
+  function baseUserBlocks(extraText){
+    var blocks = [
+      { type:'image', source:{ type:'base64', media_type: state.imageMime, data: state.imageB64 } }
+    ];
+    var ctx = 'VIDEO TITLE: ' + (state.title || '(not provided)') +
+      (state.desc ? '\nCONTEXT/DESCRIPTION: ' + state.desc : '') +
+      (extraText ? '\n\n' + extraText : '') +
+      '\n\nAnalyze the attached thumbnail image directly along with the title above.';
+    blocks.push({ type:'text', text: ctx });
+    return blocks;
+  }
+
+  function runStage(idx){
+    if(idx >= STAGES.length){
+      log('✅ Review complete.');
+      renderFinalReport();
+      return;
+    }
+    var stage = STAGES[idx];
+    setStageStatus(stage.id, 'active', 'Reviewing…');
+    log('→ '+stage.name+' started');
+
+    var extra = '';
+    if(stage.id === 'editor'){
+      extra = 'PRIOR SPECIALIST REVIEWS (for your synthesis):\n\n';
+      STAGES.slice(0,4).forEach(function(s){
+        extra += '--- '+s.name+' ---\n' + (state.stageOutputs[s.id] ? state.stageOutputs[s.id].raw : '(no data)') + '\n\n';
+      });
+    } else if(stage.id === 'copy'){
+      extra = 'Prior visual review summary for context:\n' + (state.stageOutputs.visual ? state.stageOutputs.visual.raw : '');
+    }
+
+    var userContent = baseUserBlocks(extra);
+
+    callWithRetry(stage.system, userContent, 1).then(function(raw){
+      var parsed = parseSections(raw);
+      parsed.raw = raw;
+      state.stageOutputs[stage.id] = parsed;
+      setStageStatus(stage.id, 'done', 'Done');
+      log('✓ '+stage.name+' complete');
+      renderProgressive(stage.id, parsed);
+      runStage(idx+1);
+    }).catch(function(err){
+      setStageStatus(stage.id, 'error', 'Failed');
+      log('✗ '+stage.name+' failed: '+err.message);
+      renderErrorCard(stage, err);
+      runStage(idx+1);
+    });
+  }
+
+  function renderErrorCard(stage, err){
+    var div = document.createElement('div');
+    div.className = 'cis-card cis-fade-in';
+    div.innerHTML = '<h3 style="color:var(--red);">⚠ '+stage.name+' failed</h3>' +
+      '<p style="font-size:13px;color:var(--text-dim);">'+escapeHtml(err.message)+'. This stage was skipped — the pipeline continues with the remaining reviewers.</p>';
+    resultsArea.appendChild(div);
+  }
+
+  function scoreColor(score){
+    if(score>=75) return 'var(--green)';
+    if(score>=50) return 'var(--amber)';
+    return 'var(--red)';
+  }
+
+  // ---------- Progressive per-stage cards ----------
+  function renderProgressive(id, data){
+    if(id === 'editor') return; // handled in final report
+    var stage = STAGES.filter(function(s){return s.id===id;})[0];
+    var score = parseInt(data.SCORE) || 0;
+    var div = document.createElement('div');
+    div.className = 'cis-card cis-fade-in';
+    var html = '<h3>'+stage.icon+' '+stage.name+'</h3>';
+    html += '<div class="cis-cat-row" style="border-bottom:none;padding-top:0;">' +
+      '<div class="cis-cat-name" style="width:auto;font-weight:600;">Score</div>' +
+      '<div class="cis-cat-bar-track"><div class="cis-cat-bar-fill" style="width:'+score+'%;background:'+scoreColor(score)+';"></div></div>' +
+      '<div class="cis-cat-score">'+score+'</div></div>';
+    if(data.SUMMARY) html += '<p style="font-size:13.5px;color:var(--text);margin:14px 0;">'+escapeHtml(data.SUMMARY)+'</p>';
+
+    if(extractList(data.STRENGTHS).length){
+      html += '<div style="margin-top:10px;"><div class="cis-field-label" style="margin-bottom:8px;">Strengths</div><div class="cis-list">';
+      extractList(data.STRENGTHS).forEach(function(p){
+        html += '<div class="cis-list-item"><span class="cis-dot" style="background:var(--green);"></span><p style="margin:0;">'+escapeHtml(p)+'</p></div>';
+      });
+      html += '</div></div>';
+    }
+    if(extractList(data.WEAKNESSES).length){
+      html += '<div style="margin-top:14px;"><div class="cis-field-label" style="margin-bottom:8px;">Weaknesses</div><div class="cis-list">';
+      extractList(data.WEAKNESSES).forEach(function(p){
+        html += '<div class="cis-list-item"><span class="cis-dot" style="background:var(--red);"></span><p style="margin:0;">'+escapeHtml(p)+'</p></div>';
+      });
+      html += '</div></div>';
+    }
+    if(extractList(data.FIXES).length){
+      html += '<div style="margin-top:14px;"><div class="cis-field-label" style="margin-bottom:8px;">Recommended fixes</div><div class="cis-list">';
+      extractList(data.FIXES).forEach(function(p){
+        html += '<div class="cis-list-item"><span class="cis-dot" style="background:var(--blue);"></span><p style="margin:0;">'+escapeHtml(p)+'</p></div>';
+      });
+      html += '</div></div>';
+    }
+    if(id === 'copy'){
+      if(extractList(data.ALT_TITLES).length){
+        html += '<div style="margin-top:14px;"><div class="cis-field-label" style="margin-bottom:8px;">Alternative titles</div>';
+        extractList(data.ALT_TITLES).forEach(function(t){
+          html += '<div class="cis-alt-card"><p>'+escapeHtml(t)+'</p></div>';
+        });
+        html += '</div>';
+      }
+      if(extractList(data.ALT_HOOKS).length){
+        html += '<div style="margin-top:14px;"><div class="cis-field-label" style="margin-bottom:8px;">Alternative hooks / on-thumbnail text</div>';
+        extractList(data.ALT_HOOKS).forEach(function(t){
+          html += '<div class="cis-alt-card"><p>'+escapeHtml(t)+'</p></div>';
+        });
+        html += '</div>';
+      }
+    }
+    div.innerHTML = html;
+    resultsArea.appendChild(div);
+  }
+
+  // ---------- Final comprehensive report ----------
+  function renderFinalReport(){
+    var editor = state.stageOutputs.editor;
+    if(!editor){
+      log('No final synthesis available.');
+      return;
+    }
+    var score = parseInt(editor.OVERALL_SCORE) || 0;
+    var tagColor = score>=75?'var(--green)':(score>=50?'var(--amber)':'var(--red)');
+    var circumference = 2*Math.PI*56;
+    var offset = circumference * (1 - score/100);
+
+    var div = document.createElement('div');
+    div.className = 'cis-card cis-fade-in';
+
+    var html = '<h3>🎯 Final Verdict — Editor-in-Chief</h3>';
+    html += '<div class="cis-score-hero">';
+    html += '<div class="cis-ring"><svg width="132" height="132">' +
+      '<circle cx="66" cy="66" r="56" stroke="var(--line)" stroke-width="10" fill="none"/>' +
+      '<circle cx="66" cy="66" r="56" stroke="'+tagColor+'" stroke-width="10" fill="none" stroke-linecap="round" ' +
+      'stroke-dasharray="'+circumference+'" stroke-dashoffset="'+offset+'"/></svg>' +
+      '<div class="cis-ring-val"><div class="cis-ring-num">'+score+'</div><div class="cis-ring-lbl">/ 100</div></div></div>';
+    html += '<div class="cis-verdict">' +
+      '<div class="cis-verdict-tag" style="background:'+tagColor+'22;color:'+tagColor+';">'+escapeHtml(editor.VERDICT_TAG||'—')+'</div>' +
+      '<p class="cis-verdict-text">'+escapeHtml(editor.EXEC_SUMMARY||'')+'</p></div>';
+    html += '</div>';
+
+    // Category breakdown from all 4 specialist scores
+    html += '<div style="margin-top:26px;"><div class="cis-field-label" style="margin-bottom:10px;">Category breakdown</div>';
+    STAGES.slice(0,4).forEach(function(s){
+      var d = state.stageOutputs[s.id];
+      var sc = d ? (parseInt(d.SCORE)||0) : 0;
+      html += '<div class="cis-cat-row"><div class="cis-cat-name">'+s.icon+' '+s.name.replace(' Reviewer','')+'</div>' +
+        '<div class="cis-cat-bar-track"><div class="cis-cat-bar-fill" style="width:'+sc+'%;background:'+scoreColor(sc)+';"></div></div>' +
+        '<div class="cis-cat-score">'+sc+'</div></div>';
+    });
+    html += '</div>';
+
+    if(extractList(editor.TOP_FIXES).length){
+      html += '<div style="margin-top:22px;"><div class="cis-field-label" style="margin-bottom:8px;">Highest-impact improvements</div><div class="cis-list">';
+      extractList(editor.TOP_FIXES).forEach(function(p){
+        html += '<div class="cis-list-item"><span class="cis-dot" style="background:var(--red);"></span><p style="margin:0;">'+escapeHtml(p)+'</p></div>';
+      });
+      html += '</div></div>';
+    }
+
+    if(editor.BEFORE_AFTER){
+      html += '<div style="margin-top:22px;"><div class="cis-field-label" style="margin-bottom:8px;">Before vs. after</div>' +
+        '<p style="font-size:13.5px;">'+escapeHtml(editor.BEFORE_AFTER)+'</p></div>';
+    }
+
+    if(editor.PREDICTED_PERFORMANCE){
+      html += '<div style="margin-top:22px;"><div class="cis-field-label" style="margin-bottom:8px;">Predicted performance potential</div>' +
+        '<p style="font-size:13.5px;">'+escapeHtml(editor.PREDICTED_PERFORMANCE)+'</p>' +
+        '<div class="cis-disclaimer">This is an AI-generated estimate based on general content patterns — not a guarantee of real-world CTR or view performance.</div></div>';
+    }
+
+    if(extractList(editor.PUBLISHING_CHECKLIST).length){
+      html += '<div style="margin-top:22px;"><div class="cis-field-label" style="margin-bottom:8px;">Publishing checklist</div><div class="cis-checklist">';
+      extractList(editor.PUBLISHING_CHECKLIST).forEach(function(p){
+        html += '<div class="cis-check-item"><div class="cis-check-box"></div><div>'+escapeHtml(p)+'</div></div>';
+      });
+      html += '</div></div>';
+    }
+
+    if(extractList(editor.FOLLOWUP_PROMPTS).length){
+      html += '<div style="margin-top:22px;"><div class="cis-field-label" style="margin-bottom:8px;">Prompts for deeper optimization</div>';
+      extractList(editor.FOLLOWUP_PROMPTS).forEach(function(p){
+        html += '<div class="cis-alt-card"><p style="font-family:var(--mono);font-size:12.5px;">"'+escapeHtml(p)+'"</p></div>';
+      });
+      html += '</div>';
+    }
+
+    div.innerHTML = html;
+    resultsArea.appendChild(div);
+    div.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+})();
+</script>
+</body>
+</html>
