@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laptop Decision Matrix — Professional Ultrabooks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e15;
+    --surface: #12161f;
+    --surface2: #171c26;
+    --line: #232a36;
+    --line-soft: #1a2029;
+    --text: #eceef1;
+    --text-dim: #9aa3b0;
+    --text-faint: #5d6573;
+    --red: #ec5f5f;
+    --amber: #e3a544;
+    --green: #4cce91;
+    --blue: #6ea8fe;
+    --purple: #b39ddb;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    margin: 0;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+  }
+  .cdb-header { padding: 34px 28px 22px; border-bottom: 1px solid var(--line); }
+  .cdb-eyebrow { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; }
+  .cdb-title { font-family: var(--display); font-size: 25px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .cdb-subtitle { color: var(--text-faint); font-size: 13px; margin: 0; max-width: 640px; }
+
+  .cdb-main { max-width: 1040px; margin: 0 auto; padding: 30px 28px 60px; }
+  .cdb-section { margin-bottom: 36px; }
+  .cdb-section-title { font-family: var(--display); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); margin: 0 0 16px; display: flex; align-items: center; justify-content: space-between; }
+
+  /* Weight sliders */
+  .cdb-weights { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; }
+  .cdb-weight-row { }
+  .cdb-weight-label { display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 7px; }
+  .cdb-weight-label span:first-child { color: var(--text); }
+  .cdb-weight-label span:last-child { font-family: var(--mono); color: var(--text-dim); }
+  input[type=range] { -webkit-appearance: none; width: 100%; height: 3px; border-radius: 2px; background: var(--line); outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--blue); cursor: pointer; border: 2px solid var(--bg); }
+  input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--blue); cursor: pointer; border: 2px solid var(--bg); }
+  .cdb-reset-btn { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim); background: none; border: 1px solid var(--line); border-radius: 5px; padding: 5px 10px; cursor: pointer; }
+  .cdb-reset-btn:hover { border-color: var(--text-faint); color: var(--text); }
+
+  /* Ranked results */
+  .cdb-rank-list { display: flex; flex-direction: column; gap: 10px; }
+  .cdb-rank-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; transition: border-color 0.2s ease; }
+  .cdb-rank-card.top { border-color: var(--blue); }
+  .cdb-rank-top-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .cdb-rank-num { font-family: var(--mono); font-size: 13px; color: var(--text-faint); width: 18px; flex-shrink: 0; }
+  .cdb-rank-name { font-family: var(--display); font-weight: 600; font-size: 15px; flex: 1; }
+  .cdb-rank-score { font-family: var(--mono); font-size: 17px; font-weight: 600; color: var(--blue); }
+  .cdb-rank-bar-track { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; margin-bottom: 4px; }
+  .cdb-rank-bar-fill { height: 100%; background: var(--blue); transition: width 0.3s ease; }
+  .cdb-rank-card.top .cdb-rank-bar-fill { background: var(--green); }
+  .cdb-rank-meta { font-size: 11.5px; color: var(--text-faint); }
+
+  /* Data table */
+  .cdb-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+  table.cdb-table { width: 100%; border-collapse: collapse; min-width: 760px; }
+  table.cdb-table th { text-align: left; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint); padding: 12px 14px; border-bottom: 1px solid var(--line); font-weight: 500; background: var(--surface); position: sticky; top: 0; }
+  table.cdb-table td { padding: 12px 14px; border-bottom: 1px solid var(--line-soft); font-size: 12.5px; vertical-align: top; }
+  table.cdb-table tr:last-child td { border-bottom: none; }
+  table.cdb-table td.cdb-col-name { font-family: var(--display); font-weight: 600; font-size: 13px; white-space: nowrap; }
+  .cdb-est-flag { font-family: var(--mono); font-size: 9.5px; color: var(--amber); border: 1px solid var(--amber); border-radius: 3px; padding: 1px 4px; margin-left: 6px; white-space: nowrap; }
+
+  /* Sources panel */
+  .cdb-sources-list { display: flex; flex-direction: column; gap: 10px; }
+  .cdb-source-item { padding: 10px 0; border-bottom: 1px solid var(--line-soft); font-size: 12.5px; }
+  .cdb-source-item:last-child { border-bottom: none; }
+  .cdb-source-item a { color: var(--blue); text-decoration: none; word-break: break-all; }
+  .cdb-source-item a:hover { text-decoration: underline; }
+  .cdb-source-tag { font-family: var(--mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-bottom: 3px; }
+
+  /* Collapsible */
+  .cdb-collapsible { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .cdb-collapsible-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; cursor: pointer; user-select: none; background: var(--surface); }
+  .cdb-collapsible-header h4 { margin: 0; font-family: var(--display); font-size: 13px; font-weight: 600; }
+  .cdb-chevron { transition: transform 0.2s ease; color: var(--text-faint); font-size: 11px; }
+  .cdb-collapsible.open .cdb-chevron { transform: rotate(90deg); }
+  .cdb-collapsible-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .cdb-collapsible.open .cdb-collapsible-body { max-height: 2000px; }
+  .cdb-collapsible-body-inner { padding: 4px 18px 20px; font-size: 13px; color: var(--text-dim); line-height: 1.75; }
+  .cdb-collapsible-body-inner h5 { font-family: var(--display); font-size: 12px; color: var(--text); text-transform: uppercase; letter-spacing: 0.05em; margin: 16px 0 8px; }
+  .cdb-collapsible-body-inner h5:first-child { margin-top: 0; }
+  .cdb-collapsible-body-inner ul { margin: 0; padding-left: 16px; }
+  .cdb-collapsible-body-inner li { margin-bottom: 6px; }
+
+  .cdb-footer { text-align: center; padding: 22px 24px; color: var(--text-faint); font-size: 10.5px; font-family: var(--mono); letter-spacing: 0.03em; border-top: 1px solid var(--line); }
+
+  .cdb-empty { text-align: center; padding: 30px; color: var(--text-faint); font-size: 13px; }
+
+  @media (max-width: 700px) {
+    .cdb-header { padding: 26px 20px 20px; }
+    .cdb-main { padding: 26px 20px 48px; }
+    .cdb-title { font-size: 20px; }
+    .cdb-weights { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cdb-header">
+  <div class="cdb-eyebrow">Compare & Decide · Laptops for Professionals</div>
+  <h1 class="cdb-title">Which laptop should a developer or analyst buy?</h1>
+  <p class="cdb-subtitle">MacBook Air 13″ (M3) · Dell XPS 13 9345 · ThinkPad X1 Carbon Gen 12 · Asus Zenbook S 14 (UX5406) — scored across 7 criteria, weighted by what matters to you.</p>
+</div>
+
+<div class="cdb-main">
+
+  <div class="cdb-section">
+    <h2 class="cdb-section-title">
+      <span>Set your priorities</span>
+      <button class="cdb-reset-btn" onclick="cdbReset()">Reset to equal</button>
+    </h2>
+    <div class="cdb-weights" id="cdbWeights"></div>
+  </div>
+
+  <div class="cdb-section">
+    <h2 class="cdb-section-title"><span>Live ranking</span></h2>
+    <div class="cdb-rank-list" id="cdbRankList"></div>
+  </div>
+
+  <div class="cdb-section">
+    <h2 class="cdb-section-title"><span>Underlying data (score out of 10, per criterion)</span></h2>
+    <div class="cdb-table-wrap">
+      <table class="cdb-table" id="cdbDataTable"></table>
+    </div>
+  </div>
+
+  <div class="cdb-section">
+    <div class="cdb-collapsible" id="cdbResearchCollapsible">
+      <div class="cdb-collapsible-header" onclick="cdbToggle('cdbResearchCollapsible')">
+        <h4>How this was researched</h4>
+        <span class="cdb-chevron">▶</span>
+      </div>
+      <div class="cdb-collapsible-body">
+        <div class="cdb-collapsible-body-inner" id="cdbResearchBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cdb-section" style="margin-bottom:0;">
+    <h2 class="cdb-section-title"><span>Sources</span></h2>
+    <div class="cdb-sources-list" id="cdbSourcesList"></div>
+  </div>
+
+</div>
+
+<div class="cdb-footer">Scores derived from cited sources as of Jul 2026 · configurations vary by SKU · verify current pricing before purchase</div>
+
+<script>
+var CRITERIA = [
+  { key: "price", label: "Price (value)", weight: 5 },
+  { key: "performance", label: "Performance", weight: 5 },
+  { key: "battery", label: "Battery life", weight: 5 },
+  { key: "build", label: "Build quality", weight: 5 },
+  { key: "display", label: "Display quality", weight: 5 },
+  { key: "portability", label: "Portability", weight: 5 },
+  { key: "ram", label: "RAM / storage config", weight: 5 }
+];
+
+var LAPTOPS = [
+  {
+    name: "MacBook Air 13″ (M3)",
+    scores: { price: 6, performance: 7.5, battery: 8, build: 8, display: 8, portability: 8.5, ram: 5 },
+    detail: {
+      price: "$1,099 base (8GB/256GB)",
+      performance: "M3, 8-core CPU / up to 10-core GPU, up to 60% faster than M1 (Apple)",
+      battery: "52.6Wh; Apple rates 18h video / 15h wireless web; Laptop Mag measured 15h+",
+      build: "Aluminum unibody, no ingress/mil-spec rating published",
+      display: "13.6″ Liquid Retina, 2560×1664, 500 nits, P3",
+      portability: "2.7 lb (1.24 kg), 0.44″ thick",
+      ram: "8GB base, config to 16/24GB, soldered — limited ceiling"
+    },
+    estimates: []
+  },
+  {
+    name: "Dell XPS 13 9345 (Snapdragon)",
+    scores: { price: 8, performance: 8, battery: 9.5, build: 6.5, display: 6.5, portability: 9, ram: 8.5 },
+    detail: {
+      price: "$959.99–$1,199 base configs (Windows Central, Laptop Mag)",
+      performance: "Snapdragon X Elite X1E-80-100, 12-core, 45 TOPS NPU, mid-14k Geekbench 6 multicore",
+      battery: "54Wh; Reviewed.com measured 18h38m; Dell/Amazon marketing claims up to 27h",
+      build: "Aluminum chassis; Laptop Mag notes thin-and-light tradeoffs in rigidity",
+      display: "Base 13.4″ FHD+ 1920×1200 120Hz 500nit; 3K OLED optional (+$300)",
+      portability: "2.60–2.62 lb (1.17–1.19 kg)",
+      ram: "16/32/64GB LPDDR5X, 512GB–2TB SSD"
+    },
+    estimates: []
+  },
+  {
+    name: "ThinkPad X1 Carbon Gen 12",
+    scores: { price: 3, performance: 6, battery: 4, build: 9.5, display: 6.5, portability: 9.5, ram: 8 },
+    detail: {
+      price: "$2,263 review config (Tom's Hardware); $2,989 official start (XDA) before discounts",
+      performance: "Intel Core Ultra 7 165U vPro (U-series, tuned for efficiency over raw speed)",
+      battery: "57Wh; Tom's Hardware measured 9h14m on 120Hz OLED config, down from 13h45m on prior-gen lower-res panel",
+      build: "Carbon fiber + magnesium chassis, MIL-STD 810H certified",
+      display: "Base 14″ WUXGA 1920×1200 IPS 400nit; 2880×1800 120Hz OLED optional",
+      portability: "Starts 2.4 lb (1.08 kg), 14.9mm thick — lightest of the four",
+      ram: "Up to 64GB LPDDR5X-6400 (soldered), up to 2TB PCIe Gen4 SSD"
+    },
+    estimates: []
+  },
+  {
+    name: "Asus Zenbook S 14 (UX5406)",
+    scores: { price: 5.5, performance: 6.5, battery: 7.5, build: 7.5, display: 9, portability: 8, ram: 6 },
+    detail: {
+      price: "$1,499 for Core Ultra 7 258V / 32GB / 1TB (Laptop Mag)",
+      performance: "Intel Core Ultra 7 258V (Lunar Lake), Arc 130V graphics; Geekbench 6 multicore ~9,232 (NanoReview)",
+      battery: "72–77Wh; Laptop Mag measured ~14h real-world",
+      build: "Ceraluminum chassis, no published mil-spec rating",
+      display: "14″ 2880×1800 OLED, 120Hz, 500 nits, 100% DCI-P3, Pantone validated",
+      portability: "Weight not confirmed in a primary spec sheet in this search — treated as an estimate based on typical Zenbook S 14 listings (~2.6–2.8 lb)",
+      ram: "16/32GB LPDDR5X, up to 1TB SSD"
+    },
+    estimates: ["portability"]
+  }
+];
+
+var SOURCES = [
+  { tag: "Apple — MacBook Air M3", url: "https://www.apple.com/newsroom/2024/03/apple-unveils-the-new-13-and-15-inch-macbook-air-with-the-powerful-m3-chip/" },
+  { tag: "Apple Support — MacBook Air M3 tech specs", url: "https://support.apple.com/en-us/118551" },
+  { tag: "Laptop Mag — MacBook Air 13″ M3 review", url: "https://www.laptopmag.com/laptops/macbooks/macbook-air-13-inch-m3" },
+  { tag: "Tom's Guide — MacBook Air 13″ M3 review", url: "https://www.tomsguide.com/computing/macbooks/macbook-air-13-inch-m3-review" },
+  { tag: "Dell — XPS 13 9345 official spec page", url: "https://www.dell.com/en-us/shop/dell-laptops/xps-13-laptop/spd/xps-13-9345-laptop" },
+  { tag: "Windows Central — XPS 13 9345 Snapdragon review", url: "https://www.windowscentral.com/hardware/laptops/dell-xps-13-9345-snapdragon-review" },
+  { tag: "Reviewed.com — XPS 13 9345 review (battery benchmark)", url: "https://www.reviewed.com/laptops/content/dell-xps-13-9345-review" },
+  { tag: "Laptop Mag — XPS 13 9345 Snapdragon review", url: "https://www.laptopmag.com/laptops/dell-xps-13-9345-snapdragon-x-elite" },
+  { tag: "Lenovo — ThinkPad X1 Carbon Gen 12 product page", url: "https://www.lenovo.com/us/en/p/laptops/thinkpad/thinkpadx1/thinkpad-x1-carbon-gen-12-14-inch-intel/21kc0046us" },
+  { tag: "Tom's Hardware — ThinkPad X1 Carbon Gen 12 review (battery test, price)", url: "https://www.tomshardware.com/laptops/ultrabooks-ultraportables/lenovo-thinkpad-x1-carbon-gen-12-review" },
+  { tag: "XDA Developers — ThinkPad X1 Carbon Gen 12 pricing", url: "https://www.xda-developers.com/lenovo-thinkpad-x1-carbon-gen-12/" },
+  { tag: "InvGate ITDB — ThinkPad X1 Carbon Gen 12 specs", url: "https://invgate.com/itdb/thinkpad-x1-carbon-gen-12" },
+  { tag: "Laptop Mag — Asus Zenbook S 14 (UX5406) review", url: "https://www.laptopmag.com/laptops/windows-laptops/asus-zenbook-s-14-ux5406" },
+  { tag: "NanoReview — Asus Zenbook S 14 (UX5406) benchmarks", url: "https://nanoreview.net/en/laptop/asus-vivobook-s-14-ux5406" },
+  { tag: "ASUS — Zenbook S 14 (UX5406) official product page", url: "https://www.asus.com/us/laptops/for-home/zenbook/asus-zenbook-s-14-ux5406/" },
+  { tag: "TS2 — 2025 Ultrabook Showdown (MacBook Air M4 vs XPS 13 vs Zenbook S 14, cross-reference)", url: "https://ts2.tech/en/2025-ultrabook-showdown-macbook-air-m4-vs-dell-xps-13-vs-asus-zenbook-s-14/" }
+];
+
+function cdbInit() {
+  var wrap = document.getElementById('cdbWeights');
+  wrap.innerHTML = CRITERIA.map(function(c) {
+    return '<div class="cdb-weight-row">' +
+      '<div class="cdb-weight-label"><span>' + c.label + '</span><span id="cdbW-' + c.key + '">' + c.weight + '</span></div>' +
+      '<input type="range" min="0" max="10" step="1" value="' + c.weight + '" oninput="cdbUpdateWeight(\'' + c.key + '\', this.value)">' +
+      '</div>';
+  }).join('');
+
+  var sources = document.getElementById('cdbSourcesList');
+  sources.innerHTML = SOURCES.map(function(s) {
+    return '<div class="cdb-source-item"><span class="cdb-source-tag">' + s.tag + '</span><a href="' + s.url + '" target="_blank" rel="noopener">' + s.url + '</a></div>';
+  }).join('');
+
+  document.getElementById('cdbResearchBody').innerHTML =
+    '<h5>Scoring method</h5>' +
+    '<p>Each laptop was scored 0–10 per criterion by normalizing real benchmark and spec data pulled from the sources listed above (official manufacturer pages plus Tom\'s Hardware, Laptop Mag, Windows Central, Reviewed.com, NanoReview, and XDA Developers). Scores are relative rankings across these four laptops only, not absolute or industry-wide scores.</p>' +
+    '<h5>Configuration caveat</h5>' +
+    '<p>Every laptop here ships in multiple configurations. Where reviewers tested different trims (e.g. the ThinkPad\'s 120Hz OLED review unit vs. its lower-res base panel, or the XPS 13\'s FHD+ base vs. OLED upgrade), the base or most-commonly-reviewed configuration was used, and the tradeoff is noted directly in the data table.</p>' +
+    '<h5>Conflicts resolved</h5>' +
+    '<ul>' +
+    '<li>ThinkPad battery life: Lenovo\'s prior-gen (Gen 11) figure of 13h45m does not apply to Gen 12 — Tom\'s Hardware\'s own Gen 12 test (9h14m, OLED 120Hz config) was used since it is the direct, same-methodology measurement.</li>' +
+    '<li>XPS 13 battery claims ranged from 18h38m (independent Reviewed.com lab test) to a 27-hour figure used in Dell/Amazon marketing copy. The independently measured figure was weighted more heavily in scoring; both are shown in the source data.</li>' +
+    '<li>Zenbook S 14 performance figures from NanoReview aggregate several Core Ultra configurations (226V through 386H) under one model page — the 258V variant matching the reviewed $1,499 configuration was used where possible.</li>' +
+    '</ul>' +
+    '<h5>Flagged estimate</h5>' +
+    '<p>The Zenbook S 14\'s exact shipping weight was not confirmed in an official spec sheet within this research pass — search results covered battery capacity, display, and performance in detail but not a definitive weight figure. Its portability score is marked as an estimate in the data table below and should be verified against Asus\'s current spec page before treating it as decisive.</p>';
+
+  cdbRender();
+}
+
+function cdbUpdateWeight(key, val) {
+  var c = CRITERIA.find(function(c) { return c.key === key; });
+  c.weight = parseInt(val, 10);
+  document.getElementById('cdbW-' + key).textContent = val;
+  cdbRender();
+}
+
+function cdbReset() {
+  CRITERIA.forEach(function(c) {
+    c.weight = 5;
+    document.getElementById('cdbW-' + c.key).textContent = 5;
+    document.querySelector('input[oninput*="' + c.key + '"]').value = 5;
+  });
+  cdbRender();
+}
+
+function cdbCompute() {
+  var totalWeight = CRITERIA.reduce(function(sum, c) { return sum + c.weight; }, 0);
+  return LAPTOPS.map(function(l) {
+    var raw = 0;
+    if (totalWeight > 0) {
+      CRITERIA.forEach(function(c) {
+        raw += (l.scores[c.key] || 0) * c.weight;
+      });
+      raw = raw / totalWeight;
+    }
+    return { name: l.name, score: raw, laptop: l };
+  }).sort(function(a, b) { return b.score - a.score; });
+}
+
+function cdbRender() {
+  var results = cdbCompute();
+  var totalWeight = CRITERIA.reduce(function(sum, c) { return sum + c.weight; }, 0);
+  var rankList = document.getElementById('cdbRankList');
+
+  if (totalWeight === 0) {
+    rankList.innerHTML = '<div class="cdb-empty">Set at least one criterion above zero to see a ranking.</div>';
+  } else {
+    var maxScore = results[0].score;
+    rankList.innerHTML = results.map(function(r, i) {
+      var pct = maxScore > 0 ? (r.score / 10) * 100 : 0;
+      var estFlags = r.laptop.estimates.length > 0
+        ? '<span class="cdb-est-flag">' + r.laptop.estimates.length + ' est. field</span>'
+        : '';
+      return '<div class="cdb-rank-card' + (i === 0 ? ' top' : '') + '">' +
+        '<div class="cdb-rank-top-row">' +
+        '<span class="cdb-rank-num">#' + (i + 1) + '</span>' +
+        '<span class="cdb-rank-name">' + r.name + estFlags + '</span>' +
+        '<span class="cdb-rank-score">' + r.score.toFixed(1) + '</span>' +
+        '</div>' +
+        '<div class="cdb-rank-bar-track"><div class="cdb-rank-bar-fill" style="width:' + pct.toFixed(1) + '%"></div></div>' +
+        '<div class="cdb-rank-meta">Weighted score out of 10, based on your current criteria priorities</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  var table = document.getElementById('cdbDataTable');
+  var headRow = '<tr><th>Laptop</th>' + CRITERIA.map(function(c) { return '<th>' + c.label + '</th>'; }).join('') + '</tr>';
+  var bodyRows = LAPTOPS.map(function(l) {
+    var cells = CRITERIA.map(function(c) {
+      var isEst = l.estimates.indexOf(c.key) !== -1;
+      var val = l.scores[c.key] !== undefined ? l.scores[c.key].toFixed(1) : '—';
+      return '<td>' + val + (isEst ? '<span class="cdb-est-flag">Est.</span>' : '') + '<div style="color:var(--text-faint);font-size:11px;margin-top:3px;">' + (l.detail[c.key] || '') + '</div></td>';
+    }).join('');
+    return '<tr><td class="cdb-col-name">' + l.name + '</td>' + cells + '</tr>';
+  }).join('');
+  table.innerHTML = headRow + bodyRows;
+}
+
+function cdbToggle(id) {
+  var el = document.getElementById(id);
+  el.classList.toggle('open');
+  el.querySelector('.cdb-chevron').textContent = el.classList.contains('open') ? '▼' : '▶';
+}
+
+cdbInit();
+</script>
+
+</body>
+</html>
