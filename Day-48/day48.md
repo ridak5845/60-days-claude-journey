@@ -36,8 +36,6 @@ For this project, I built a laptop comparison tool for developers and analysts t
 
 ## 1. Priority Selection
 
-> Insert Screenshot 2 (Sliders & Criteria)
-
 ![Priorities](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-48/priorities.png)
 
 ---
