@@ -1,6 +1,8 @@
 # Day 49 – Personal AI Playbook
 
+
 ### 60 Days of Claude AI Challenge
+
 
 ## 🚀 Project Overview
 
@@ -15,7 +17,7 @@ The Personal AI Playbook is a reusable workflow management system that transform
 
 ## 1. Welcome Screen
 
-[welcome](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/Home.png)
+![welcome](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/Home.png)
 
 Shows the introductory modal explaining how the AI Playbook works and how workflows are organized.
 
@@ -23,7 +25,7 @@ Shows the introductory modal explaining how the AI Playbook works and how workfl
 
 ## 2. Dashboard
 
-[Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/dashboard49.png)
+![Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/dashboard49.png)
 
 Displays:
 
@@ -37,7 +39,7 @@ Displays:
 
 ## 3. My Workflows
 
-[Workflows](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/workflows.png)
+![Workflows](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/workflows.png)
 
 Contains reusable prompt workflows including:
 
@@ -54,7 +56,7 @@ Contains reusable prompt workflows including:
 
 ## 4. Prompt Builder
 
-[Prompt Builder](
+![Prompt Builder](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/prompt-builder.png)
 
 Allows building prompts from reusable building blocks including:
 
@@ -71,7 +73,7 @@ Allows building prompts from reusable building blocks including:
 
 ## 5. Loop Builder
 
-[Loop Builder](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/loop-builder.png)
+![Loop Builder](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/loop-builder.png)
 
 Provides iterative prompt improvement using:
 
@@ -85,7 +87,7 @@ Provides iterative prompt improvement using:
 
 ## 6. Building Blocks
 
-[Building Blocks](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/building-blocks.png)
+![Building Blocks](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-49/building-blocks.png)
 
 Reference glossary explaining reusable prompt components such as:
 
