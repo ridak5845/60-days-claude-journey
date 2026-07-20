@@ -18,35 +18,32 @@ The simulator generates a personalized **Defense Report** highlighting strengths
 
 ## 1. Application Home Screen
 
-![Application Home]()
+![Application Home](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-50/interview.png)
 
 ---
 
 ## 2. Adaptive Interview Session
 
-![Interview Session]()
+![Interview Session](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-50/defend.png)
 
 ---
 
 ## 3. Defense Report
 
-![Defense Report]()
+![Defense Report](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-50/report.png)
 
 ---
 
 ## 4. Detailed Claim Analysis
 
-![Detailed Analysis]()
+![Detailed Analysis](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-50/report2.png)
 
 ---
 
 # 📄 Generated HTML File
 
-**Defend-your-Experience**
+[HTML FILE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-50/defend-your-experience.html)
 
-```
-
-```
 
 This HTML application contains:
 
