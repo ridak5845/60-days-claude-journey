@@ -18,6 +18,8 @@ The stretch goal is to automatically publish AI review comments back onto GitHub
 
 ---
 
+![Poster](
+
 # Product Requirements Document (PRD)
 
 ## Problem Statement
