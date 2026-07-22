@@ -24,6 +24,8 @@ The complete system architecture is available in:
 
 **ARCHITECTURE.md**
 
+[Architecture file](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-52/ARCHITECTURE.md)
+
 This document includes:
 
 - Finalized Tech Stack
