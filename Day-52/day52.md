@@ -26,6 +26,22 @@ The complete system architecture is available in:
 
 [Architecture file](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-52/ARCHITECTURE.md)
 
+**API.md**
+
+[API](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-52/API.md)
+
+**PROJECT_STRUCTURE.md**
+
+[PROJECT-STRUCTURE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-52/PROJECT-STRUCTURE.md)
+
+**SCHEMA.md**
+
+[SCHEMA](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-52/SCHEMA.md)
+
+**UI-WIREFRAMES.md**
+
+[UI-WIREFRAMES](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-52/UI-WIREFRAMES.md)
+
 This document includes:
 
 - Finalized Tech Stack
