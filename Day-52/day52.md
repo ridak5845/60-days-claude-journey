@@ -72,15 +72,7 @@ These refinements improve implementation clarity without changing the approved p
 
 ## Commit
 
-Replace this placeholder with your actual commit after pushing today's work:
-
-`https://github.com/<your-username>/<repository-name>/commit/<commit-hash>`
-
-Example:
-
-`https://github.com/johndoe/codelens/commit/abc123def456`
-
----
+https://github.com/ridak5845/codelens/commit/c7066bdd3b709fda21468923509dbb5a0809363d
 
 # Day 2 Summary
 
