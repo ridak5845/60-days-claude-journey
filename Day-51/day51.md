@@ -21,12 +21,15 @@ The stretch goal is to automatically publish AI review comments back onto GitHub
 ![Poster](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-51/Project-day1.png)
 
 **PRD**
+
 [PRD](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-51/PRD_AI_Code_Review_Platform.docx)
 
 **PITCH-DECK**
+
 [Pitch-Deck](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-51/Pitch_Deck_AI_Code_Review_Platform.pptx)
 
 **Blueprint**
+
 [blueprint](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-51/Implementation_Blueprint_Days_2-10.docx)
 
 # Product Requirements Document (PRD)
