@@ -32,6 +32,10 @@
 
 [BLUEPRINT](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-53/BLUEPRINT-ADDENDUM-DAY3-AUTH.md)
 
+## COMMIT
+
+https://github.com/ridak5845/codelens/commit/d3b77a5c6561df24580227b900eca796ea97c83c
+
 ## Key Learnings
 
 1. **Stateless auth beats sessions on free-tier hosting.** Render's free tier spins down idle instances — an in-memory session would silently log users out on every cold start. JWT-in-cookie avoids this with zero server-side session state.
