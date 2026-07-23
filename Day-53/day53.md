@@ -4,11 +4,28 @@
 
 ## Hello World — Working Application
 
-![CodeLens Hello World](images/hello-world-dashboard.png)
+![CodeLens Hello World](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-53/Screenshot%202026-07-23%20180835.png)
+
+![COdeLens](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-53/Screenshot%202026-07-23%20180835.png)
 
 *GitHub OAuth login → JWT cookie issued → MongoDB user record created → protected dashboard rendered with the real logged-in username.*
 
 ---
+
+**SETUP.md**
+[SETUP](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-53/SETUP.md)
+
+**PROJECT-STRUCTURE.md**
+[PROJECT-STRUCTURE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-53/PROJECT-STRUCTURE%20(2).md)
+
+**ENVIRONMENT.md**
+[ENVIRONMENT](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-53/ENVIRONMENT.md)
+
+**DAY3-SUMMARY**
+[SUMMARY](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-53/DAY3-SUMMARY.md)
+
+**BLUEPRINT-ADDENDUM-DAY3-AUTH.md**
+[BLUEPRINT](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-53/BLUEPRINT-ADDENDUM-DAY3-AUTH.md)
 
 ## Key Learnings
 
