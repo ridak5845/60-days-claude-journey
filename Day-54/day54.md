@@ -22,6 +22,10 @@ The milestone focused on building the complete authenticated workflow from repos
 
 ---
 
+## Project Repo Link
+
+https://github.com/ridak5845/codelens.git
+
 # What Was Implemented
 
 ## Backend
