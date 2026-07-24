@@ -41,15 +41,15 @@ Although the functionality of the application remains the same, the internal imp
 
 **API.md**
 
-[API.md]()
+[API.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-55/API%20(2).md)
 
 **PROJECT-STRUCTURE.md**
 
-[PROJECT-STRUCTURE.md]()
+[PROJECT-STRUCTURE.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-55/PROJECT-STRUCTURE%20(4).md)
 
 **DAY5-SUMMARY.md**
 
-[DAY5-SUMMARY]()
+[DAY5-SUMMARY](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-55/DAY5-SUMMARY.md)
 
 ---
 
