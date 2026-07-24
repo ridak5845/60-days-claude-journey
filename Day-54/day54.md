@@ -250,11 +250,13 @@ Screenshot:
 
 # Documentation Updated
 
-Updated
+**API.md**
 
-```
-API.md
-```
+[API.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-54/API%20(1).md)
+
+**PROJECT-STRUCTURE.md**
+
+[PROJECT-STRUCTURE](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-54/PROJECT-STRUCTURE%20(3).md)
 
 Changes include:
 
@@ -264,6 +266,11 @@ Changes include:
 - Example API responses
 
 ---
+# DAY4 SUMMARY
+
+**SUMMARY.md**
+
+[SUMMARY.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-54/DAY4-SUMMARY.md)
 
 # Cleanup
 
