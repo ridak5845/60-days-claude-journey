@@ -150,12 +150,6 @@ Unauthenticated requests correctly return
 }
 ```
 
-Screenshot:
-
-```
-screenshots/01-api-auth-error.png
-```
-
 ---
 
 ## ✅ Milestone 2
@@ -170,9 +164,9 @@ GET /api/repos
 
 Screenshot:
 
-```
-screenshots/02-api-repos-success.png
-```
+
+![GET](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-54/Screenshot%202026-07-24%20205700.png)
+
 
 ---
 
@@ -188,9 +182,9 @@ Verified:
 
 Screenshot:
 
-```
-screenshots/03-dashboard-repositories.png
-```
+
+![Dashboard](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-54/Screenshot%202026-07-24%20210416.png)
+
 
 ---
 
@@ -208,9 +202,9 @@ Empty-state handling also confirmed using repositories without pull requests.
 
 Screenshot:
 
-```
-screenshots/04-own-repo-pulls.png
-```
+
+![PULL](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-54/Screenshot%202026-07-24%20210445.png)
+
 
 ---
 
@@ -226,9 +220,9 @@ Successfully fetched live Pull Requests from GitHub.
 
 Screenshot:
 
-```
-screenshots/05-facebook-react-pr-list.png
-```
+
+![PUll](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-54/Screenshot%202026-07-24%20210858.png)
+
 
 ---
 
@@ -244,9 +238,9 @@ Verified route
 
 Screenshot:
 
-```
-screenshots/06-pr-changed-files.png
-```
+
+![pull](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-54/Screenshot%202026-07-24%20211158.png)
+
 
 ---
 
