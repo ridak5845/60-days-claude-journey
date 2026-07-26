@@ -67,6 +67,16 @@ https://codelens-backend-rien.onrender.com
 
 ---
 
+# SUBMISSION 
+
+**Project Repository**
+
+https://github.com/ridak5845/codelens.git
+
+**Latest Commit URL**
+
+https://github.com/ridak5845/codelens/commit/883bb9843868df4db92bc2d6e56cbe38c375a15b
+
 # FILES
 
 **ENVIRONMENT.md**
@@ -80,6 +90,8 @@ https://codelens-backend-rien.onrender.com
 **DAY6-SUMMARY.md**
 
 [Day6-Summary](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-56/DAY6-SUMMARY.md)
+
+---
 
 # Full User Flow (Screenshots)
 
