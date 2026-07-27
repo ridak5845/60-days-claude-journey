@@ -46,7 +46,5 @@ feat(ui): refine landing page and improve overall user experience
 ## Repository
 
 Project Repository:
-<YOUR_PROJECT_REPO_LINK>
+<https://github.com/ridak5845/codelens.git>
 
-Challenge Repository:
-<YOUR_ABTALKS_REPO_LINK>
