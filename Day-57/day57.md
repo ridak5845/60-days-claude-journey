@@ -24,10 +24,15 @@ Today's focus was on refining the user experience instead of adding new function
 ## Before vs After
 
 ### Before
-![Before](./before.png)
+![Before](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-57/welcome.png)
 
 ### After
-![After](./after.png)
+![After](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-57/Screenshot%202026-07-28%20045954.png)
+
+## SUMMARY FILE
+
+[SUMMARY.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-57/DAY7-SUMMARY.md)
+
 
 ## Key Learnings
 
