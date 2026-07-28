@@ -226,6 +226,6 @@
 
 ## Submission Format
 
-**Project repo commit URL:** https://github.com/<your-username>/codelens/commit/<day8-commit-hash>
+**Project repo commit URL:** https://github.com/ridak5845/60-days-claude-journey.git
 
-**ABTalks repo commit URL:** https://github.com/<your-username>/ABTalks/commit/<abtalks-day8-commit-hash>
+**ABTalks repo commit URL:** https://github.com/ridak5845/60-days-claude-journey/commit/663dfec5993ee366880b166e7fb1965a6e72c9bf
