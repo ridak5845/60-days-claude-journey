@@ -42,23 +42,48 @@
 
 ---
 
-## 3. Files Included in ABTalks Repo
+## 3. SCREENSHOTS OF THE APP
 
-```text
-DAY8-SUMMARY.md
-ISSUES-FOUND-AND-FIXED.md
-screenshots/
-  01-landing-page.png
-  02-github-login.png
-  03-repositories-page.png
-  04-pull-requests-page.png
-  05-pr-review-results.png
-  06-file-review-page.png
-  07-history-page.png
-  08-history-detail-page.png
-  09-offline-banner.png
-  10-404-page.png
-```
+**1.LANDING PAGE**
+
+![landing page](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-58/Screenshot%202026-07-28%20045954.png)
+
+**2.GITHUB LOGIN PAGE**
+
+![login page](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-58/Screenshot%202026-07-26%20192731.png)
+
+**3.REPOS PAGE**
+
+![repos](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-58/Screenshot%202026-07-26%20192821.png)
+
+**4.PULL REQUEST PAGE**
+
+![pull request](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-58/Screenshot%202026-07-26%20200120.png)
+
+**5.PR REVIEW RESULT**
+
+![result](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-58/Screenshot%202026-07-26%20193626.png)
+
+**6.FILE REVIEW PAGE**
+
+![review](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-58/Screenshot%202026-07-28%20195135.png)
+
+**7.HISTORY PAGE**
+
+![history](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-58/Screenshot%202026-07-28%20195117.png)
+
+
+**8.HISTORY DETAIL PAGE**
+
+![history detail page](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-58/Screenshot%202026-07-28%20000820.png)
+
+**9.OFFLINE PAGE**
+
+![offline](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-58/Screenshot%202026-07-28%20195456.png)
+
+**10.404 PAGE**
+
+![404 page](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-58/Screenshot%202026-07-28%20195153.png)
 
 ---
 
