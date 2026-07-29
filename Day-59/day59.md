@@ -9,9 +9,9 @@
 ## Project Information
 
 * **Project Name:** CodeLens
-* **Project Repository:** https://github.com/YOUR-USERNAME/codelens
-* **Live Deployed Application:** https://YOUR-CODELENS-APP.vercel.app
-* **ABTalks Repository:** https://github.com/YOUR-USERNAME/ABTalks
+* **Project Repository:** https://github.com/ridak5845/codelens.git
+* **Live Deployed Application:** https://codelens-beige-two.vercel.app/
+* **ABTalks Repository:** https://github.com/ridak5845/60-days-claude-journey.git
 * **Final Launch Commit:** https://github.com/YOUR-USERNAME/codelens/commit/FINAL-COMMIT-HASH
 
 ---
@@ -70,31 +70,6 @@ This was the most valuable catch of today's launch review.
 
 ---
 
-## Screenshots of Final Deployed Version
-
-Add the following screenshots to this folder in your ABTalks repo:
-
-```
-ABTalks/
-└── day9/
-    ├── dashboard.png
-    ├── repositories.png
-    ├── pull-requests.png
-    ├── ai-review.png
-    ├── review-history.png
-    └── mobile-view.png
-```
-
-### Suggested Screenshot Captions
-
-1. **dashboard.png** — Authenticated user dashboard
-2. **repositories.png** — Public GitHub repository browser
-3. **pull-requests.png** — Open pull request selection screen
-4. **ai-review.png** — AI-generated code review results
-5. **review-history.png** — Saved review history dashboard
-6. **mobile-view.png** — Responsive mobile layout
-
----
 
 ## End-to-End Walkthrough Performed
 
@@ -175,23 +150,12 @@ https://github.com/YOUR-USERNAME/codelens/commit/FINAL-COMMIT-HASH
 
 ### Project Repository
 
-```
-https://github.com/YOUR-USERNAME/codelens
-```
+https://github.com/ridak5845/codelens.git
 
 ### Live Deployed Application
 
-```
-https://YOUR-CODELENS-APP.vercel.app
-```
+https://codelens-beige-two.vercel.app/
 
-### ABTalks Repo Commit (Day 9 Files)
-
-```
-https://github.com/YOUR-USERNAME/ABTalks/commit/ABTALKS-DAY9-COMMIT
-```
-
----
 
 ## Day 9 Reflection
 
