@@ -12,7 +12,7 @@
 * **Project Repository:** https://github.com/ridak5845/codelens.git
 * **Live Deployed Application:** https://codelens-beige-two.vercel.app/
 * **ABTalks Repository:** https://github.com/ridak5845/60-days-claude-journey.git
-* **Final Launch Commit:** https://github.com/YOUR-USERNAME/codelens/commit/FINAL-COMMIT-HASH
+* **Final Launch Commit:** https://github.com/ridak5845/60-days-claude-journey/commit/7643462bf9099e7ac485aef9bf3b4cd47bc18e30
 
 ---
 
