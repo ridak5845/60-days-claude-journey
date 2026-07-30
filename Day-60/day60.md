@@ -12,7 +12,7 @@
 https://github.com/ridak5845/codelens.git
 
 **v1.0.0 Release Tag:**
-https://github.com/your-username/codelens/releases/tag/v1.0.0
+https://github.com/ridak5845/codelens/releases/tag/v1.0.0
 
 **Live Deployed Application:**
 https://codelens-beige-two.vercel.app/
