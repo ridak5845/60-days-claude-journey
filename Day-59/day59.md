@@ -92,6 +92,16 @@ This was the most valuable catch of today's launch review.
 
 ---
 
+## FILES
+
+**Project-Structure**
+
+[Project-Structure.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-59/PROJECT-STRUCTURE%20(9).md)
+
+**DAY9-SUMMARY**
+
+[Day9-Summary.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-59/DAY9-SUMMARY.md)
+
 ## Key Learnings
 
 ### Technical Learnings
