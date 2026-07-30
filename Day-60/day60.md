@@ -22,7 +22,7 @@ https://codelens-beige-two.vercel.app/
 ## 📦 ABTalks Repository Commit
 
 **ABTalks Repo Commit URL:**
-https://github.com/your-username/ABTalks/commit/your-commit-id
+https://github.com/ridak5845/60-days-claude-journey/commit/a1bce491c705aba34386e89f4463426cb3b3c735
 
 ---
 
@@ -56,6 +56,7 @@ https://github.com/your-username/ABTalks/commit/your-commit-id
 
 ![infographic](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-60/Screenshot_30-7-2026_23718_.jpeg)
 
+---
 
 # 📁 Uploaded Artifacts
 
