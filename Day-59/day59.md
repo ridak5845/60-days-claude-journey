@@ -142,7 +142,8 @@ git push origin main
 Replace the link below with your actual pushed commit:
 
 **Launch Commit URL:**
-https://github.com/YOUR-USERNAME/codelens/commit/FINAL-COMMIT-HASH
+
+https://github.com/ridak5845/codelens/commit/615380d1882f060b17667a0f3bd2d9722cbae78c
 
 ---
 
