@@ -26,6 +26,37 @@ https://github.com/your-username/ABTalks/commit/your-commit-id
 
 ---
 
+# FILES
+
+**1.FUTURE SCOPE**
+
+[Future-scope.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-60/future-scope.md)
+
+**2.Challenge-retrospective**
+
+[Challenge-retrospective.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-60/challenge-retrospective.md)
+
+**3.30-day-growth-plan**
+
+[30-day-growth-plan.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-60/30-day-growth-plan.md)
+
+**4.Daily-build-prompt**
+
+[daily-build-prompt.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-60/daily-build-prompt.md)
+
+**5.Portfolio-Materials**
+
+[Portfolio-materials.md](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-60/PORTFOLIO-MATERIALS.md)
+
+**6.Certificate-of-Completion**
+
+![certificate]()
+
+**7.60-Day-Journey-Infographic**
+
+![infographic]()
+
+
 # 📁 Uploaded Artifacts
 
 The following files have been added to the ABTalks repository:
