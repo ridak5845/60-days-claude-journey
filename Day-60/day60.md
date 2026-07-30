@@ -50,11 +50,11 @@ https://github.com/your-username/ABTalks/commit/your-commit-id
 
 **6.Certificate-of-Completion**
 
-![certificate]()
+![certificate](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-60/Screenshot_30-7-2026_17449_.jpeg)
 
 **7.60-Day-Journey-Infographic**
 
-![infographic]()
+![infographic](https://github.com/ridak5845/60-days-claude-journey/blob/main/Day-60/Screenshot_30-7-2026_23718_.jpeg)
 
 
 # 📁 Uploaded Artifacts
